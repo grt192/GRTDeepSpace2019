@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.PWM;
 import frc.config.Config;
 import frc.util.GRTUtil;
 
@@ -23,6 +24,7 @@ class Wheel {
 
 	private TalonSRX rotateMotor;
 	private TalonSRX driveMotor;
+	private PWM neo;
 
 	private String name;
 
@@ -33,6 +35,8 @@ class Wheel {
 
 		rotateMotor = new TalonSRX(Config.getInt(name + "_rotate"));
 		driveMotor = new TalonSRX(Config.getInt(name + "_drive"));
+		neo = new PWM(Config.getInt(name + "_pwm"));
+		neo.setBounds(2, 1.525, 1.5, 1.475, 1);
 		TICKS_PER_ROTATION = Config.getDouble("ticks_per_rotation");
 		OFFSET = Config.getInt(name + "_offset");
 		DRIVE_TICKS_TO_METERS = Config.getDouble("drive_encoder_scale");
@@ -81,7 +85,8 @@ class Wheel {
 			rotateMotor.set(ControlMode.Position, encoderPos);
 		}
 		speed *= (reversed ? -1 : 1);// / (DRIVE_TICKS_TO_METERS * 10);
-		driveMotor.set(ControlMode.PercentOutput, speed);
+		// driveMotor.set(ControlMode.PercentOutput, speed);
+		neo.setSpeed(speed);
 	}
 
 	public double getDriveSpeed() {
