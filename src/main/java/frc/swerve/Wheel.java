@@ -23,7 +23,6 @@ class Wheel {
 	private static final double maxIAccum = 0.0;
 
 	private TalonSRX rotateMotor;
-	private TalonSRX driveMotor;
 	private PWM neo;
 
 	private String name;
@@ -34,7 +33,6 @@ class Wheel {
 		this.name = name;
 
 		rotateMotor = new TalonSRX(Config.getInt(name + "_rotate"));
-		driveMotor = new TalonSRX(Config.getInt(name + "_drive"));
 		neo = new PWM(Config.getInt(name + "_pwm"));
 		neo.setBounds(2, 1.525, 1.5, 1.475, 1);
 		TICKS_PER_ROTATION = Config.getDouble("ticks_per_rotation");
@@ -42,7 +40,6 @@ class Wheel {
 		DRIVE_TICKS_TO_METERS = Config.getDouble("drive_encoder_scale");
 
 		configRotateMotor();
-		configDriveMotor();
 	}
 
 	public void enable() {
@@ -57,7 +54,7 @@ class Wheel {
 
 	public void disable() {
 		rotateMotor.set(ControlMode.Disabled, 0);
-		driveMotor.set(ControlMode.Disabled, 0);
+		neo.setDisabled();
 	}
 
 	public void set(double radians, double speed) {
@@ -90,7 +87,8 @@ class Wheel {
 	}
 
 	public double getDriveSpeed() {
-		return driveMotor.getSelectedSensorVelocity(0) * DRIVE_TICKS_TO_METERS * 10 * (reversed ? -1 : 1);
+		return 0; // driveMotor.getSelectedSensorVelocity(0) * DRIVE_TICKS_TO_METERS * 10 *
+					// (reversed ? -1 : 1);
 	}
 
 	public double getCurrentPosition() {
@@ -116,24 +114,6 @@ class Wheel {
 		rotateMotor.config_kF(0, 0, 0);
 		rotateMotor.configMaxIntegralAccumulator(0, maxIAccum, 0);
 		rotateMotor.configAllowableClosedloopError(0, 0, 0);
-	}
-
-	private void configDriveMotor() {
-		Config.defaultConfigTalon(driveMotor);
-
-		driveMotor.configContinuousCurrentLimit(40, 0);
-		driveMotor.configPeakCurrentDuration(0, 0);
-		driveMotor.enableCurrentLimit(true);
-		driveMotor.configOpenloopRamp(0, 0);
-
-		driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-		driveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10, 0);
-		driveMotor.getSensorCollection().setQuadraturePosition(0, 0);
-
-		driveMotor.config_kP(0, Config.getDouble("velocity_p") * DRIVE_TICKS_TO_METERS * 10 * 1023, 0);
-		driveMotor.config_kI(0, 0, 0);
-		driveMotor.config_kD(0, 0, 0);
-		driveMotor.config_kF(0, Config.getDouble("velocity_f") * DRIVE_TICKS_TO_METERS * 10 * 1023, 0);
 	}
 
 }
