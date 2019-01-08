@@ -33,7 +33,7 @@ class Wheel {
 		this.name = name;
 
 		rotateMotor = new TalonSRX(Config.getInt(name + "_rotate"));
-		neo = new PWM(Config.getInt(name + "_pwm"));
+		neo = new PWM(Config.getInt(name + "_drive"));
 		neo.setBounds(2, 1.525, 1.5, 1.475, 1);
 		TICKS_PER_ROTATION = Config.getDouble("ticks_per_rotation");
 		OFFSET = Config.getInt(name + "_offset");
