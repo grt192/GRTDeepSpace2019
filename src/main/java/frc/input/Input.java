@@ -8,6 +8,7 @@
 package frc.input;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.networking.FieldGUIServer;
 
 /**
  * Add your docs here.
@@ -15,4 +16,5 @@ import edu.wpi.first.wpilibj.XboxController;
 public class Input {
 
     public static final XboxController XBOX = new XboxController(0);
+    public static final FieldGUIServer GUI = new FieldGUIServer();
 }
