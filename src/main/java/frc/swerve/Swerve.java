@@ -1,13 +1,16 @@
 package frc.swerve;
 
+import edu.wpi.first.wpilibj.Notifier;
 import frc.config.Config;
 
-public class Swerve {
+public class Swerve implements Runnable {
 
 	private final double SWERVE_WIDTH;
 	private final double SWERVE_HEIGHT;
 	private final double RADIUS;
 	private final double WHEEL_ANGLE;
+
+	private Notifier notifier;
 
 	private NavXGyro gyro;
 	private Wheel[] wheels;
@@ -25,6 +28,10 @@ public class Swerve {
 		SWERVE_HEIGHT = Config.getDouble("swerve_height");
 		RADIUS = Math.sqrt(SWERVE_WIDTH * SWERVE_WIDTH + SWERVE_HEIGHT * SWERVE_HEIGHT) / 2;
 		WHEEL_ANGLE = Math.atan2(SWERVE_WIDTH, SWERVE_HEIGHT);
+	}
+
+	public void run() {
+
 	}
 
 	public void drive(double vx, double vy, double w) {
