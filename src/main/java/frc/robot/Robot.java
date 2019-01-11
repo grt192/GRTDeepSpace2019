@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
+import frc.input.Input;
 import frc.modes.Mode;
 import frc.swerve.Swerve;
 
@@ -29,12 +30,15 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         Config.start();
+        Input.GUI.start();
         SWERVE = new Swerve();
         currentMode = DEFAULT_MODE;
     }
 
     private void loop() {
         // handle mode switching
+        String line = Input.GUI.readLine();
+        System.out.println(line);
         if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
         }

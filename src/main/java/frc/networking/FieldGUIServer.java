@@ -8,6 +8,7 @@
 package frc.networking;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,7 +21,8 @@ public class FieldGUIServer extends Thread {
 
     private ServerSocket server;
     private Socket client;
-    private Scanner input;
+    private InputStream input;
+    private Scanner scanner;
     private PrintWriter output;
 
     public FieldGUIServer() {
@@ -35,22 +37,27 @@ public class FieldGUIServer extends Thread {
 
     @Override
     public void run() {
-        while (client == null) {
-            try {
-                client = server.accept();
-                input = new Scanner(client.getInputStream());
-                output = new PrintWriter(client.getOutputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Failed to connect. Try again.");
-            }
+        try {
+            client = server.accept();
+            input = client.getInputStream();
+            scanner = new Scanner(input);
+            output = new PrintWriter(client.getOutputStream());
+            System.out.println("Successfully connected");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to connect. Try again.");
         }
     }
 
     public String readLine() {
-        if (input == null || !input.hasNextLine())
+        try {
+            if (scanner == null || input.available() == 0)
+                return "";
+        } catch (IOException e) {
+            e.printStackTrace();
             return "";
-        return input.nextLine();
+        }
+        return scanner.nextLine();
     }
 
     public void sendData(String data) {
