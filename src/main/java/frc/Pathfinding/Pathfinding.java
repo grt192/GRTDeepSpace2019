@@ -111,22 +111,22 @@ public class Pathfinding {
 
         // will change cost vals later //
 
-        N1.adjacencies = new Edge[] { new Edge(N2, 0), new Edge(N4, 0), new Edge(N5, 0) };
+        N1.adjacencies = new Edge[] { new Edge(N2, 2), new Edge(N4, 2), new Edge(N5, 3) };
 
-        N2.adjacencies = new Edge[] { new Edge(N1, 0), new Edge(N3, 0), new Edge(N4, 0), new Edge(N5, 0),
-                new Edge(N6, 0), new Edge(N7, 0) };
+        N2.adjacencies = new Edge[] { new Edge(N1, 2), new Edge(N3, 2), new Edge(N4, .5), new Edge(N5, .5),
+                new Edge(N6, 3), new Edge(N7, 3) };
 
-        N3.adjacencies = new Edge[] { new Edge(N2, 0), new Edge(N4, 0), new Edge(N5, 0) };
+        N3.adjacencies = new Edge[] { new Edge(N2, 2), new Edge(N4, 3), new Edge(N5, 2) };
 
-        N4.adjacencies = new Edge[] { new Edge(N1, 0), new Edge(N2, 0), new Edge(N3, 0), new Edge(N5, 0),
-                new Edge(N6, 0) };
+        N4.adjacencies = new Edge[] { new Edge(N1, 2), new Edge(N2, .5), new Edge(N3, 3), new Edge(N5, 1),
+                new Edge(N6, 1) };
 
-        N5.adjacencies = new Edge[] { new Edge(N1, 0), new Edge(N2, 0), new Edge(N3, 0), new Edge(N4, 0),
-                new Edge(N6, 0) };
+        N5.adjacencies = new Edge[] { new Edge(N1, 3), new Edge(N2, .5), new Edge(N3, 2), new Edge(N4, 1),
+                new Edge(N7, 1) };
 
-        N6.adjacencies = new Edge[] { new Edge(N2, 0), new Edge(N4, 0) };
+        N6.adjacencies = new Edge[] { new Edge(N2, 3), new Edge(N4, 1) };
 
-        N7.adjacencies = new Edge[] { new Edge(N2, 0), new Edge(N5, 0) };
+        N7.adjacencies = new Edge[] { new Edge(N2, 3), new Edge(N5, 1) };
 
         Node start = closestNode(x, y, nodeArr);
         Node end = N2;
