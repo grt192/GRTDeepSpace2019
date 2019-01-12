@@ -76,9 +76,20 @@ public class Pathfinding {
         return path;
     }
 
-    public static void closestNode(double x, double y) {
+    public static Node closestNode(double x, double y, Node[] nodeArr) {
 
-        // write this later //
+        Node fnode = new Node("blank", 0, 0);
+
+        for (Node n : nodeArr) {
+
+            if (n.hValue(x, y, n.xycoord) < fnode.hValue(x, y, fnode.xycoord)) {
+
+                fnode = n;
+
+            }
+
+        }
+        return fnode;
 
     }
 
@@ -95,6 +106,8 @@ public class Pathfinding {
         Node N5 = new Node("N5", 0, 0);
         Node N6 = new Node("N6", 0, 0);
         Node N7 = new Node("N7", 0, 0);
+
+        Node[] nodeArr = new Node[] { N1, N2, N3, N4, N5, N6, N7 };
 
         // will change cost vals later //
 
@@ -115,7 +128,7 @@ public class Pathfinding {
 
         N7.adjacencies = new Edge[] { new Edge(N2, 0), new Edge(N5, 0) };
 
-        Node start = N1;
+        Node start = closestNode(x, y, nodeArr);
         Node end = N2;
 
         Search(start, end, x, y);
