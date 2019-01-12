@@ -1,4 +1,4 @@
-package frc.Pathfinding;
+package frc.pathfinding;
 
 class Edge {
     public final double cost;

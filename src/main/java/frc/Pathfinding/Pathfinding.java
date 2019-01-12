@@ -1,4 +1,4 @@
-package frc.Pathfinding;
+package frc.pathfinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
