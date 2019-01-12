@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 
 public class Pathfinding {
 
-    public static void Search(Node start, Node end) {
+    public static void Search(Node start, Node end, double x, double y) {
 
         HashSet<Node> closed = new HashSet<Node>();
         PriorityQueue<Node> open = new PriorityQueue<Node>();
@@ -33,7 +33,7 @@ public class Pathfinding {
                 Node child = e.target;
                 double cost = e.cost;
                 double temp_g_scores = current.g_scores + cost;
-                double temp_f_scores = temp_g_scores + child.h_scores;
+                double temp_f_scores = temp_g_scores + child.hValue(x, y, child.xycoord);
 
                 if ((closed.contains(child)) && (temp_f_scores >= child.f_scores)) {
                     continue;
@@ -76,23 +76,25 @@ public class Pathfinding {
         return path;
     }
 
-    public static void closestNode(int x, int y) {
+    public static void closestNode(double x, double y) {
 
-        // will write later //
+        // write this later //
 
     }
 
     public static void main(String[] args) {
 
-        // will write method for changing h vals later //
+        // this is the current xy position //
+        double x = 0;
+        double y = 0;
 
-        Node N1 = new Node("N1", 0);
-        Node N2 = new Node("N2", 0);
-        Node N3 = new Node("N3", 0);
-        Node N4 = new Node("N4", 0);
-        Node N5 = new Node("N5", 0);
-        Node N6 = new Node("N6", 0);
-        Node N7 = new Node("N7", 0);
+        Node N1 = new Node("N1", 0, 0);
+        Node N2 = new Node("N2", 0, 0);
+        Node N3 = new Node("N3", 0, 0);
+        Node N4 = new Node("N4", 0, 0);
+        Node N5 = new Node("N5", 0, 0);
+        Node N6 = new Node("N6", 0, 0);
+        Node N7 = new Node("N7", 0, 0);
 
         // will change cost vals later //
 
@@ -116,7 +118,7 @@ public class Pathfinding {
         Node start = N1;
         Node end = N2;
 
-        Search(start, end);
+        Search(start, end, x, y);
     }
 
 }
