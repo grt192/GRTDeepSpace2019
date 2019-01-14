@@ -4,6 +4,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PWM;
 import frc.config.Config;
@@ -18,12 +21,11 @@ class Wheel {
 	private static final double TWO_PI = Math.PI * 2;
 
 	private static final double kP = 9000.0;
-	private static final double kI = 0.0;
 	private static final double kD = 0.0;
-	private static final double maxIAccum = 0.0;
 
 	private TalonSRX rotateMotor;
-	private PWM neo;
+	private CANSparkMax driveMotor;
+	private CANEncoder driveEncoder;
 
 	private String name;
 
@@ -33,8 +35,8 @@ class Wheel {
 		this.name = name;
 
 		rotateMotor = new TalonSRX(Config.getInt(name + "_rotate"));
-		neo = new PWM(Config.getInt(name + "_drive"));
-		neo.setBounds(2, 1.525, 1.5, 1.475, 1);
+		driveMotor = new CANSparkMax(Config.getInt(name + "_drive"), MotorType.kBrushless);
+		driveEncoder = driveMotor.getEncoder();
 		TICKS_PER_ROTATION = Config.getDouble("ticks_per_rotation");
 		OFFSET = Config.getInt(name + "_offset");
 		DRIVE_TICKS_TO_METERS = Config.getDouble("drive_encoder_scale");
@@ -54,7 +56,7 @@ class Wheel {
 
 	public void disable() {
 		rotateMotor.set(ControlMode.Disabled, 0);
-		neo.setDisabled();
+		driveMotor.disable();
 	}
 
 	public void set(double radians, double speed) {
@@ -83,12 +85,11 @@ class Wheel {
 		}
 		speed *= (reversed ? -1 : 1);// / (DRIVE_TICKS_TO_METERS * 10);
 		// driveMotor.set(ControlMode.PercentOutput, speed);
-		neo.setSpeed(speed);
+		driveMotor.set(speed);
 	}
 
 	public double getDriveSpeed() {
-		return 0; // driveMotor.getSelectedSensorVelocity(0) * DRIVE_TICKS_TO_METERS * 10 *
-					// (reversed ? -1 : 1);
+		return driveEncoder.getVelocity() * DRIVE_TICKS_TO_METERS * 10 * (reversed ? -1 : 1);
 	}
 
 	public double getCurrentPosition() {
@@ -109,10 +110,10 @@ class Wheel {
 		rotateMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10, 0);
 
 		rotateMotor.config_kP(0, kP / TICKS_PER_ROTATION, 0);
-		rotateMotor.config_kI(0, kI / TICKS_PER_ROTATION, 0);
+		rotateMotor.config_kI(0, 0, 0);
 		rotateMotor.config_kD(0, kD / TICKS_PER_ROTATION, 0);
 		rotateMotor.config_kF(0, 0, 0);
-		rotateMotor.configMaxIntegralAccumulator(0, maxIAccum, 0);
+		rotateMotor.configMaxIntegralAccumulator(0, 0, 0);
 		rotateMotor.configAllowableClosedloopError(0, 0, 0);
 	}
 
