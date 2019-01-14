@@ -22,6 +22,7 @@ public class Swerve implements Runnable {
 	private Wheel[] wheels;
 
 	private volatile double userVX, userVY, userW, angle;
+	private volatile SwerveData swerveData;
 
 	public Swerve() {
 		this.gyro = Robot.GYRO;
@@ -38,19 +39,28 @@ public class Swerve implements Runnable {
 		kD = Config.getDouble("swerve_kd");
 		RADIUS = Math.sqrt(SWERVE_WIDTH * SWERVE_WIDTH + SWERVE_HEIGHT * SWERVE_HEIGHT) / 2;
 		WHEEL_ANGLE = Math.atan2(SWERVE_WIDTH, SWERVE_HEIGHT);
+		calcSwerveData();
+		notifier = new Notifier(this);
+		notifier.startPeriodic(0.02);
 	}
 
 	public void run() {
 		double w = userW;
-		if (w == 0) {
-			double currentAngle = GRTUtil.positiveMod(Math.toRadians(gyro.getAngle()), TWO_PI);
-			double targetAngle = GRTUtil.positiveMod(angle, TWO_PI);
-			double error = targetAngle - currentAngle;
-			if (error > Math.PI) {
-				error -= Math.PI;
-			}
+		if (w == 0)
+			w = calcPID();
+		changeMotors(userVX, userVY, w);
+		calcSwerveData();
+	}
 
+	private double calcPID() {
+		double currentAngle = GRTUtil.positiveMod(Math.toRadians(gyro.getAngle()), TWO_PI);
+		double targetAngle = GRTUtil.positiveMod(angle, TWO_PI);
+		double error = targetAngle - currentAngle;
+		if (Math.abs(error) > Math.PI) {
+			error -= Math.signum(error) * Math.PI;
 		}
+		double w = error * kP - Math.toRadians(gyro.getRate()) * kD;
+		return w;
 	}
 
 	public void drive(double vx, double vy, double w) {
@@ -81,6 +91,10 @@ public class Swerve implements Runnable {
 	}
 
 	public SwerveData getSwerveData() {
+		return swerveData;
+	}
+
+	private void calcSwerveData() {
 		double gyroAngle = Math.toRadians(gyro.getAngle());
 		double gyroRate = Math.toRadians(gyro.getRate());
 		double vx = 0;
@@ -98,7 +112,7 @@ public class Swerve implements Runnable {
 		w /= 4.0;
 		vx /= 4.0;
 		vy /= 4.0;
-		return new SwerveData(gyroAngle, gyroRate, vx, vy, w);
+		swerveData = new SwerveData(gyroAngle, gyroRate, vx, vy, w);
 	}
 
 	private double getRelativeWheelAngle(int i) {
