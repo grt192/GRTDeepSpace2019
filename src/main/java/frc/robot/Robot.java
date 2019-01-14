@@ -12,6 +12,7 @@ import frc.config.Config;
 import frc.modes.Mode;
 import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
+import frc.swerve.NavXGyro;
 import frc.swerve.Swerve;
 
 /**
@@ -27,11 +28,13 @@ public class Robot extends TimedRobot {
     private Mode currentMode;
 
     public static Swerve SWERVE;
+    public static NavXGyro GYRO;
     public static PositionTracker POS_TRACKER;
 
     @Override
     public void robotInit() {
         Config.start();
+        GYRO = new NavXGyro();
         SWERVE = new Swerve();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(0, 0);
