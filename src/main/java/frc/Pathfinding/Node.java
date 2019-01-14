@@ -1,43 +1,45 @@
 package frc.pathfinding;
 
-class Node {
+import java.util.HashSet;
 
-    public final String value;
-    public double g_scores = 0;
-    public double h_scores;
-    public double f_scores = 0;
-    public Edge[] adjacencies;
+class Node implements Comparable<Node> {
+
+    public double g;
+    public double h;
+    public double f;
+    public final HashSet<Node> neighbors;
     public Node parent;
-    public double[] xycoord;
+    public final double x, y;
 
-    public double hVal;
-
-    public Node(String val, double x, double y) {
-        value = val;
-        xycoord = new double[] { x, y };
+    public Node(double x, double y) {
+        this.x = x;
+        this.y = y;
+        neighbors = new HashSet<>();
     }
 
-    public String toString() {
-        return value;
+    public void update(Node node) {
+        double newG = node.g + distance(node);
+        if (newG < g) {
+            parent = node;
+            g = newG;
+            f = g + h;
+        }
     }
 
-    public double[] getCoord() {
-        return xycoord;
-
+    public void calcH(Node end) {
+        h = distance(end);
+        f = g + h;
     }
 
-    public double hValue(double x, double y, double[] coord) {
+    private double distance(Node n) {
+        double dx = x - n.x;
+        double dy = y - n.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
 
-        double NX = coord[0];
-        double NY = coord[1];
-
-        double ac = Math.abs(NY - y);
-        double cb = Math.abs(NX - x);
-
-        hVal = Math.hypot(cb, ac);
-
-        return hVal;
-
+    @Override
+    public int compareTo(Node other) {
+        return (int) Math.signum(f - other.f);
     }
 
 }

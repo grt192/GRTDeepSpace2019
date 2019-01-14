@@ -17,56 +17,43 @@ public class Pathfinding {
     private final double INCHES_TO_FEET = 1 / 12;
     private final double RADIUS = 22 * INCHES_TO_FEET;
 
-    public static void Search(Node start, Node end, double x, double y) {
+    private Rectangle2D[] obstacles;
+    private HashSet<Node> nodes;
+    private Node targetNode;
 
+    public Pathfinding() {
+        buildMap();
+        initNodes();
+        targetNode = new Node(0, 0);// to avoid null checks
+    }
+
+    public Node search(double x, double y) {
         HashSet<Node> closed = new HashSet<Node>();
         PriorityQueue<Node> open = new PriorityQueue<Node>();
+        cleanTree();
+        Node startNode = new Node(x, y);
+        open.add(startNode);
 
-        boolean finished = false;
-
-        while (!open.isEmpty() && !finished) {
-
+        while (!open.isEmpty()) {
             Node current = open.poll();
             closed.add(current);
 
-            if (current.value.equals(end.value)) {
-
-                finished = true;
-                List<Node> path = pathR(end);
-                System.out.println(path);
-
+            if (current == targetNode) {
+                Node next = current;
+                while (next.parent != startNode) {
+                    next = next.parent;
+                }
+                return next;
             }
-
-            for (Edge e : current.adjacencies) {
-                Node child = e.target;
-                double cost = e.cost;
-                double temp_g_scores = current.g_scores + cost;
-                double temp_f_scores = temp_g_scores + child.hValue(x, y, child.xycoord);
-
-                if ((closed.contains(child)) && (temp_f_scores >= child.f_scores)) {
+            for (Node node : current.neighbors) {
+                if (closed.contains(node))
                     continue;
-
-                }
-
-                else if ((!open.contains(child)) || (temp_f_scores < child.f_scores)) {
-
-                    child.parent = current;
-                    child.g_scores = temp_g_scores;
-                    child.f_scores = temp_f_scores;
-
-                    if (open.contains(child)) {
-
-                        open.remove(child);
-
-                    }
-
-                    open.add(child);
-
-                }
+                if (!open.contains(node))
+                    open.add(node);
+                node.update(current);
             }
-
         }
-
+        return null;
     }
 
     public static List<Node> pathR(Node end) {
@@ -84,34 +71,14 @@ public class Pathfinding {
         return path;
     }
 
-    public Node closestNode(double x, double y, Node[] nodeArr) {
-
-        Node fnode = new Node("blank", 0, 0);
-
-        for (Node n : nodeArr) {
-
-            if (lineOfSight(x, y, n.getCoord())) {
-
-                if (n.hValue(x, y, n.xycoord) < fnode.hValue(x, y, fnode.xycoord)) {
-
-                    fnode = n;
-
-                }
-
-            }
-
-        }
-        return fnode;
-    }
-
     // creds: michael //
-    public boolean lineOfSight(double x, double y, double[] coordArr) {
+    public boolean lineOfSight(Node n1, Node n2) {
 
-        double x1 = x;
-        double y1 = y;
+        double x1 = n1.x;
+        double y1 = n1.y;
 
-        double x2 = coordArr[0];
-        double y2 = coordArr[1];
+        double x2 = n2.x;
+        double y2 = n2.y;
 
         double d_sq = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
         if (d_sq <= 0)
@@ -146,6 +113,61 @@ public class Pathfinding {
         Line2D.Double lowerLine = new Line2D.Double(res[1][0], res[1][1], res[1][2], res[1][3]);
         Ellipse2D.Double endCircle = new Ellipse2D.Double(x2, y2, RADIUS, RADIUS);
 
+        for (int i = 0; i < obstacles.length; i++) {
+            if (upperLine.intersects(obstacles[i])) {
+                return false;
+            }
+            if (lowerLine.intersects(obstacles[i])) {
+                return false;
+            }
+            if (endCircle.intersects(obstacles[i])) {
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    private void initNodes() {
+        nodes = new HashSet<>();
+        addNode(new Node(0, 0));
+        // etc, etc
+    }
+
+    public void setTargetNode(double x, double y) {
+        removeNode(targetNode);
+        targetNode = new Node(x, y);
+        addNode(targetNode);
+        for (Node node : nodes) {
+            node.calcH(targetNode);
+        }
+    }
+
+    private void cleanTree() {
+        for (Node node : nodes) {
+            node.g = Double.POSITIVE_INFINITY;
+        }
+    }
+
+    private void addNode(Node n) {
+        for (Node node : nodes) {
+            if (lineOfSight(n, node)) {
+                node.neighbors.add(n);
+                n.neighbors.add(node);
+            }
+        }
+        nodes.add(n);
+    }
+
+    private void removeNode(Node n) {
+        nodes.remove(n);
+        for (Node node : nodes) {
+            node.neighbors.remove(n);
+        }
+    }
+
+    private void buildMap() {
         Point2D.Double cargoBayUL = new Point2D.Double(36 * FEET_TO_METERS, 10 * FEET_TO_METERS);
         Point2D.Double cargoBayUR = new Point2D.Double(36 * FEET_TO_METERS, 17 * FEET_TO_METERS);
         Point2D.Double cargoBayBL = new Point2D.Double(18 * FEET_TO_METERS, 10 * FEET_TO_METERS);
@@ -198,7 +220,7 @@ public class Pathfinding {
         Rectangle2D.Double farHabZone = new Rectangle2D.Double(farHabZoneUL.getX(), farHabZoneUR.getY(),
                 farHabZoneBR.getY() - farHabZoneBL.getY(), farHabZoneUL.getX() - farHabZoneBL.getX());
 
-        Rectangle2D.Double[] obstacles = new Rectangle2D.Double[7];
+        obstacles = new Rectangle2D.Double[7];
         obstacles[0] = cargoBay;
         obstacles[1] = leftFrontRocket;
         obstacles[2] = leftBackRocket;
@@ -206,63 +228,53 @@ public class Pathfinding {
         obstacles[4] = rightBackRocket;
         obstacles[5] = closeHabZone;
         obstacles[6] = farHabZone;
-
-        for (int i = 0; i < obstacles.length; i++) {
-            if (upperLine.intersects(obstacles[i])) {
-                return false;
-            }
-            if (lowerLine.intersects(obstacles[i])) {
-                return false;
-            }
-            if (endCircle.intersects(obstacles[i])) {
-                return false;
-            }
-
-        }
-
-        return true;
     }
 
-    public static void main(String[] args) {
+    // public static void main(String[] args) {
 
-        // this is the current xy position //
-        double x = 0;
-        double y = 0;
+    // // this is the current xy position //
+    // double x = 0;
+    // double y = 0;
 
-        Node N1 = new Node("N1", 0, 0);
-        Node N2 = new Node("N2", 0, 0);
-        Node N3 = new Node("N3", 0, 0);
-        Node N4 = new Node("N4", 0, 0);
-        Node N5 = new Node("N5", 0, 0);
-        Node N6 = new Node("N6", 0, 0);
-        Node N7 = new Node("N7", 0, 0);
+    // Node N1 = new Node("N1", 0, 0);
+    // Node N2 = new Node("N2", 0, 0);
+    // Node N3 = new Node("N3", 0, 0);
+    // Node N4 = new Node("N4", 0, 0);
+    // Node N5 = new Node("N5", 0, 0);
+    // Node N6 = new Node("N6", 0, 0);
+    // Node N7 = new Node("N7", 0, 0);
 
-        Node[] nodeArr = new Node[] { N1, N2, N3, N4, N5, N6, N7 };
+    // Node[] nodeArr = new Node[] { N1, N2, N3, N4, N5, N6, N7 };
 
-        // will change cost vals later //
+    // // will change cost vals later //
 
-        N1.adjacencies = new Edge[] { new Edge(N2, 2), new Edge(N4, 2), new Edge(N5, 3) };
+    // N1.adjacencies = new Edge[] { new Edge(N2, 2), new Edge(N4, 2), new Edge(N5,
+    // 3) };
 
-        N2.adjacencies = new Edge[] { new Edge(N1, 2), new Edge(N3, 2), new Edge(N4, .5), new Edge(N5, .5),
-                new Edge(N6, 3), new Edge(N7, 3) };
+    // N2.adjacencies = new Edge[] { new Edge(N1, 2), new Edge(N3, 2), new Edge(N4,
+    // .5), new Edge(N5, .5),
+    // new Edge(N6, 3), new Edge(N7, 3) };
 
-        N3.adjacencies = new Edge[] { new Edge(N2, 2), new Edge(N4, 3), new Edge(N5, 2) };
+    // N3.adjacencies = new Edge[] { new Edge(N2, 2), new Edge(N4, 3), new Edge(N5,
+    // 2) };
 
-        N4.adjacencies = new Edge[] { new Edge(N1, 2), new Edge(N2, .5), new Edge(N3, 3), new Edge(N5, 1),
-                new Edge(N6, 1) };
+    // N4.adjacencies = new Edge[] { new Edge(N1, 2), new Edge(N2, .5), new Edge(N3,
+    // 3), new Edge(N5, 1),
+    // new Edge(N6, 1) };
 
-        N5.adjacencies = new Edge[] { new Edge(N1, 3), new Edge(N2, .5), new Edge(N3, 2), new Edge(N4, 1),
-                new Edge(N7, 1) };
+    // N5.adjacencies = new Edge[] { new Edge(N1, 3), new Edge(N2, .5), new Edge(N3,
+    // 2), new Edge(N4, 1),
+    // new Edge(N7, 1) };
 
-        N6.adjacencies = new Edge[] { new Edge(N2, 3), new Edge(N4, 1) };
+    // N6.adjacencies = new Edge[] { new Edge(N2, 3), new Edge(N4, 1) };
 
-        N7.adjacencies = new Edge[] { new Edge(N2, 3), new Edge(N5, 1) };
+    // N7.adjacencies = new Edge[] { new Edge(N2, 3), new Edge(N5, 1) };
 
-        Node start = N1;
-        // get from GUI //
-        Node end = N2;
+    // Node start = N1;
+    // // get from GUI //
+    // Node end = N2;
 
-        Search(start, end, x, y);
-    }
+    // Search(start, end, x, y);
+    // }
 
 }
