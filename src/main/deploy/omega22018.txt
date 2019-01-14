@@ -11,16 +11,17 @@ swerve_inverted=true
 # Offsets are inverted
 fl_rotate=1
 fl_drive=2
-fl_offset=142
+fl_offset=150
 fr_rotate=15
 fr_drive=16
-fr_offset=67
+fr_offset=160
 bl_rotate=3
 bl_drive=4
-bl_offset=224
+bl_offset=225
 br_rotate=13
 br_drive=14
-br_offset=-597
+br_offset=460
+
 
 
 ticks_per_rotation=1024

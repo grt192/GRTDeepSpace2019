@@ -4,7 +4,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.PWM;
 import frc.config.Config;
 import frc.util.GRTUtil;
 
@@ -17,12 +21,11 @@ class Wheel {
 	private static final double TWO_PI = Math.PI * 2;
 
 	private static final double kP = 9000.0;
-	private static final double kI = 0.0;
 	private static final double kD = 0.0;
-	private static final double maxIAccum = 0.0;
 
 	private TalonSRX rotateMotor;
-	private TalonSRX driveMotor;
+	private CANSparkMax driveMotor;
+	private CANEncoder driveEncoder;
 
 	private String name;
 
@@ -32,13 +35,13 @@ class Wheel {
 		this.name = name;
 
 		rotateMotor = new TalonSRX(Config.getInt(name + "_rotate"));
-		driveMotor = new TalonSRX(Config.getInt(name + "_drive"));
+		driveMotor = new CANSparkMax(Config.getInt(name + "_drive"), MotorType.kBrushless);
+		driveEncoder = driveMotor.getEncoder();
 		TICKS_PER_ROTATION = Config.getDouble("ticks_per_rotation");
 		OFFSET = Config.getInt(name + "_offset");
 		DRIVE_TICKS_TO_METERS = Config.getDouble("drive_encoder_scale");
 
 		configRotateMotor();
-		configDriveMotor();
 	}
 
 	public void enable() {
@@ -53,7 +56,7 @@ class Wheel {
 
 	public void disable() {
 		rotateMotor.set(ControlMode.Disabled, 0);
-		driveMotor.set(ControlMode.Disabled, 0);
+		driveMotor.disable();
 	}
 
 	public void set(double radians, double speed) {
@@ -81,11 +84,12 @@ class Wheel {
 			rotateMotor.set(ControlMode.Position, encoderPos);
 		}
 		speed *= (reversed ? -1 : 1);// / (DRIVE_TICKS_TO_METERS * 10);
-		driveMotor.set(ControlMode.PercentOutput, speed);
+		// driveMotor.set(ControlMode.PercentOutput, speed);
+		driveMotor.set(speed);
 	}
 
 	public double getDriveSpeed() {
-		return driveMotor.getSelectedSensorVelocity(0) * DRIVE_TICKS_TO_METERS * 10 * (reversed ? -1 : 1);
+		return driveEncoder.getVelocity() * DRIVE_TICKS_TO_METERS * 10 * (reversed ? -1 : 1);
 	}
 
 	public double getCurrentPosition() {
@@ -106,29 +110,11 @@ class Wheel {
 		rotateMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10, 0);
 
 		rotateMotor.config_kP(0, kP / TICKS_PER_ROTATION, 0);
-		rotateMotor.config_kI(0, kI / TICKS_PER_ROTATION, 0);
+		rotateMotor.config_kI(0, 0, 0);
 		rotateMotor.config_kD(0, kD / TICKS_PER_ROTATION, 0);
 		rotateMotor.config_kF(0, 0, 0);
-		rotateMotor.configMaxIntegralAccumulator(0, maxIAccum, 0);
+		rotateMotor.configMaxIntegralAccumulator(0, 0, 0);
 		rotateMotor.configAllowableClosedloopError(0, 0, 0);
-	}
-
-	private void configDriveMotor() {
-		Config.defaultConfigTalon(driveMotor);
-
-		driveMotor.configContinuousCurrentLimit(40, 0);
-		driveMotor.configPeakCurrentDuration(0, 0);
-		driveMotor.enableCurrentLimit(true);
-		driveMotor.configOpenloopRamp(0, 0);
-
-		driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-		driveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10, 0);
-		driveMotor.getSensorCollection().setQuadraturePosition(0, 0);
-
-		driveMotor.config_kP(0, Config.getDouble("velocity_p") * DRIVE_TICKS_TO_METERS * 10 * 1023, 0);
-		driveMotor.config_kI(0, 0, 0);
-		driveMotor.config_kD(0, 0, 0);
-		driveMotor.config_kF(0, Config.getDouble("velocity_f") * DRIVE_TICKS_TO_METERS * 10 * 1023, 0);
 	}
 
 }
