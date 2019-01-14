@@ -56,21 +56,6 @@ public class Pathfinding {
         return null;
     }
 
-    public static List<Node> pathR(Node end) {
-
-        List<Node> path = new ArrayList<Node>();
-
-        for (Node node = end; node != null; node = node.parent) {
-
-            path.add(node);
-
-        }
-
-        Collections.reverse(path);
-
-        return path;
-    }
-
     // creds: michael //
     public boolean lineOfSight(Node n1, Node n2) {
 
