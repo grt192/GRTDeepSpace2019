@@ -1,15 +1,11 @@
 package frc.pathfinding;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.PriorityQueue;
-
-import java.awt.geom.Point2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.HashSet;
+import java.util.PriorityQueue;
 
 public class Pathfinding {
 
