@@ -13,5 +13,6 @@
   "wpilib.online": true,
   "java.format.settings.url": "eclipse-formatter.xml",
   "java.completion.guessMethodArguments": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "java.saveActions.organizeImports": true
 }
