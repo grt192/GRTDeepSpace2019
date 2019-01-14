@@ -50,6 +50,7 @@ public class Swerve implements Runnable {
 			w = calcPID();
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
+		Robot.POS_TRACKER.update();
 	}
 
 	private double calcPID() {

@@ -35,14 +35,13 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         Config.start();
         GYRO = new NavXGyro();
-        SWERVE = new Swerve();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(0, 0);
+        SWERVE = new Swerve();
         currentMode = DEFAULT_MODE;
     }
 
     private void loop() {
-        POS_TRACKER.update();
         // handle mode switching
         if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
