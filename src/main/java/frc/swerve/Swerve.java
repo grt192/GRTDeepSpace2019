@@ -58,7 +58,7 @@ public class Swerve implements Runnable {
 		double targetAngle = GRTUtil.positiveMod(angle, TWO_PI);
 		double error = targetAngle - currentAngle;
 		if (Math.abs(error) > Math.PI) {
-			error -= Math.signum(error) * Math.PI;
+			error -= Math.signum(error) * TWO_PI;
 		}
 		double w = error * kP - Math.toRadians(gyro.getRate()) * kD;
 		return w;
@@ -69,12 +69,12 @@ public class Swerve implements Runnable {
 		userVY = vy;
 		userW = w;
 		if (w != 0)
-			angle = gyro.getAngle();
+			angle = Math.toRadians(gyro.getAngle());
 	}
 
 	public void setAngle(double angle) {
 		userW = 0;
-		this.angle = angle;
+		this.angle = Math.toRadians(angle);
 	}
 
 	public void changeMotors(double vx, double vy, double w) {

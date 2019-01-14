@@ -6,6 +6,8 @@ swerve_height=0.5334
 
 
 swerve_inverted=true
+swerve_kp=0.1
+swerve_kd=0.0
 
 
 # Offsets are inverted
