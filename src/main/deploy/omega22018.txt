@@ -7,18 +7,20 @@ swerve_height=0.5334
 
 swerve_inverted=true
 
+
+# Offsets are inverted
 fl_rotate=1
 fl_drive=2
-fl_offset=220
+fl_offset=142
 fr_rotate=15
 fr_drive=16
-fr_offset=-129
-bl_rotate=6
-bl_drive=7
-bl_offset=93
-br_rotate=10
-br_drive=11
-br_offset=548
+fr_offset=67
+bl_rotate=3
+bl_drive=4
+bl_offset=224
+br_rotate=13
+br_drive=14
+br_offset=-597
 
 
 ticks_per_rotation=1024

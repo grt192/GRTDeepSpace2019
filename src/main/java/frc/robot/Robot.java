@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.modes.Mode;
+import frc.positiontracking.BasicPositionTracker;
+import frc.positiontracking.PositionTracker;
 import frc.swerve.Swerve;
 
 /**
@@ -25,15 +27,19 @@ public class Robot extends TimedRobot {
     private Mode currentMode;
 
     public static Swerve SWERVE;
+    public static PositionTracker POS_TRACKER;
 
     @Override
     public void robotInit() {
         Config.start();
         SWERVE = new Swerve();
+        POS_TRACKER = new BasicPositionTracker();
+        POS_TRACKER.set(0, 0);
         currentMode = DEFAULT_MODE;
     }
 
     private void loop() {
+        POS_TRACKER.update();
         // handle mode switching
         if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
