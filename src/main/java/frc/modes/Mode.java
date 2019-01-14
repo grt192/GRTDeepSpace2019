@@ -10,6 +10,7 @@ package frc.modes;
 public abstract class Mode {
 
     public static final Mode DRIVER_CONTROL = new DriverControl();
+    public static final Mode PATHFINDING_CONTROL = new PathfindingControl();
 
     public void enter() {
     }

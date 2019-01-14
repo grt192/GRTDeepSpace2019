@@ -7,41 +7,27 @@
 
 package frc.modes;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import frc.input.Input;
-import frc.input.JoystickProfile;
+import frc.pathfinding.Pathfinding;
 import frc.robot.Robot;
 
 /**
  * Add your docs here.
  */
-class DriverControl extends Mode {
+class PathfindingControl extends Mode {
+
+    public PathfindingControl() {
+        double x;
+        double y;
+    }
+
+    Pathfinding pathfinding = new Pathfinding();
 
     @Override
     public boolean loop() {
-        driveSwerve();
+        double xPos = Robot.POS_TRACKER.getX();
+        double yPos = Robot.POS_TRACKER.getY();
+        pathfinding.search(xPos, yPos);
         return true;
     }
-
-    private void driveSwerve() {
-        
-        Pathfinding.setTargetNode()
-        /*
-        () ()
-        ( . .)
-        c(")(")
-        */
-        
-        double rotate = 0;
-        
-            // } else {
-            // double rx = -Input.XBOX.getY(Hand.kRight);
-            // double ry = Input.XBOX.getX(Hand.kRight);
-            // if (rx * rx + ry * ry > 0.7) {
-            // double theta = Math.atan2(ry, rx);
-            // Robot.SWERVE.setAngle(theta);
-            // }
-        }Robot.SWERVE.drive(x,y,rotate);
-}
 
 }
