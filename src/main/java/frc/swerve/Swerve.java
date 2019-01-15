@@ -51,6 +51,7 @@ public class Swerve implements Runnable {
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
 		Robot.POS_TRACKER.update();
+		System.out.println(Robot.POS_TRACKER.getX() + ", " + Robot.POS_TRACKER.getY());
 	}
 
 	private double calcPID() {

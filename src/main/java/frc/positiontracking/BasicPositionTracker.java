@@ -27,7 +27,7 @@ public class BasicPositionTracker implements PositionTracker {
     public void set(double x, double y) {
         this.x = x;
         this.y = y;
-        lastUpdate = System.nanoTime();
+        lastUpdate = System.currentTimeMillis();
     }
 
     @Override
@@ -43,8 +43,8 @@ public class BasicPositionTracker implements PositionTracker {
     @Override
     public void update() {
         SwerveData data = Robot.SWERVE.getSwerveData();
-        long temp = System.nanoTime();
-        double dt = (temp - lastUpdate) / 1000000;
+        long temp = System.currentTimeMillis();
+        double dt = (temp - lastUpdate) / 1000.0;
         x += data.encoderVX * dt;
         y += data.encoderVY * dt;
         lastUpdate = temp;
