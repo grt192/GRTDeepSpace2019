@@ -18,7 +18,8 @@ public class Pathfinding {
     private Node targetNode;
 
     public Pathfinding() {
-        buildMap();
+        // buildMap();
+        buildMapTest();
         initNodes();
         targetNode = new Node(0, 0);// to avoid null checks
     }
@@ -209,6 +210,14 @@ public class Pathfinding {
         obstacles[4] = rightBackRocket;
         obstacles[5] = closeHabZone;
         obstacles[6] = farHabZone;
+    }
+
+    private void buildMapTest() {
+        Rectangle2D.Double table = new Rectangle2D.Double(122 * INCHES_TO_FEET * FEET_TO_METERS,
+                82 * INCHES_TO_FEET * FEET_TO_METERS, 82 - 64, 122 - 41);
+        obstacles = new Rectangle2D.Double[1];
+
+        obstacles[0] = table;
     }
 
     // public static void main(String[] args) {
