@@ -51,26 +51,24 @@ public class Robot extends TimedRobot {
         String line = Input.GUI.readLine();
         while (line != "") {
             System.out.println(line);
-            String[] nums = line.split(" ");
-
-            double x = Double.parseDouble(nums[0]);
-            double y = Double.parseDouble(nums[1]);
-
-            PathfindingControl.PATHFINDING_CONTROL.setTarget(x, y);
-            changeMode(Mode.PATHFINDING_CONTROL);
+            String[] message = line.split(" ");
+            switch (message[0]) {
+            case "move":
+                double x = Double.parseDouble(message[1]);
+                double y = Double.parseDouble(message[2]);
+                PathfindingControl.PATHFINDING_CONTROL.setTarget(x, y);
+            case "resume":
+                changeMode(Mode.PATHFINDING_CONTROL);
+                break;
+            case "pause":
+                changeMode(DEFAULT_MODE);
+                break;
+            }
             line = Input.GUI.readLine();
         }
-
-        // if (line == "pause") {
-        // changeMode(DEFAULT_MODE);
-        // }
         if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
-            // || line == "pause"
         }
-        // else if (line == "resumed") {
-        // changeMode(Mode.PATHFINDING_CONTROL);
-        // }
 
     }
 
