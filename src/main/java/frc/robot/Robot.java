@@ -15,6 +15,7 @@ import frc.modes.PathfindingControl;
 import frc.pathfinding.Pathfinding;
 import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
+import frc.swerve.NavXGyro;
 import frc.swerve.Swerve;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
     private Mode currentMode;
 
     public static Swerve SWERVE;
+    public static NavXGyro GYRO;
     public static PositionTracker POS_TRACKER;
 
     @Override
@@ -38,14 +40,14 @@ public class Robot extends TimedRobot {
         Config.start();
         Input.GUI.start();
         SWERVE = new Swerve();
+        GYRO = new NavXGyro();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(0, 0);
+        SWERVE = new Swerve();
         currentMode = DEFAULT_MODE;
     }
 
     private void loop() {
-        POS_TRACKER.update();
-
         // handle mode switching
         String line = Input.GUI.readLine();
         String[] nums = line.split(",");
