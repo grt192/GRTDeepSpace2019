@@ -45,6 +45,9 @@ public class Robot extends TimedRobot {
         POS_TRACKER.update();
         // handle mode switching
         String line = Input.GUI.readLine();
+        if (line == "pause") {
+            changeMode(DEFAULT_MODE);
+        }
         System.out.println(line);
         if (!currentMode.loop()
                 || (Input.XBOX.getTriggerAxis(Hand.kLeft) + Input.XBOX.getTriggerAxis(Hand.kRight)) > 0.05) {
