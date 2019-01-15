@@ -95,18 +95,18 @@ public class Pathfinding {
         Line2D.Double lowerLine = new Line2D.Double(res[1][0], res[1][1], res[1][2], res[1][3]);
         Ellipse2D.Double endCircle = new Ellipse2D.Double(x2, y2, RADIUS, RADIUS);
 
-        for (int i = 0; i < obstacles.length; i++) {
-            if (upperLine.intersects(obstacles[i])) {
-                return false;
-            }
-            if (lowerLine.intersects(obstacles[i])) {
-                return false;
-            }
-            if (endCircle.intersects(obstacles[i])) {
-                return false;
-            }
+        // for (int i = 0; i < obstacles.length; i++) {
+        // if (upperLine.intersects(obstacles[i])) {
+        // return false;
+        // }
+        // if (lowerLine.intersects(obstacles[i])) {
+        // return false;
+        // }
+        // if (endCircle.intersects(obstacles[i])) {
+        // return false;
+        // }
 
-        }
+        // }
 
         return true;
     }
