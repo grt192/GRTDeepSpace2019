@@ -56,7 +56,6 @@ public class Robot extends TimedRobot {
             changeMode(DEFAULT_MODE);
         } else if (line == "resumed") {
             changeMode(PATHFINDING_MODE);
-
         }
     }
 
