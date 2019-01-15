@@ -14,6 +14,7 @@ import frc.modes.Mode;
 import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.swerve.Swerve;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,7 +46,8 @@ public class Robot extends TimedRobot {
         // handle mode switching
         String line = Input.GUI.readLine();
         System.out.println(line);
-        if (!currentMode.loop()) {
+        if (!currentMode.loop()
+                || (Input.XBOX.getTriggerAxis(Hand.kLeft) + Input.XBOX.getTriggerAxis(Hand.kRight)) > 0.05) {
             changeMode(DEFAULT_MODE);
         }
     }
@@ -67,4 +69,5 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         loop();
     }
+
 }
