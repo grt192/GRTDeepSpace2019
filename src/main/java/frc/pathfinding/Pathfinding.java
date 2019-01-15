@@ -10,8 +10,9 @@ import java.util.PriorityQueue;
 public class Pathfinding {
 
     private final double FEET_TO_METERS = .3048;
-    private final double INCHES_TO_FEET = 1 / 12;
-    private final double RADIUS = 22 * INCHES_TO_FEET;
+    private final double INCHES_TO_FEET = 1.0 / 12;
+    private final double INCHES_TO_METERS = INCHES_TO_FEET * FEET_TO_METERS;
+    private final double RADIUS = 22 * INCHES_TO_FEET * FEET_TO_METERS;
 
     private Rectangle2D[] obstacles;
     private HashSet<Node> nodes;
@@ -58,65 +59,7 @@ public class Pathfinding {
         return null;
     }
 
-    // creds: michael //
     public boolean lineOfSight(Node n1, Node n2) {
-
-        double x1 = n1.x;
-        double y1 = n1.y;
-
-        double x2 = n2.x;
-        double y2 = n2.y;
-
-        double d_sq = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
-        if (d_sq <= 0)
-            return true;
-
-        double d = Math.sqrt(d_sq);
-        double vx = (x2 - x1) / d;
-        double vy = (y2 - y1) / d;
-
-        double[][] res = new double[4][4];
-        int j = 0;
-
-        for (int sign1 = +1; sign1 >= -1; sign1 -= 2) {
-            double c = (RADIUS - sign1 * RADIUS) / d;
-            if (c * c > 1.0)
-                continue;
-            double h = Math.sqrt(Math.max(0.0, 1.0 - c * c));
-
-            for (int sign2 = +1; sign2 >= -1; sign2 -= 2) {
-                double nx = vx * c - sign2 * h * vy;
-                double ny = vy * c + sign2 * h * vx;
-
-                double[] a = res[j++];
-                a[0] = x1 + RADIUS * nx;
-                a[1] = y1 + RADIUS * ny;
-                a[2] = x2 + sign1 * RADIUS * nx;
-                a[3] = y2 + sign1 * RADIUS * ny;
-            }
-        }
-
-        Line2D.Double upperLine = new Line2D.Double(res[0][0], res[0][1], res[0][2], res[0][3]);
-        Line2D.Double lowerLine = new Line2D.Double(res[1][0], res[1][1], res[1][2], res[1][3]);
-        Ellipse2D.Double endCircle = new Ellipse2D.Double(x2, y2, RADIUS, RADIUS);
-
-        // for (int i = 0; i < obstacles.length; i++) {
-        // if (upperLine.intersects(obstacles[i])) {
-        // return false;
-        // }
-        // if (lowerLine.intersects(obstacles[i])) {
-        // return false;
-        // }
-        // if (endCircle.intersects(obstacles[i])) {
-        // return false;
-        // }
-
-        // }
-
-        return true;
-    }
-
-    public boolean newLineOfSight(Node n1, Node n2) {
         double x1 = n1.x;
         double y1 = n1.y;
 
@@ -156,7 +99,10 @@ public class Pathfinding {
 
     private void initNodes() {
         nodes = new HashSet<>();
-        addNode(new Node(0, 0));
+        addNode(new Node(3.7, 1.0));
+        addNode(new Node(3.7, 2.7));
+        addNode(new Node(0.48, 2.7));
+        addNode(new Node(0.48, 1.0));
         // etc, etc
     }
 
@@ -256,8 +202,9 @@ public class Pathfinding {
     }
 
     private void buildMapTest() {
-        Rectangle2D.Double table = new Rectangle2D.Double(122 * INCHES_TO_FEET * FEET_TO_METERS,
-                82 * INCHES_TO_FEET * FEET_TO_METERS, 82 - 64, 122 - 41);
+        Rectangle2D.Double table = new Rectangle2D.Double(41 * INCHES_TO_FEET * FEET_TO_METERS,
+                64 * INCHES_TO_FEET * FEET_TO_METERS, (122 - 41) * INCHES_TO_METERS, (82 - 64) * INCHES_TO_METERS);
+        System.out.println(table);
         obstacles = new Rectangle2D.Double[1];
 
         obstacles[0] = table;
