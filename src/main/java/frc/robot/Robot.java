@@ -39,10 +39,10 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         Config.start();
         Input.GUI.start();
-        SWERVE = new Swerve();
         GYRO = new NavXGyro();
+        SWERVE = new Swerve();
         POS_TRACKER = new BasicPositionTracker();
-        POS_TRACKER.set(0, 0);
+        POS_TRACKER.set(0.3556, 0.4064);
         SWERVE = new Swerve();
         currentMode = DEFAULT_MODE;
     }
@@ -50,19 +50,22 @@ public class Robot extends TimedRobot {
     private void loop() {
         // handle mode switching
         String line = Input.GUI.readLine();
-        String[] nums = line.split(",");
+        while (line != "") {
+            System.out.println(line);
+            String[] nums = line.split(" ");
 
-        double x = Double.parseDouble(nums[0]);
-        double y = Double.parseDouble(nums[1]);
+            double x = Double.parseDouble(nums[0]);
+            double y = Double.parseDouble(nums[1]);
 
-        PathfindingControl.PATHFINDING_CONTROL.setTarget(x, y);
-
-        if (line == "pause") {
-            changeMode(DEFAULT_MODE);
+            PathfindingControl.PATHFINDING_CONTROL.setTarget(x, y);
+            changeMode(Mode.PATHFINDING_CONTROL);
+            line = Input.GUI.readLine();
         }
-        System.out.println(line);
-        if (!currentMode.loop()
-                || (Input.XBOX.getTriggerAxis(Hand.kLeft) + Input.XBOX.getTriggerAxis(Hand.kRight)) > 0.05) {
+
+        // if (line == "pause") {
+        // changeMode(DEFAULT_MODE);
+        // }
+        if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
             // || line == "pause"
         }

@@ -70,7 +70,7 @@ public class Pathfinding {
         double vx = (x2 - x1) / d;
         double vy = (y2 - y1) / d;
 
-        double[][] res = new double[2][4];
+        double[][] res = new double[4][4];
         int j = 0;
 
         for (int sign1 = +1; sign1 >= -1; sign1 -= 2) {
