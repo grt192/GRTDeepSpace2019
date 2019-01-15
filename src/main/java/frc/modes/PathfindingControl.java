@@ -32,9 +32,9 @@ public class PathfindingControl extends Mode {
 
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
-        // Node endPos = pathfinding.search(xPos, yPos);
-        double x = this.x;// endPos.x;
-        double y = this.y;// endPos.y;
+        Node endPos = pathfinding.search(xPos, yPos);
+        double x = endPos.x;
+        double y = endPos.y;
         double d = 4 * Math.sqrt((x - xPos) * (x - xPos) + (y - yPos) * (y - yPos));
         double vx = (x - xPos) / d;
         double vy = (y - yPos) / d;
@@ -50,7 +50,7 @@ public class PathfindingControl extends Mode {
         System.out.println("Setting target to " + x + ", " + y);
         this.x = x;
         this.y = y;
-        // pathfinding.setTargetNode(x, y);
+        pathfinding.setTargetNode(x, y);
 
     }
 

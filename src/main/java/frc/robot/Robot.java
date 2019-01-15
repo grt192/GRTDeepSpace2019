@@ -43,7 +43,6 @@ public class Robot extends TimedRobot {
         SWERVE = new Swerve();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(0.3556, 0.4064);
-        SWERVE = new Swerve();
         currentMode = DEFAULT_MODE;
     }
 
