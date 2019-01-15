@@ -13,7 +13,7 @@ import frc.robot.Robot;
 /**
  * Add your docs here.
  */
-class PathfindingControl extends Mode {
+public class PathfindingControl extends Mode {
 
     private double x;
     private double y;

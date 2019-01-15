@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.input.Input;
 import frc.modes.Mode;
+import frc.modes.PathfindingControl;
+import frc.pathfinding.Pathfinding;
 import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.swerve.Swerve;
@@ -26,7 +28,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class Robot extends TimedRobot {
 
     private static final Mode DEFAULT_MODE = Mode.DRIVER_CONTROL;
-    private static final Mode PATHFINDING_MODE = Mode.PATHFINDING_CONTROL;
     private Mode currentMode;
 
     public static Swerve SWERVE;
@@ -44,19 +45,29 @@ public class Robot extends TimedRobot {
 
     private void loop() {
         POS_TRACKER.update();
+
         // handle mode switching
         String line = Input.GUI.readLine();
+        String[] nums = line.split(",");
+
+        double x = Double.parseDouble(nums[0]);
+        double y = Double.parseDouble(nums[1]);
+
+        PathfindingControl.PATHFINDING_CONTROL.setTarget(x, y);
+
         if (line == "pause") {
             changeMode(DEFAULT_MODE);
         }
         System.out.println(line);
         if (!currentMode.loop()
-                || (Input.XBOX.getTriggerAxis(Hand.kLeft) + Input.XBOX.getTriggerAxis(Hand.kRight)) > 0.05
-                || line == "pause") {
+                || (Input.XBOX.getTriggerAxis(Hand.kLeft) + Input.XBOX.getTriggerAxis(Hand.kRight)) > 0.05) {
             changeMode(DEFAULT_MODE);
-        } else if (line == "resumed") {
-            changeMode(PATHFINDING_MODE);
+            // || line == "pause"
         }
+        // else if (line == "resumed") {
+        // changeMode(Mode.PATHFINDING_CONTROL);
+        // }
+
     }
 
     private void changeMode(Mode newMode) {
