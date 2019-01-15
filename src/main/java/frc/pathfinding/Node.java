@@ -39,7 +39,9 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node other) {
-        return (int) Math.signum(f - other.f);
+        if (other.f < f)
+            return 1;
+        return -1;
     }
 
 }

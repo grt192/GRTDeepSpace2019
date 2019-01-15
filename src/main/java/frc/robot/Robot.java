@@ -12,12 +12,10 @@ import frc.config.Config;
 import frc.input.Input;
 import frc.modes.Mode;
 import frc.modes.PathfindingControl;
-import frc.pathfinding.Pathfinding;
 import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.swerve.NavXGyro;
 import frc.swerve.Swerve;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -69,7 +67,6 @@ public class Robot extends TimedRobot {
         if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
         }
-
     }
 
     private void changeMode(Mode newMode) {
