@@ -15,12 +15,13 @@ import frc.robot.Robot;
  */
 class PathfindingControl extends Mode {
 
-    public PathfindingControl() {
-        double x;
-        double y;
-    }
+    private double x;
+    private double y;
+    private Pathfinding pathfinding;
 
-    Pathfinding pathfinding = new Pathfinding();
+    public PathfindingControl() {
+        pathfinding = new Pathfinding();
+    }
 
     @Override
     public boolean loop() {
@@ -34,13 +35,18 @@ class PathfindingControl extends Mode {
         double vx = (x - xPos) / d;
         double vy = (y - yPos) / d;
         Robot.SWERVE.drive(vx, vy, 0);
-
+        if (Math.sqrt((this.x - xPos) * (this.x - xPos) + (this.y - yPos) * (this.y - yPos)) < 0.1) {
+            return false;
+        }
         return true;
 
     }
 
     public void setTarget(double x, double y) {
+        this.x = x;
+        this.y = y;
         pathfinding.setTargetNode(x, y);
+
     }
 
 }
