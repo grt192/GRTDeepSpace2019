@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class Robot extends TimedRobot {
 
     private static final Mode DEFAULT_MODE = Mode.DRIVER_CONTROL;
+    private static final Mode PATHFINDING_MODE = Mode.PATHFINDING_CONTROL;
     private Mode currentMode;
 
     public static Swerve SWERVE;
@@ -50,8 +51,12 @@ public class Robot extends TimedRobot {
         }
         System.out.println(line);
         if (!currentMode.loop()
-                || (Input.XBOX.getTriggerAxis(Hand.kLeft) + Input.XBOX.getTriggerAxis(Hand.kRight)) > 0.05) {
+                || (Input.XBOX.getTriggerAxis(Hand.kLeft) + Input.XBOX.getTriggerAxis(Hand.kRight)) > 0.05
+                || line == "pause") {
             changeMode(DEFAULT_MODE);
+        } else if (line == "resumed") {
+            changeMode(PATHFINDING_MODE);
+
         }
     }
 
