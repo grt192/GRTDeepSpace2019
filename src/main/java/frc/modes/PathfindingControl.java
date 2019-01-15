@@ -24,12 +24,17 @@ class PathfindingControl extends Mode {
 
     @Override
     public boolean loop() {
+
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
+        Node endPos = pathfinding.search(xPos, yPos);
+        double x = endPos.x;
+        double y = endPos.y;
+        double d = Math.sqrt((x - xPos) * (x - xPos) + (y - yPos) * (y - yPos));
+        double vx = (x - xPos) / d;
+        double vy = (y - yPos) / d;
+        Robot.SWERVE.drive(vx, vy, 0);
 
-        pathfinding.search(xPos, yPos);
-
-        // Robot.SWERVE.drive();
         return true;
 
     }

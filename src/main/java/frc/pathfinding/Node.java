@@ -2,7 +2,7 @@ package frc.pathfinding;
 
 import java.util.HashSet;
 
-class Node implements Comparable<Node> {
+public class Node implements Comparable<Node> {
 
     public double g;
     public double h;
