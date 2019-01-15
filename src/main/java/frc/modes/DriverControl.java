@@ -18,6 +18,11 @@ import frc.robot.Robot;
 class DriverControl extends Mode {
 
     @Override
+    public void enter() {
+        Input.RUMBLE.start();
+    }
+
+    @Override
     public boolean loop() {
         driveSwerve();
         return true;

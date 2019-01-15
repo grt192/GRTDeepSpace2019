@@ -9,6 +9,7 @@ package frc.input;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.networking.FieldGUIServer;
+import frc.sequence.RumbleSeguence;
 
 /**
  * Add your docs here.
@@ -17,4 +18,5 @@ public class Input {
 
     public static final XboxController XBOX = new XboxController(0);
     public static final FieldGUIServer GUI = new FieldGUIServer();
+    public static final RumbleSeguence RUMBLE = new RumbleSeguence();
 }
