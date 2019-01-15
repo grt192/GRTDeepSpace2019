@@ -7,7 +7,7 @@
 
 package frc.modes;
 
-import frc.pathfinding.Pathfinding;
+import frc.pathfinding.*;
 import frc.robot.Robot;
 
 /**
@@ -26,8 +26,16 @@ class PathfindingControl extends Mode {
     public boolean loop() {
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
+
         pathfinding.search(xPos, yPos);
+
+        // Robot.SWERVE.drive();
         return true;
+
+    }
+
+    public void setTarget(double x, double y) {
+        pathfinding.setTargetNode(x, y);
     }
 
 }
