@@ -23,6 +23,10 @@ public class PathfindingControl extends Mode {
         pathfinding = new Pathfinding();
     }
 
+    public void enter() {
+        System.out.println("pathfinding");
+    }
+
     @Override
     public boolean loop() {
 
