@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.modes.Mode;
@@ -29,6 +30,10 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         Config.start();
+
+        CameraServer.getInstance().startAutomaticCapture(0);
+        CameraServer.getInstance().startAutomaticCapture(1);
+
         SWERVE = new Swerve();
         currentMode = DEFAULT_MODE;
     }
