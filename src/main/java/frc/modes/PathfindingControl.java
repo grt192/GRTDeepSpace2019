@@ -33,6 +33,10 @@ public class PathfindingControl extends Mode {
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
         Node endPos = pathfinding.search(xPos, yPos);
+        if (endPos == null) {
+            System.out.println("NO PATH FOUND");
+            return false;
+        }
         double x = endPos.x;
         double y = endPos.y;
         double d = 4 * Math.sqrt((x - xPos) * (x - xPos) + (y - yPos) * (y - yPos));

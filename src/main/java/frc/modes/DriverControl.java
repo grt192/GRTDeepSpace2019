@@ -19,7 +19,7 @@ class DriverControl extends Mode {
 
     @Override
     public void enter() {
-        Input.RUMBLE.start();
+        // Input.RUMBLE.start();
     }
 
     @Override

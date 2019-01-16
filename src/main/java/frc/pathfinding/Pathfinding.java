@@ -41,7 +41,6 @@ public class Pathfinding {
             if (current == targetNode) {
                 Node next = current;
                 while (next.parent != startNode) {
-                    System.out.println(next);
                     next = next.parent;
                 }
                 removeNode(startNode);
@@ -99,10 +98,10 @@ public class Pathfinding {
 
     private void initNodes() {
         nodes = new HashSet<>();
-        addNode(new Node(3.7, 1.0));
-        addNode(new Node(3.7, 2.7));
-        addNode(new Node(0.48, 2.7));
-        addNode(new Node(0.48, 1.0));
+        addNode(new Node(3.6, 0.78));
+        addNode(new Node(3.6, 2.44));
+        addNode(new Node(0.48, 2.44));
+        addNode(new Node(0.48, 0.78));
         // etc, etc
     }
 
@@ -202,9 +201,8 @@ public class Pathfinding {
     }
 
     private void buildMapTest() {
-        Rectangle2D.Double table = new Rectangle2D.Double(41 * INCHES_TO_FEET * FEET_TO_METERS,
-                64 * INCHES_TO_FEET * FEET_TO_METERS, (122 - 41) * INCHES_TO_METERS, (82 - 64) * INCHES_TO_METERS);
-        System.out.println(table);
+        Rectangle2D.Double table = new Rectangle2D.Double(41 * INCHES_TO_METERS, 53 * INCHES_TO_METERS,
+                78 * INCHES_TO_METERS, 21 * INCHES_TO_METERS);
         obstacles = new Rectangle2D.Double[1];
 
         obstacles[0] = table;

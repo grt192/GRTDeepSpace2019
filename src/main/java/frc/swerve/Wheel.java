@@ -6,9 +6,9 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.PWM;
 import frc.config.Config;
 import frc.util.GRTUtil;
 
@@ -42,6 +42,7 @@ class Wheel {
 		DRIVE_TICKS_TO_METERS = Config.getDouble("drive_encoder_scale");
 
 		configRotateMotor();
+		configDriveMotor();
 	}
 
 	public void enable() {
@@ -115,6 +116,10 @@ class Wheel {
 		rotateMotor.config_kF(0, 0, 0);
 		rotateMotor.configMaxIntegralAccumulator(0, 0, 0);
 		rotateMotor.configAllowableClosedloopError(0, 0, 0);
+	}
+
+	private void configDriveMotor() {
+		driveMotor.setIdleMode(IdleMode.kBrake);
 	}
 
 }

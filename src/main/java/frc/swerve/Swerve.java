@@ -1,6 +1,7 @@
 package frc.swerve;
 
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.config.Config;
 import frc.robot.Robot;
 import frc.util.GRTUtil;
@@ -51,6 +52,8 @@ public class Swerve implements Runnable {
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
 		Robot.POS_TRACKER.update();
+		SmartDashboard.putNumber("X Position", Robot.POS_TRACKER.getX());
+		SmartDashboard.putNumber("Y Position", Robot.POS_TRACKER.getY());
 	}
 
 	private double calcPID() {
