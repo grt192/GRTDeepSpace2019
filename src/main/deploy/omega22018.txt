@@ -1,11 +1,11 @@
 # Config file for 2018 omega2
 # Domain: roborio-192-frc.local
 
-swerve_width=0.6604
-swerve_height=0.5334
+swerve_width=26
+swerve_height=21
 
-robot_width=0.6604
-robot_height=0.5334
+robot_width=32.75
+robot_height=28
 
 
 swerve_inverted=true
@@ -30,7 +30,7 @@ br_offset=-30
 
 
 ticks_per_rotation=1024
-drive_encoder_scale=0.0478779678
+drive_encoder_scale=1.884955592
 velocity_f=0.34
 velocity_p=0.5
 

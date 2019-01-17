@@ -14,6 +14,7 @@ public class Swerve implements Runnable {
 	private final double SWERVE_HEIGHT;
 	private final double RADIUS;
 	private final double WHEEL_ANGLE;
+	private final double ROTATE_SCALE;
 	private final double kP;
 	private final double kD;
 
@@ -40,6 +41,7 @@ public class Swerve implements Runnable {
 		kD = Config.getDouble("swerve_kd");
 		RADIUS = Math.sqrt(SWERVE_WIDTH * SWERVE_WIDTH + SWERVE_HEIGHT * SWERVE_HEIGHT) / 2;
 		WHEEL_ANGLE = Math.atan2(SWERVE_WIDTH, SWERVE_HEIGHT);
+		ROTATE_SCALE = 1 / RADIUS;
 		calcSwerveData();
 		notifier = new Notifier(this);
 		notifier.startPeriodic(0.02);
@@ -81,6 +83,7 @@ public class Swerve implements Runnable {
 	}
 
 	public void changeMotors(double vx, double vy, double w) {
+		w *= ROTATE_SCALE;
 		double gyroAngle = Math.toRadians(gyro.getAngle());
 		for (int i = 0; i < 4; i++) {
 			double wheelAngle = getRelativeWheelAngle(i) + gyroAngle;

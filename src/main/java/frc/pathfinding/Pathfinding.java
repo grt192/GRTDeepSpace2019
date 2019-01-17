@@ -12,7 +12,7 @@ public class Pathfinding {
     private final double FEET_TO_METERS = .3048;
     private final double INCHES_TO_FEET = 1.0 / 12;
     private final double INCHES_TO_METERS = INCHES_TO_FEET * FEET_TO_METERS;
-    private final double RADIUS = 22 * INCHES_TO_FEET * FEET_TO_METERS;
+    private final double RADIUS = 22;
 
     private Rectangle2D[] obstacles;
     private HashSet<Node> nodes;
@@ -98,10 +98,10 @@ public class Pathfinding {
 
     private void initNodes() {
         nodes = new HashSet<>();
-        addNode(new Node(3.6, 0.78));
-        addNode(new Node(3.6, 2.44));
-        addNode(new Node(0.48, 2.44));
-        addNode(new Node(0.48, 0.78));
+        addNode(new Node(142, 30));
+        addNode(new Node(142, 97));
+        addNode(new Node(18, 97));
+        addNode(new Node(18, 30));
         // etc, etc
     }
 
@@ -201,8 +201,7 @@ public class Pathfinding {
     }
 
     private void buildMapTest() {
-        Rectangle2D.Double table = new Rectangle2D.Double(41 * INCHES_TO_METERS, 53 * INCHES_TO_METERS,
-                78 * INCHES_TO_METERS, 21 * INCHES_TO_METERS);
+        Rectangle2D.Double table = new Rectangle2D.Double(41, 53, 78, 21);
         obstacles = new Rectangle2D.Double[1];
 
         obstacles[0] = table;
