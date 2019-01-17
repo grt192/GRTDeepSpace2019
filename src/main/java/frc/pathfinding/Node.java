@@ -2,6 +2,8 @@ package frc.pathfinding;
 
 import java.util.HashSet;
 
+import frc.fieldmap.geometry.Vector;
+
 public class Node implements Comparable<Node> {
 
     public double g;
@@ -9,11 +11,10 @@ public class Node implements Comparable<Node> {
     public double f;
     public final HashSet<Node> neighbors;
     public Node parent;
-    public final double x, y;
+    public final Vector pos;
 
     public Node(double x, double y) {
-        this.x = x;
-        this.y = y;
+        pos = new Vector(x, y);
         neighbors = new HashSet<>();
     }
 
@@ -32,9 +33,7 @@ public class Node implements Comparable<Node> {
     }
 
     private double distance(Node n) {
-        double dx = x - n.x;
-        double dy = y - n.y;
-        return Math.sqrt(dx * dx + dy * dy);
+        return pos.distanceTo(n.pos);
     }
 
     @Override

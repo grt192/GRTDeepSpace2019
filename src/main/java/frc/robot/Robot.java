@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
+import frc.fieldmap.FieldMap;
 import frc.input.Input;
 import frc.modes.Mode;
 import frc.modes.PathfindingControl;
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
     public static Swerve SWERVE;
     public static NavXGyro GYRO;
     public static PositionTracker POS_TRACKER;
+    public static FieldMap FIELD_MAP;
 
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
@@ -43,12 +45,13 @@ public class Robot extends TimedRobot {
         ROBOT_WIDTH = Config.getDouble("robot_width");
         ROBOT_HEIGHT = Config.getDouble("robot_height");
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
-        Input.GUI.start();
+        FIELD_MAP = new FieldMap();
         GYRO = new NavXGyro();
         SWERVE = new Swerve();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(0.3556, 0.4064);
         currentMode = DEFAULT_MODE;
+        Input.GUI.start();
     }
 
     private void loop() {
