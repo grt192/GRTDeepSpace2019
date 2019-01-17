@@ -8,7 +8,8 @@
 package frc.fieldmap;
 
 import frc.fieldmap.geometry.Circle;
-import frc.fieldmap.geometry.Polygon;
+import frc.fieldmap.geometry.*;
+import frc.robot.Robot;
 
 /**
  * Add your docs here.
@@ -19,6 +20,21 @@ public class FieldMap {
 
     public FieldMap() {
         buildMap();
+    }
+
+    public boolean lineOfSight(Vector v1, Vector v2) {
+        Vector dif = v2.subtract(v1);
+        double d = v1.distanceTo(v2);
+        if (d == 0.0)
+            return true;
+        Vector norm = dif.multiply(Robot.ROBOT_RADIUS / d).normal();
+        Polygon rect = new Polygon(v1.add(norm), v2.add(norm), v2.subtract(norm), v1.subtract(norm));
+        Circle endCircle = new Circle(v2, Robot.ROBOT_RADIUS);
+        if (shapeIntersects(rect))
+            return false;
+        if (shapeIntersects(endCircle))
+            return false;
+        return true;
     }
 
     public boolean shapeIntersects(Polygon p) {
