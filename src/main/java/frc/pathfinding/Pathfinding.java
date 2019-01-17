@@ -1,9 +1,9 @@
 package frc.pathfinding;
 
-import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
+import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
 
 public class Pathfinding {
@@ -16,7 +16,7 @@ public class Pathfinding {
         targetNode = new Node(0, 0);// to avoid null checks
     }
 
-    public Node search(double x, double y) {
+    public Vector search(double x, double y) {
         HashSet<Node> closed = new HashSet<>();
         PriorityQueue<Node> open = new PriorityQueue<>();
         cleanTree();
@@ -35,7 +35,7 @@ public class Pathfinding {
                     next = next.parent;
                 }
                 removeNode(startNode);
-                return next;
+                return next.pos;
             }
             for (Node node : current.neighbors) {
                 if (closed.contains(node))

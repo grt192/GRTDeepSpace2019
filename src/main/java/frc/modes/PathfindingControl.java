@@ -7,6 +7,7 @@
 
 package frc.modes;
 
+import frc.fieldmap.geometry.Vector;
 import frc.pathfinding.*;
 import frc.robot.Robot;
 
@@ -32,7 +33,7 @@ public class PathfindingControl extends Mode {
 
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
-        Node endPos = pathfinding.search(xPos, yPos);
+        Vector endPos = pathfinding.search(xPos, yPos);
         if (endPos == null) {
             System.out.println("NO PATH FOUND");
             return false;
