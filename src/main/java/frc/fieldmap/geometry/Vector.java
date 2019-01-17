@@ -13,7 +13,6 @@ package frc.fieldmap.geometry;
 public class Vector {
 
     public final double x, y;
-    public double magnitude = -1;
 
     public Vector(double x, double y) {
         this.x = x;
@@ -36,13 +35,17 @@ public class Vector {
         return x * v.x + y * v.y;
     }
 
-    public double getMagnitude() {
-        if (magnitude < 0)
-            magnitude = Math.sqrt(x * x + y * y);
-        return magnitude;
-    }
-
     public Vector multiply(double s) {
         return new Vector(x * s, y * s);
+    }
+
+    public double distanceSquaredTo(Vector v) {
+        double dx = x - v.x;
+        double dy = y - v.y;
+        return dx * dx + dy * dy;
+    }
+
+    public double distanceTo(Vector v) {
+        return Math.sqrt(distanceSquaredTo(v));
     }
 }

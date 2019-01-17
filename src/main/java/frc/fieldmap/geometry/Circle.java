@@ -10,30 +10,17 @@ package frc.fieldmap.geometry;
 /**
  * Add your docs here.
  */
-public class Circle extends Shape {
+public class Circle {
 
     private double radius;
     private Vector position;
-    private Vector[] axes;
 
     public Circle(Vector pos, double radius) {
         this.radius = radius;
         position = pos;
-        axes = new Vector[0];
     }
 
-    @Override
-    public double getMin(Vector axis) {
-        return 0;
-    }
-
-    @Override
-    public double getMax(Vector axis) {
-        return 0;
-    }
-
-    @Override
-    public Vector[] getAxes() {
-        return axes;
+    public boolean intersects(Polygon p) {
+        return p.getClosestDistance(position) <= radius;
     }
 }
