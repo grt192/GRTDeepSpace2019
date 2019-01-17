@@ -4,6 +4,9 @@
 swerve_width=0.6604
 swerve_height=0.5334
 
+robot_width=0.6604
+robot_height=0.5334
+
 
 swerve_inverted=true
 swerve_kp=0.0

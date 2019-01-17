@@ -33,9 +33,16 @@ public class Robot extends TimedRobot {
     public static NavXGyro GYRO;
     public static PositionTracker POS_TRACKER;
 
+    public static double ROBOT_WIDTH;
+    public static double ROBOT_HEIGHT;
+    public static double ROBOT_RADIUS;
+
     @Override
     public void robotInit() {
         Config.start();
+        ROBOT_WIDTH = Config.getDouble("robot_width");
+        ROBOT_HEIGHT = Config.getDouble("robot_height");
+        ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
         Input.GUI.start();
         GYRO = new NavXGyro();
         SWERVE = new Swerve();
