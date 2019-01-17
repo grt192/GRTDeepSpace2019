@@ -8,7 +8,8 @@
 package frc.fieldmap;
 
 import frc.fieldmap.geometry.Circle;
-import frc.fieldmap.geometry.*;
+import frc.fieldmap.geometry.Polygon;
+import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
 
 /**
