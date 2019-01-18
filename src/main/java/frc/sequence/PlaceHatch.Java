@@ -7,8 +7,8 @@
 
 package frc.sequence;
 
-
 import frc.mechs.Hatches;
+import frc.robot.Robot;
 
 /**
  * Add your docs here.
@@ -17,8 +17,13 @@ public class PlaceHatch extends Sequence {
 
     @Override
     public void run() {
-        mechs.Hatches.setOpen();
-        Thread.sleep(2000);
-        mechs.Hatches.setClose();
+        Robot.HATCHES.setOut();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Robot.HATCHES.setIn();
     }
 }

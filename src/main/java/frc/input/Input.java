@@ -9,8 +9,7 @@ package frc.input;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.networking.FieldGUIServer;
-import frc.sequence.RumbleSeguence;
-import frc.sequence.PlaceHatch;
+import frc.sequence.*;
 
 /**
  * Add your docs here.
