@@ -7,7 +7,13 @@ import frc.config.Config;
 public class Hatches{
 
     private Solenoid hatch;
-    public Hatches(boolean actuated){
+    public Hatches(){
         this.hatch = new Solenoid(Config.getInt("hatch"));
+    }
+    public void setClose(){
+        hatch.setClose;
+    }
+    public void setOpen(){
+        hatch.setOpen;
     }
 }
