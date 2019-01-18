@@ -20,7 +20,8 @@ public class FieldMap {
     private Polygon[] obstacles;
 
     public FieldMap() {
-        buildMap();
+        // buildMap();
+        testMap();
     }
 
     public boolean lineOfSight(Vector v1, Vector v2) {
@@ -56,5 +57,9 @@ public class FieldMap {
 
     private void buildMap() {
 
+    }
+
+    private void testMap() {
+        Polygon table = new Polygon(new Vector(36, 59), new Vector(36, 81), new Vector(117, 59), new Vector(117, 81));
     }
 }
