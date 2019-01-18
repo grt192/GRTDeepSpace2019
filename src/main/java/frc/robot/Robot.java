@@ -17,6 +17,7 @@ import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.swerve.NavXGyro;
 import frc.swerve.Swerve;
+import frc.mechs.Hatches;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,7 +35,7 @@ public class Robot extends TimedRobot {
     public static NavXGyro GYRO;
     public static PositionTracker POS_TRACKER;
     public static FieldMap FIELD_MAP;
-
+    public static Hatches HATCHES;
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
     public static double ROBOT_RADIUS;
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
         FIELD_MAP = new FieldMap();
         GYRO = new NavXGyro();
         SWERVE = new Swerve();
+        HATCHES = new Hatches();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(0.3556, 0.4064);
         currentMode = DEFAULT_MODE;
