@@ -7,10 +7,8 @@
 
 package frc.modes;
 
-import com.sun.tools.classfile.TypeAnnotation.TargetType;
-
 import frc.fieldmap.geometry.Vector;
-import frc.pathfinding.*;
+import frc.pathfinding.Pathfinding;
 import frc.robot.Robot;
 
 /**
