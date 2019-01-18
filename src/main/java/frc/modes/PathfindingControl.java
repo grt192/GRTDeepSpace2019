@@ -38,10 +38,11 @@ public class PathfindingControl extends Mode {
             System.out.println("NO PATH FOUND");
             return false;
         }
-        double d = pos.distanceTo(target);
-        double speed = 0.5 * Math.min((d - 36) / 36.0, 1);
+        double d = pos.distanceTo(endPos);
+        double distance = pos.distanceTo(target);
+        double speed = 0.5;// * Math.min((d - 36) / 36.0, 1);
         Vector velocity = endPos.subtract(pos).multiply(speed / d);
-        if (d < 4) {
+        if (distance < 4) {
             return false;
         }
         Robot.SWERVE.drive(velocity.x, velocity.y, 0);

@@ -3,6 +3,7 @@ package frc.pathfinding;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
+import frc.fieldmap.FieldMap;
 import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
 
@@ -12,6 +13,7 @@ public class Pathfinding {
     private Node targetNode;
 
     public Pathfinding() {
+        Robot.FIELD_MAP = new FieldMap();
         initNodes();
         targetNode = new Node(0, 0);// to avoid null checks
     }

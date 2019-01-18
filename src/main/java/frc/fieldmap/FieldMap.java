@@ -72,6 +72,7 @@ public class FieldMap {
     }
 
     private void testMap() {
+        obstacles = new Polygon[1];
         Polygon table = new Polygon(new Vector(41, 53), new Vector(41, 74), new Vector(119, 74), new Vector(119, 53));
         obstacles[0] = table;
     }

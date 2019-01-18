@@ -9,7 +9,7 @@ robot_height=28
 
 
 swerve_inverted=true
-swerve_kp=0.0
+swerve_kp=0.3
 swerve_kd=0.0
 
 
