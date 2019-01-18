@@ -56,10 +56,23 @@ public class FieldMap {
     }
 
     private void buildMap() {
-
+        Polygon habZoneClose = new Polygon(new Vector(48, 73.6291), new Vector(0, 73.6291), new Vector(0, 251.2433),
+                new Vector(48, 251.2433));
+        Polygon leftRocketClose = new Polygon(new Vector(209.5727, 0), new Vector(209.5727, 6.6388),
+                new Vector(219.678, 26.2055), new Vector(238.8411, 0), new Vector(238.8411, 26.2055));
+        Polygon cargoBayClose = new Polygon(new Vector(222.8754, 139.1743), new Vector(222.8754, 185.11),
+                new Vector(251.3519, 133.8589), new Vector(251.3519, 189.5825), new Vector(324, 133.8589),
+                new Vector(324, 189.5825));
+        Polygon rightRocketClose = new Polygon(new Vector(209.5727, 324), new Vector(209.527, 314.125),
+                new Vector(219.6789, 303.9730), new Vector(238.8411, 295.5230), new Vector(238.8411, 324));
+        obstacles[0] = habZoneClose;
+        obstacles[1] = leftRocketClose;
+        obstacles[2] = cargoBayClose;
+        obstacles[3] = rightRocketClose;
     }
 
     private void testMap() {
         Polygon table = new Polygon(new Vector(36, 59), new Vector(36, 81), new Vector(117, 59), new Vector(117, 81));
+        obstacles[0] = table;
     }
 }
