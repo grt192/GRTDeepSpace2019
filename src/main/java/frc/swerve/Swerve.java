@@ -29,6 +29,7 @@ public class Swerve implements Runnable {
 	public Swerve() {
 		this.gyro = Robot.GYRO;
 		gyro.reset();
+		angle = 0.0;
 		wheels = new Wheel[4];
 		wheels[0] = new Wheel("fr");
 		wheels[1] = new Wheel("br");
@@ -56,6 +57,7 @@ public class Swerve implements Runnable {
 		Robot.POS_TRACKER.update();
 		SmartDashboard.putNumber("X Position", Robot.POS_TRACKER.getX());
 		SmartDashboard.putNumber("Y Position", Robot.POS_TRACKER.getY());
+		SmartDashboard.putNumber("Angle", gyro.getAngle());
 	}
 
 	private double calcPID() {
@@ -79,7 +81,7 @@ public class Swerve implements Runnable {
 
 	public void setAngle(double angle) {
 		userW = 0;
-		this.angle = Math.toRadians(angle);
+		this.angle = angle;
 	}
 
 	public void changeMotors(double vx, double vy, double w) {
