@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
         GYRO = new NavXGyro();
         SWERVE = new Swerve();
         POS_TRACKER = new BasicPositionTracker();
-        POS_TRACKER.set(0.3556, 0.4064);
+        POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
     }
