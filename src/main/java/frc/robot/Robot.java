@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.fieldmap.FieldMap;
 import frc.input.Input;
+import frc.mechs.Hatches;
 import frc.modes.Mode;
 import frc.modes.PathfindingControl;
 import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.sequence.Sequence;
 import frc.swerve.NavXGyro;
-import frc.swerve.Swerve;
-import frc.mechs.Hatches;;
+import frc.swerve.Swerve;;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
         DEFAULT_MODE = Mode.DRIVER_CONTROL;
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
+        // CameraServer.getInstance().startAutomaticCapture(0);
     }
 
     private void loop() {
