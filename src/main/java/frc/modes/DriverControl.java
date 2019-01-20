@@ -36,20 +36,20 @@ class DriverControl extends Mode {
     }
 
     private void driveSwerve() {
-        double x = JoystickProfile.clipAndSquare(-Input.XBOX.getY(Hand.kLeft));
-        double y = JoystickProfile.clipAndSquare(Input.XBOX.getX(Hand.kLeft));
+        double x = JoystickProfile.applyDeadband(-Input.XBOX.getY(Hand.kLeft));
+        double y = JoystickProfile.applyDeadband(Input.XBOX.getX(Hand.kLeft));
+        double mag = Math.sqrt(x * x + y * y);
+        x *= mag;
+        y *= mag;
+        int pov = Input.XBOX.getPOV();
+        if (pov >= 0) {
+            Robot.SWERVE.setAngle(Math.toRadians(pov));
+        }
         double lTrigger = Input.XBOX.getTriggerAxis(Hand.kLeft);
         double rTrigger = Input.XBOX.getTriggerAxis(Hand.kRight);
         double rotate = 0;
         if (lTrigger + rTrigger > 0.05) {
             rotate = rTrigger * rTrigger - lTrigger * lTrigger;
-            // } else {
-            // double rx = -Input.XBOX.getY(Hand.kRight);
-            // double ry = Input.XBOX.getX(Hand.kRight);
-            // if (rx * rx + ry * ry > 0.7) {
-            // double theta = Math.atan2(ry, rx);
-            // Robot.SWERVE.setAngle(theta);
-            // }
         }
         Robot.SWERVE.drive(x, y, rotate);
     }
