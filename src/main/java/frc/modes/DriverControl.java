@@ -19,18 +19,17 @@ import frc.sequence.PlaceHatch;
  */
 class DriverControl extends Mode {
 
-    public PlaceHatch placeHatch;
-
     @Override
     public void enter() {
         // Input.RUMBLE.start();
-        placeHatch.start();
+
     }
 
     @Override
     public boolean loop() {
         if (Input.XBOX.getAButton()) {
-            placeHatch.run();
+            Input.HATCHES_SEQUENCE.start();
+            System.out.println("Place Hatch");
         }
         driveSwerve();
         return true;
