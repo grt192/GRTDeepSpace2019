@@ -28,7 +28,6 @@ class DriverControl extends Mode {
     public boolean loop() {
         if (Input.XBOX.getAButtonPressed()) {
             Sequence.PLACE_HATCH.start();
-            System.out.println("Place Hatch");
         }
 
         driveSwerve();
