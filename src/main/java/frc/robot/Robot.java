@@ -29,7 +29,7 @@ import frc.mechs.Hatches;;
  */
 public class Robot extends TimedRobot {
 
-    private static final Mode DEFAULT_MODE = Mode.DRIVER_CONTROL;
+    private Mode DEFAULT_MODE;
     private Mode currentMode;
 
     public static Swerve SWERVE;
@@ -49,12 +49,13 @@ public class Robot extends TimedRobot {
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
         FIELD_MAP = new FieldMap();
         GYRO = new NavXGyro();
-        SWERVE = new Swerve();
         HATCHES = new Hatches();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
+        SWERVE = new Swerve();
         Sequence.initSequneces();
         Mode.initModes();
+        DEFAULT_MODE = Mode.DRIVER_CONTROL;
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
     }

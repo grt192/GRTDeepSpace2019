@@ -30,6 +30,7 @@ class DriverControl extends Mode {
             Sequence.PLACE_HATCH.start();
             System.out.println("Place Hatch");
         }
+
         driveSwerve();
         return true;
     }
