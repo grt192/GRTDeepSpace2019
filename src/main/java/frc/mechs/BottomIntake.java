@@ -10,16 +10,16 @@ public class BottomIntake {
 
     private Solenoid intake1;
     private Solenoid intake2;
-    private TalonSRX intakeMotor;
+    private TalonSRX intakeMotor1;
 
     public BottomIntake() {
         this.intake1 = new Solenoid(Config.getInt("intake1"));
         this.intake2 = new Solenoid(Config.getInt("intake2"));
-        this.intakeMotor = new TalonSRX(Config.getInt("bottom-intake-motor"));
+        this.intakeMotor1 = new TalonSRX(Config.getInt("bottom-intake-motor"));
     }
 
     public void setPower(Double power) {
-        intakeMotor.set(ControlMode.PercentOutput, power);
+        intakeMotor1.set(ControlMode.PercentOutput, power);
     }
 
     public void in() {
