@@ -48,4 +48,9 @@ public class Vector {
     public double distanceTo(Vector v) {
         return Math.sqrt(distanceSquaredTo(v));
     }
+
+    @Override
+    public String toString() {
+        return "Vector[" + x + ", " + y + "]";
+    }
 }

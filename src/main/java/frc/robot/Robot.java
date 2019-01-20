@@ -46,13 +46,11 @@ public class Robot extends TimedRobot {
         ROBOT_WIDTH = Config.getDouble("robot_width");
         ROBOT_HEIGHT = Config.getDouble("robot_height");
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
-        FIELD_MAP = new FieldMap();
         GYRO = new NavXGyro();
         SWERVE = new Swerve();
         HATCHES = new Hatches();
         POS_TRACKER = new BasicPositionTracker();
-
-        POS_TRACKER.set(0.3556, 0.4064);
+        POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
     }
