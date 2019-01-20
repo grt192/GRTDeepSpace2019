@@ -15,7 +15,7 @@ import frc.robot.Robot;
 public class PlaceHatch extends Sequence {
 
     @Override
-    public void run() {
+    public void runSequence() {
         Robot.HATCHES.setOut();
         try {
             Thread.sleep(2000);

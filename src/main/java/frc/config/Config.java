@@ -76,6 +76,7 @@ public class Config {
 	}
 
 	public static void defaultConfigTalon(TalonSRX talon) {
+		talon.configFactoryDefault();
 		talon.configForwardSoftLimitEnable(false, 0);
 		talon.configReverseSoftLimitEnable(false, 0);
 		talon.setNeutralMode(NeutralMode.Brake);
