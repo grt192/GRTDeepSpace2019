@@ -17,7 +17,7 @@ import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.swerve.NavXGyro;
 import frc.swerve.Swerve;
-import frc.mechs.Hatches;
+import frc.mechs.Hatches;;
 
 /**
  * The VM is configured to automatically run this class, and to call the
