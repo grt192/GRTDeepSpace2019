@@ -55,8 +55,11 @@ public class Swerve implements Runnable {
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
 		Robot.POS_TRACKER.update();
+		Robot.POS_TRACKER2.update();
 		SmartDashboard.putNumber("X Position", Robot.POS_TRACKER.getX());
 		SmartDashboard.putNumber("Y Position", Robot.POS_TRACKER.getY());
+		SmartDashboard.putNumber("X Position2", Robot.POS_TRACKER2.getX());
+		SmartDashboard.putNumber("Y Position2", Robot.POS_TRACKER2.getY());
 		SmartDashboard.putNumber("Angle", gyro.getAngle());
 	}
 

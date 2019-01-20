@@ -15,6 +15,7 @@ import frc.mechs.Hatches;
 import frc.modes.Mode;
 import frc.modes.PathfindingControl;
 import frc.positiontracking.BasicPositionTracker;
+import frc.positiontracking.KalmanFilterPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.sequence.Sequence;
 import frc.swerve.NavXGyro;
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
     public static Swerve SWERVE;
     public static NavXGyro GYRO;
     public static PositionTracker POS_TRACKER;
+    public static PositionTracker POS_TRACKER2;
     public static FieldMap FIELD_MAP;
     public static Hatches HATCHES;
     public static double ROBOT_WIDTH;
@@ -52,6 +54,8 @@ public class Robot extends TimedRobot {
         HATCHES = new Hatches();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
+        POS_TRACKER2 = new KalmanFilterPositionTracker();
+        POS_TRACKER2.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
         SWERVE = new Swerve();
         Sequence.initSequneces();
         Mode.initModes();
