@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
         SWERVE = new Swerve();
         HATCHES = new Hatches();
         POS_TRACKER = new BasicPositionTracker();
+
         POS_TRACKER.set(0.3556, 0.4064);
         currentMode = DEFAULT_MODE;
         Input.GUI.start();

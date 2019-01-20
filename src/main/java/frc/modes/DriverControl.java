@@ -7,23 +7,31 @@
 
 package frc.modes;
 
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.input.Input;
 import frc.input.JoystickProfile;
 import frc.robot.Robot;
+import frc.sequence.PlaceHatch;
 
 /**
  * Add your docs here.
  */
 class DriverControl extends Mode {
 
+    public PlaceHatch placeHatch;
+
     @Override
     public void enter() {
         // Input.RUMBLE.start();
+        placeHatch.start();
     }
 
     @Override
     public boolean loop() {
+        if (Input.XBOX.getAButton()) {
+            placeHatch.run();
+        }
         driveSwerve();
         return true;
     }
