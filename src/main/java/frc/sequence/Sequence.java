@@ -14,6 +14,15 @@ import edu.wpi.first.wpilibj.Notifier;
  */
 public abstract class Sequence implements Runnable {
 
+    public static RumbleSeguence RUMBLE_SEQUENCE;
+    public static PlaceHatch PLACE_HATCH;
+
+    public static void initSequneces() {
+        RUMBLE_SEQUENCE = new RumbleSeguence();
+        PLACE_HATCH = new PlaceHatch();
+
+    }
+
     private Notifier notifier;
 
     public Sequence() {

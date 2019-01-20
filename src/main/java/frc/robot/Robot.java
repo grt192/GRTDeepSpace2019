@@ -19,6 +19,7 @@ import frc.modes.Mode;
 import frc.modes.PathfindingControl;
 import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
+import frc.sequence.Sequence;
 import frc.swerve.NavXGyro;
 import frc.swerve.Swerve;
 
@@ -31,7 +32,7 @@ import frc.swerve.Swerve;
  */
 public class Robot extends TimedRobot {
 
-    private static final Mode DEFAULT_MODE = Mode.DRIVER_CONTROL;
+    private Mode DEFAULT_MODE;
     private Mode currentMode;
 
     public static Swerve SWERVE;
@@ -40,7 +41,7 @@ public class Robot extends TimedRobot {
     public static FieldMap FIELD_MAP;
     public static Hatches HATCHES;
     public static BottomIntake BOTTOMINTAKE;
-    public static Elevator ELAVATOR;
+    public static Elevator ELEVATOR;
     public static TopIntake TOPINTAKE;
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
@@ -54,10 +55,13 @@ public class Robot extends TimedRobot {
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
         FIELD_MAP = new FieldMap();
         GYRO = new NavXGyro();
-        SWERVE = new Swerve();
         HATCHES = new Hatches();
         POS_TRACKER = new BasicPositionTracker();
-        POS_TRACKER.set(0.3556, 0.4064);
+        POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
+        SWERVE = new Swerve();
+        Sequence.initSequneces();
+        Mode.initModes();
+        DEFAULT_MODE = Mode.DRIVER_CONTROL;
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
     }
