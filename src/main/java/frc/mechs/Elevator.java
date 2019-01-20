@@ -30,4 +30,12 @@ public class Elevator {
     public void setPosition(int position) {
         winch.set(ControlMode.Position, position);
     }
+
+    public void down() {
+
+    }
+
+    public void up() {
+
+    }
 }
