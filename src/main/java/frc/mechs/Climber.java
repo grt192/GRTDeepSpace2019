@@ -78,6 +78,11 @@ public class Climber {
         }
     }
 
+    public void stop() {
+        rightRack.set(ControlMode.PercentOutput, 0);
+        leftRack.set(ControlMode.PercentOutput, 0);
+    }
+
     private void configTalon(TalonSRX talon) {
         Config.defaultConfigTalon(talon);
         talon.setNeutralMode(NeutralMode.Brake);

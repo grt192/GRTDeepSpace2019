@@ -52,7 +52,7 @@ public class Swerve implements Runnable {
 
 	public void run() {
 		double w = userW;
-		if (w == 0 && !robotCentric)
+		if (w == 0)
 			w = calcPID();
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
