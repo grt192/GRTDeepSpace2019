@@ -24,12 +24,14 @@ public class Swerve implements Runnable {
 	private Wheel[] wheels;
 
 	private volatile double userVX, userVY, userW, angle;
+	private volatile boolean robotCentric;
 	private volatile SwerveData swerveData;
 
 	public Swerve() {
 		this.gyro = Robot.GYRO;
 		gyro.reset();
 		angle = 0.0;
+		robotCentric = false;
 		wheels = new Wheel[4];
 		wheels[0] = new Wheel("fr");
 		wheels[1] = new Wheel("br");
@@ -84,9 +86,13 @@ public class Swerve implements Runnable {
 		this.angle = angle;
 	}
 
+	public void setRobotCentric(boolean mode) {
+		robotCentric = mode;
+	}
+
 	public void changeMotors(double vx, double vy, double w) {
 		w *= ROTATE_SCALE;
-		double gyroAngle = Math.toRadians(gyro.getAngle());
+		double gyroAngle = (robotCentric ? 0 : Math.toRadians(gyro.getAngle()));
 		for (int i = 0; i < 4; i++) {
 			double wheelAngle = getRelativeWheelAngle(i) + gyroAngle;
 			double dx = RADIUS * Math.cos(wheelAngle);

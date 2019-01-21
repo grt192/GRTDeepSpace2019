@@ -7,11 +7,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.fieldmap.FieldMap;
 import frc.input.Input;
 import frc.mechs.BottomIntake;
+import frc.mechs.Climber;
 import frc.mechs.Elevator;
 import frc.mechs.Hatches;
 import frc.mechs.TopIntake;
@@ -43,6 +45,7 @@ public class Robot extends TimedRobot {
     public static BottomIntake BOTTOMINTAKE;
     public static Elevator ELEVATOR;
     public static TopIntake TOPINTAKE;
+    public static Climber CLIMBER;
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
     public static double ROBOT_RADIUS;
@@ -56,6 +59,7 @@ public class Robot extends TimedRobot {
         FIELD_MAP = new FieldMap();
         GYRO = new NavXGyro();
         HATCHES = new Hatches();
+        CLIMBER = new Climber();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
         SWERVE = new Swerve();
@@ -64,7 +68,7 @@ public class Robot extends TimedRobot {
         DEFAULT_MODE = Mode.DRIVER_CONTROL;
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
-        // CameraServer.getInstance().startAutomaticCapture(0);
+        CameraServer.getInstance().startAutomaticCapture(0);
     }
 
     private void loop() {

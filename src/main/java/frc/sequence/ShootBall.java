@@ -15,13 +15,12 @@ import frc.robot.Robot;
 public class ShootBall extends Sequence {
 
     @Override
-    public void run() {
+    public void runSequence() {
         Robot.BOTTOMINTAKE.out();
         Robot.ELEVATOR.down();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

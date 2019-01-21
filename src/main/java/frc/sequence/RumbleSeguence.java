@@ -16,7 +16,7 @@ import frc.input.Input;
 public class RumbleSeguence extends Sequence {
 
     @Override
-    public void run() {
+    public void runSequence() {
         Input.XBOX.setRumble(RumbleType.kLeftRumble, 1.0);
         Input.XBOX.setRumble(RumbleType.kRightRumble, 1.0);
         try {
