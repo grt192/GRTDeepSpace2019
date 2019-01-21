@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
         CameraServer.getInstance().startAutomaticCapture(0);
+        CameraServer.getInstance().startAutomaticCapture(1);
     }
 
     private void loop() {
