@@ -16,10 +16,10 @@ public class TopIntake {
     // private final Double CARGO_BAY = 3.3125;
 
     public TopIntake() {
-        this.intakeMotor2 = new TalonSRX(Config.getInt("top-intake-motor"));
+        intakeMotor2 = new TalonSRX(Config.getInt("carriage"));
     }
 
-    public void setPower(Double power) {
+    public void setPower(double power) {
         intakeMotor2.set(ControlMode.PercentOutput, power);
     }
 }
