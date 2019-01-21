@@ -2,18 +2,18 @@ package frc.vision;
 
 public class JeVoisMessage {
 
-    public String originalLine;
+    public final String originalLine;
 
-    public Long receivedTime; // millis
-    public Double cameraTime; // seconds since camera startup
+    public final long receivedTime; // millis
+    public final double cameraTime; // seconds since camera startup
 
-    public Double translateX; // inches
-    public Double translateY;
-    public Double translateZ;
+    public final double translateX; // inches
+    public final double translateY;
+    public final double translateZ;
 
-    public Double rotateX; // radians
-    public Double rotateY;
-    public Double rotateZ;
+    public final double rotateX; // radians
+    public final double rotateY;
+    public final double rotateZ;
 
     public JeVoisMessage(String line, Long receivedTime) throws NumberFormatException {
         this.originalLine = line;

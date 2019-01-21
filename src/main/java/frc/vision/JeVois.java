@@ -27,7 +27,8 @@ public class JeVois extends Thread {
                     this.lastString = camera.readString().trim();
                     System.out.println(lastString);
                     if (!lastString.equals("")) {
-                        this.lastMessage = new JeVoisMessage(lastString, System.currentTimeMillis());
+                        lastReceivedTimestamp = System.currentTimeMillis();
+                        this.lastMessage = new JeVoisMessage(lastString, lastReceivedTimestamp);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
