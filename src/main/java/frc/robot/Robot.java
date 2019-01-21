@@ -11,14 +11,17 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.fieldmap.FieldMap;
 import frc.input.Input;
+import frc.mechs.BottomIntake;
+import frc.mechs.Elevator;
 import frc.mechs.Hatches;
+import frc.mechs.TopIntake;
 import frc.modes.Mode;
 import frc.modes.PathfindingControl;
 import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.sequence.Sequence;
 import frc.swerve.NavXGyro;
-import frc.swerve.Swerve;;
+import frc.swerve.Swerve;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,6 +40,9 @@ public class Robot extends TimedRobot {
     public static PositionTracker POS_TRACKER;
     public static FieldMap FIELD_MAP;
     public static Hatches HATCHES;
+    public static BottomIntake BOTTOMINTAKE;
+    public static Elevator ELEVATOR;
+    public static TopIntake TOPINTAKE;
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
     public static double ROBOT_RADIUS;

@@ -19,7 +19,6 @@ public class Elevator {
     public Elevator() {
         this.winch = new TalonSRX(Config.getInt("winch_motor"));
         this.winchFollower = new TalonSRX(Config.getInt("winch_motor_follower"));
-
         winchFollower.follow(winch);
     }
 
@@ -29,5 +28,13 @@ public class Elevator {
 
     public void setPosition(int position) {
         winch.set(ControlMode.Position, position);
+    }
+
+    public void down() {
+
+    }
+
+    public void up() {
+
     }
 }
