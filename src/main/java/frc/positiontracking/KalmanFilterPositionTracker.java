@@ -70,9 +70,12 @@ public class KalmanFilterPositionTracker implements PositionTracker {
         long temp = System.currentTimeMillis();
         double dt = (temp - lastUpdate) / 1000.0;
         kf.get_controlMatrix().put(0, 0, dt, 0, 0, dt);
+        lastUpdate = temp;
         Mat U = new Mat(STATES, 1, TYPE);
         U.put(0, 0, data.encoderVX, data.encoderVY);
         kf.predict(U);
-        lastUpdate = temp;
+        Mat Z = new Mat(STATES, 1, TYPE);
+        Z.put(0, 0, 3.6, 4.7);
+        // kf.correct(Z);
     }
 }
