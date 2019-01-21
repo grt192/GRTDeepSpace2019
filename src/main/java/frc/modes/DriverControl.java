@@ -20,18 +20,28 @@ class DriverControl extends Mode {
 
     @Override
     public boolean loop() {
-        if (Input.XBOX.getAButtonPressed()) {
-            Sequence.PLACE_HATCH.start();
-        }
-        if (Input.XBOX.getYButtonPressed())
-            Robot.SWERVE.setRobotCentric(true);
-        if (Input.XBOX.getXButtonPressed())
-            Robot.SWERVE.setRobotCentric(false);
+        driveMechs();
         driveSwerve();
         return true;
     }
 
+    private void driveMechs() {
+        if (Input.XBOX.getAButtonPressed()) {
+            Sequence.PLACE_HATCH.start();
+        }
+        if (Input.XBOX.getBButtonPressed()) {
+            Robot.BOTTOM_INTAKE.toggle();
+        }
+        double intakePower = JoystickProfile.applyDeadband(Input.XBOX.getY(Hand.kRight));
+        Robot.BOTTOM_INTAKE.setPower(intakePower);
+        Robot.TOP_INTAKE.setPower(intakePower);
+    }
+
     private void driveSwerve() {
+        if (Input.XBOX.getYButtonPressed())
+            Robot.SWERVE.setRobotCentric(true);
+        if (Input.XBOX.getXButtonPressed())
+            Robot.SWERVE.setRobotCentric(false);
         double x = JoystickProfile.applyDeadband(-Input.XBOX.getY(Hand.kLeft));
         double y = JoystickProfile.applyDeadband(Input.XBOX.getX(Hand.kLeft));
         double mag = Math.sqrt(x * x + y * y);

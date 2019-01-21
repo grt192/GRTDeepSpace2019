@@ -24,6 +24,7 @@ import frc.positiontracking.PositionTracker;
 import frc.sequence.Sequence;
 import frc.swerve.NavXGyro;
 import frc.swerve.Swerve;
+import sun.security.x509.X400Address;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -94,12 +95,17 @@ public class Robot extends TimedRobot {
             }
             line = Input.GUI.readLine();
         }
+        if (Input.XBOX.getBackButtonPressed()) {
+            changeMode(Mode.CLIMB_MODE);
+        }
         if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
         }
     }
 
     private void changeMode(Mode newMode) {
+        if (currentMode == Mode.CLIMB_MODE)
+            return;
         if (currentMode == newMode)
             return;
         currentMode.exit();
