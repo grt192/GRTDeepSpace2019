@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.config.Config;
 import frc.robot.Robot;
 import frc.util.GRTUtil;
+import frc.input.*;
 
 public class Swerve implements Runnable {
 
@@ -55,11 +56,9 @@ public class Swerve implements Runnable {
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
 		Robot.POS_TRACKER.update();
-		Robot.POS_TRACKER2.update();
 		SmartDashboard.putNumber("X Position", Robot.POS_TRACKER.getX());
 		SmartDashboard.putNumber("Y Position", Robot.POS_TRACKER.getY());
-		SmartDashboard.putNumber("X Position2", Robot.POS_TRACKER2.getX());
-		SmartDashboard.putNumber("Y Position2", Robot.POS_TRACKER2.getY());
+		Input.GUI.sendData("position " + Robot.POS_TRACKER.getX() + " " + Robot.POS_TRACKER.getY());
 		SmartDashboard.putNumber("Angle", gyro.getAngle());
 	}
 
