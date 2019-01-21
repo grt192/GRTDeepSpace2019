@@ -19,7 +19,6 @@ public class Elevator {
     public Elevator() {
         this.winch = new TalonSRX(Config.getInt("winch_motor"));
         this.winchFollower = new TalonSRX(Config.getInt("winch_motor_follower"));
-
         winchFollower.follow(winch);
     }
 
