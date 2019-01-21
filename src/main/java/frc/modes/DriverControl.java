@@ -55,6 +55,7 @@ class DriverControl extends Mode {
             } else {
                 Robot.SWERVE.setAngle(Math.toRadians(pov));
             }
+            break;
         }
 
         double lTrigger = Input.XBOX.getTriggerAxis(Hand.kLeft);
