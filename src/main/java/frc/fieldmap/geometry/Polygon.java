@@ -19,7 +19,7 @@ public class Polygon {
         this.points = points;
         axes = new Vector[points.length];
         Vector v;
-        for (int i = 0; i < points.length - 1; ++i) {
+        for (int i = 0; i < points.length; ++i) {
             if (i < points.length - 1) {
                 v = points[i].subtract(points[i + 1]);
                 v = v.normal();

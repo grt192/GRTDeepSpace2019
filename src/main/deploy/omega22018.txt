@@ -9,7 +9,7 @@ robot_height=28
 
 
 swerve_inverted=true
-swerve_kp=0.0
+swerve_kp=0.3
 swerve_kd=0.0
 
 
@@ -34,15 +34,7 @@ drive_encoder_scale=1.884955592
 velocity_f=0.34
 velocity_p=0.5
 
-name=beta2018
+name=omega22018
 
-upper_flywheel=5
-lower_right_flywheel=14
-lower_left_flywheel=3
-winch_motor=12
-winch_motor_follower=13
-
-right_sol=2
-left_sol=3
-center_sol=0
-winch_sol=1
+hatch1=0
+hatch2=1

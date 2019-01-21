@@ -7,23 +7,31 @@
 
 package frc.sequence;
 
-import frc.mechs.Hatches;
 import frc.robot.Robot;
 
 /**
  * Add your docs here.
  */
-public class PlaceHatch extends Sequence {
+public class ShootBall extends Sequence {
 
     @Override
     public void run() {
-        Robot.HATCHES.setOut();
+        Robot.BOTTOMINTAKE.out();
+        Robot.ELEVATOR.down();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        Robot.HATCHES.setIn();
+
+        Robot.BOTTOMINTAKE.in();
+        Robot.ELEVATOR.up();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
