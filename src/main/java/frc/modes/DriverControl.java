@@ -19,17 +19,14 @@ import frc.sequence.Sequence;
 class DriverControl extends Mode {
 
     @Override
-    public void enter() {
-        // Input.RUMBLE.start();
-
-    }
-
-    @Override
     public boolean loop() {
         if (Input.XBOX.getAButtonPressed()) {
             Sequence.PLACE_HATCH.start();
         }
-
+        if (Input.XBOX.getYButtonPressed())
+            Robot.SWERVE.setRobotCentric(true);
+        if (Input.XBOX.getXButtonPressed())
+            Robot.SWERVE.setRobotCentric(false);
         driveSwerve();
         return true;
     }
