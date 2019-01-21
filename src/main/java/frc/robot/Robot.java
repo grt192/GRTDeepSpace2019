@@ -42,9 +42,9 @@ public class Robot extends TimedRobot {
     public static PositionTracker POS_TRACKER;
     public static FieldMap FIELD_MAP;
     public static Hatches HATCHES;
-    public static BottomIntake BOTTOMINTAKE;
+    public static BottomIntake BOTTOM_INTAKE;
     public static Elevator ELEVATOR;
-    public static TopIntake TOPINTAKE;
+    public static TopIntake TOP_INTAKE;
     public static Climber CLIMBER;
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
@@ -58,6 +58,9 @@ public class Robot extends TimedRobot {
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
         FIELD_MAP = new FieldMap();
         GYRO = new NavXGyro();
+        ELEVATOR = new Elevator();
+        TOP_INTAKE = new TopIntake();
+        BOTTOM_INTAKE = new BottomIntake();
         HATCHES = new Hatches();
         CLIMBER = new Climber();
         POS_TRACKER = new BasicPositionTracker();
