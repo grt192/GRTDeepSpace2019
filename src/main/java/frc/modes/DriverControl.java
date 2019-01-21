@@ -38,9 +38,19 @@ class DriverControl extends Mode {
         x *= mag;
         y *= mag;
         int pov = Input.XBOX.getPOV();
-        if (pov >= 0) {
+
+        if (pov == 45) {
+            Robot.SWERVE.setAngle(Math.toRadians(142));
+        } else if (pov == 135) {
+            Robot.SWERVE.setAngle(Math.toRadians(52));
+        } else if (pov == 235) {
+            Robot.SWERVE.setAngle(Math.toRadians(302));
+        } else if (pov == 325) {
+            Robot.SWERVE.setAngle(Math.toRadians(212));
+        } else {
             Robot.SWERVE.setAngle(Math.toRadians(pov));
         }
+
         double lTrigger = Input.XBOX.getTriggerAxis(Hand.kLeft);
         double rTrigger = Input.XBOX.getTriggerAxis(Hand.kRight);
         double rotate = 0;
