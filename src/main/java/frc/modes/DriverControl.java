@@ -38,8 +38,8 @@ class DriverControl extends Mode {
         x *= mag;
         y *= mag;
         int pov = Input.XBOX.getPOV();
-
-        if (pov == 45) {
+        if (pov == -1) {
+        } else if (pov == 45) {
             Robot.SWERVE.setAngle(Math.toRadians(142));
         } else if (pov == 135) {
             Robot.SWERVE.setAngle(Math.toRadians(52));
