@@ -17,7 +17,8 @@ import frc.sequence.Sequence;
  * Add your docs here.
  */
 class DriverControl extends Mode {
-    private boolean buttonPressed = false;
+
+    private int pov = -1;
 
     @Override
     public boolean loop() {
@@ -38,11 +39,12 @@ class DriverControl extends Mode {
         double mag = Math.sqrt(x * x + y * y);
         x *= mag;
         y *= mag;
-        int pov = Input.XBOX.getPOV();
+        boolean buttonPressed = false;
         if (pov == -1) {
             buttonPressed = true;
         }
-        while (buttonPressed) {
+        pov = Input.XBOX.getPOV();
+        if (buttonPressed) {
             if (pov == -1) {
             } else if (pov == 45) {
                 Robot.SWERVE.setAngle(Math.toRadians(52));
@@ -55,7 +57,7 @@ class DriverControl extends Mode {
             } else {
                 Robot.SWERVE.setAngle(Math.toRadians(pov));
             }
-            break;
+
         }
 
         double lTrigger = Input.XBOX.getTriggerAxis(Hand.kLeft);
