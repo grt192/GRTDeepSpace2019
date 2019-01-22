@@ -19,6 +19,7 @@ import frc.sequence.Sequence;
 class DriverControl extends Mode {
 
     private int pov = -1;
+    private int lastPov;
 
     @Override
     public boolean loop() {
@@ -44,18 +45,29 @@ class DriverControl extends Mode {
             buttonPressed = true;
         }
         pov = Input.XBOX.getPOV();
+        if (Input.XBOX.getBumperPressed(Hand.kLeft)) {
+            pov = lastPov - 45;
+        }
+        if (Input.XBOX.getBumperPressed(Hand.kRight)) {
+            pov = lastPov + 45;
+        }
         if (buttonPressed) {
             if (pov == -1) {
             } else if (pov == 45) {
                 Robot.SWERVE.setAngle(Math.toRadians(52));
+                lastPov = pov;
             } else if (pov == 135) {
                 Robot.SWERVE.setAngle(Math.toRadians(142));
+                lastPov = pov;
             } else if (pov == 235) {
                 Robot.SWERVE.setAngle(Math.toRadians(302));
+                lastPov = pov;
             } else if (pov == 325) {
                 Robot.SWERVE.setAngle(Math.toRadians(212));
+                lastPov = pov;
             } else {
                 Robot.SWERVE.setAngle(Math.toRadians(pov));
+                lastPov = pov;
             }
 
         }
