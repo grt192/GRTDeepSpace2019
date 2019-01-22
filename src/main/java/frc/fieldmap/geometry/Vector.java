@@ -49,6 +49,10 @@ public class Vector {
         return Math.sqrt(distanceSquaredTo(v));
     }
 
+    public Vector rotate(double angle) {
+        return new Vector(x * Math.cos(angle) - y * Math.sin(angle), x * Math.sin(angle) + y * Math.cos(angle));
+    }
+
     @Override
     public String toString() {
         return "Vector[" + x + ", " + y + "]";

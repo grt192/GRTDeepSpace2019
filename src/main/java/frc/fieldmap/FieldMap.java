@@ -18,6 +18,7 @@ import frc.robot.Robot;
 public class FieldMap {
 
     private Polygon[] obstacles;
+    private VisionTarget[] visionTargets;
 
     public FieldMap() {
         // buildMap();
@@ -55,6 +56,19 @@ public class FieldMap {
         return false;
     }
 
+    public VisionTarget getNearestTarget(Vector robotPos, Vector image) {
+        double min = Double.POSITIVE_INFINITY;
+        VisionTarget best = null;
+        for (VisionTarget vt : visionTargets) {
+            double dist = vt.pos.pos.add(image.rotate(vt.pos.angle)).distanceSquaredTo(robotPos);
+            if (dist < min) {
+                dist = min;
+                best = vt;
+            }
+        }
+        return best;
+    }
+
     private void buildMap() {
         Polygon habZoneClose = new Polygon(new Vector(48, 73.6291), new Vector(0, 73.6291), new Vector(0, 251.2433),
                 new Vector(48, 251.2433));
@@ -75,5 +89,8 @@ public class FieldMap {
         obstacles = new Polygon[1];
         Polygon table = new Polygon(new Vector(41, 53), new Vector(41, 74), new Vector(119, 74), new Vector(119, 53));
         obstacles[0] = table;
+
+        visionTargets = new VisionTarget[1];
+        visionTargets[0] = new VisionTarget(new Vector(139, 142.5), -Math.PI / 2, false);
     }
 }

@@ -38,3 +38,7 @@ name=omega22018
 
 hatch1=0
 hatch2=1
+
+# hatch_cam_x=?
+# hatch_cam_y=?
+# hatch_cam_angle=0
