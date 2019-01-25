@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.input.Input;
 import frc.input.JoystickProfile;
 import frc.robot.Robot;
-import frc.sequence.Sequence;
 
 /**
  * Add your docs here.
@@ -26,9 +25,9 @@ class DriverControl extends Mode {
 
     @Override
     public boolean loop() {
-        if (Input.XBOX.getAButtonPressed()) {
-            Sequence.PLACE_HATCH.start();
-        }
+        // if (Input.XBOX.getAButtonPressed()) {
+        // Sequence.PLACE_HATCH.start();
+        // }
 
         driveSwerve();
         return true;

@@ -16,7 +16,7 @@ public class JeVois extends Thread {
     }
 
     public JeVois(SerialPort.Port port) { // port should be kUSB, kUSB1, or kUSB2
-        this.camera = new SerialPort(115200, port);
+        // this.camera = new SerialPort(115200, port);
     }
 
     @Override
@@ -24,7 +24,16 @@ public class JeVois extends Thread {
         while (true) {
             if (this.enabled) {
                 try {
-                    this.lastString = camera.readString().trim();
+                    String body = camera.readString().trim();
+                    String[] lines = body.split("\n");
+                    if (lines.length == 0) {
+                        continue;
+                    }
+                    String line = lines[lines.length - 1];
+                    if (line.split(" ").length < 8) {
+                        continue;
+                    }
+                    this.lastString = line;
                     System.out.println(lastString);
                     if (!lastString.equals("")) {
                         lastReceivedTimestamp = System.currentTimeMillis();
@@ -35,7 +44,7 @@ public class JeVois extends Thread {
                 }
             }
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

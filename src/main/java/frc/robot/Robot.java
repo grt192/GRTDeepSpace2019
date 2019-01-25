@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
         FIELD_MAP = new FieldMap();
         GYRO = new NavXGyro();
         HATCH_JEVOIS = new Camera("hatch_cam");
-        HATCHES = new Hatches();
+        // HATCHES = new Hatches();
         POS_TRACKER = new KalmanFilterPositionTracker();
         POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
         SWERVE = new Swerve();

@@ -56,25 +56,26 @@ public class KalmanFilterPositionTracker implements PositionTracker {
 
     @Override
     public double getX() {
-        return kf.get_statePost().get(0, 0)[0];
+        return 0;// kf.get_statePost().get(0, 0)[0];
     }
 
     @Override
     public double getY() {
-        return kf.get_statePost().get(1, 0)[0];
+        return 0;// kf.get_statePost().get(1, 0)[0];
     }
 
     @Override
     public void update() {
         SwerveData data = Robot.SWERVE.getSwerveData();
         long temp = System.currentTimeMillis();
-        double dt = (temp - lastUpdate) / 1000.0;
+        long ticks = (temp - lastUpdate);
+        double dt = ticks / 1000.0;
         kf.get_controlMatrix().put(0, 0, dt, 0, 0, dt);
         lastUpdate = temp;
         Mat U = new Mat(STATES, 1, TYPE);
         U.put(0, 0, data.encoderVX, data.encoderVY);
         kf.predict(U);
-        Position estimate = Robot.HATCH_JEVOIS.getPositionEstimate((long) dt * 1000);
+        Position estimate = Robot.HATCH_JEVOIS.getPositionEstimate(ticks);
         if (estimate != null) {
             Mat Z = new Mat(STATES, 1, TYPE);
             Z.put(0, 0, estimate.pos.x, estimate.pos.y);

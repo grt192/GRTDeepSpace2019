@@ -23,11 +23,11 @@ public class Camera {
         double angle = Config.getDouble(name + "_angle");
         relativePosition = new Position(new Vector(x, y), angle);
         jeVois = new JeVois();
-        jeVois.start();
+        // jeVois.start();
     }
 
     public Position getPositionEstimate(long maxAge) {
-        if (System.currentTimeMillis() - jeVois.getLastReceivedTimestamp() < maxAge)
+        if (System.currentTimeMillis() - jeVois.getLastReceivedTimestamp() > maxAge)
             return null;
         JeVoisMessage message = jeVois.getLastMessage();
         if (message == null)
@@ -40,6 +40,7 @@ public class Camera {
         Vector estimate = target.pos.pos.add(imageDisplacement.rotate(target.pos.angle))
                 .subtract(relativePosition.pos.rotate(angleEstimate));
         Position pos = new Position(estimate, angleEstimate);
+        System.out.println(estimate);
         return pos;
     }
 
