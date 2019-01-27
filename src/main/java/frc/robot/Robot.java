@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
     public static double ROBOT_RADIUS;
-    public static JeVois HATCH_JEVOIS;
+    // public static JeVois HATCH_JEVOIS;
 
     @Override
     public void robotInit() {
@@ -51,8 +51,8 @@ public class Robot extends TimedRobot {
         ROBOT_HEIGHT = Config.getDouble("robot_height");
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
         FIELD_MAP = new FieldMap();
-        HATCH_JEVOIS = new JeVois();
-        HATCH_JEVOIS.start();
+        // HATCH_JEVOIS = new JeVois();
+        // HATCH_JEVOIS.start();
         GYRO = new NavXGyro();
         HATCHES = new Hatches();
         POS_TRACKER = new KalmanFilterPositionTracker();
