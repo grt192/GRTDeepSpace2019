@@ -18,6 +18,9 @@ import frc.sequence.Sequence;
  */
 class DriverControl extends Mode {
 
+    private int pov = -1;
+    private int lastPov;
+
     @Override
     public boolean loop() {
         driveMechs();
@@ -47,10 +50,38 @@ class DriverControl extends Mode {
         double mag = Math.sqrt(x * x + y * y);
         x *= mag;
         y *= mag;
-        int pov = Input.XBOX.getPOV();
-        if (pov >= 0) {
-            Robot.SWERVE.setAngle(Math.toRadians(pov));
+        boolean buttonPressed = false;
+        if (pov == -1) {
+            buttonPressed = true;
         }
+        pov = Input.XBOX.getPOV();
+        if (Input.XBOX.getBumperPressed(Hand.kLeft)) {
+            pov = lastPov - 45;
+        }
+        if (Input.XBOX.getBumperPressed(Hand.kRight)) {
+            pov = lastPov + 45;
+        }
+        if (buttonPressed) {
+            if (pov == -1) {
+            } else if (pov == 45) {
+                Robot.SWERVE.setAngle(Math.toRadians(52));
+                lastPov = pov;
+            } else if (pov == 135) {
+                Robot.SWERVE.setAngle(Math.toRadians(142));
+                lastPov = pov;
+            } else if (pov == 235) {
+                Robot.SWERVE.setAngle(Math.toRadians(302));
+                lastPov = pov;
+            } else if (pov == 325) {
+                Robot.SWERVE.setAngle(Math.toRadians(212));
+                lastPov = pov;
+            } else {
+                Robot.SWERVE.setAngle(Math.toRadians(pov));
+                lastPov = pov;
+            }
+
+        }
+
         double lTrigger = Input.XBOX.getTriggerAxis(Hand.kLeft);
         double rTrigger = Input.XBOX.getTriggerAxis(Hand.kRight);
         double rotate = 0;

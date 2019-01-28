@@ -58,13 +58,16 @@ public class FieldMap {
     private void buildMap() {
         Polygon habZoneClose = new Polygon(new Vector(48, 73.6291), new Vector(0, 73.6291), new Vector(0, 251.2433),
                 new Vector(48, 251.2433));
-        Polygon leftRocketClose = new Polygon(new Vector(209.5727, 0), new Vector(209.5727, 6.6388),
-                new Vector(219.678, 26.2055), new Vector(238.8411, 0), new Vector(238.8411, 26.2055));
-        Polygon cargoBayClose = new Polygon(new Vector(222.8754, 139.1743), new Vector(222.8754, 185.11),
-                new Vector(251.3519, 133.8589), new Vector(251.3519, 189.5825), new Vector(324, 133.8589),
-                new Vector(324, 189.5825));
-        Polygon rightRocketClose = new Polygon(new Vector(209.5727, 324), new Vector(209.527, 314.125),
-                new Vector(219.6789, 303.9730), new Vector(238.8411, 295.5230), new Vector(238.8411, 324));
+        Polygon leftRocketClose = new Polygon(new Vector(209.5727, 0), new Vector(209.5727, 7.63),
+                new Vector(219.179, 27.32), new Vector(238.01, 27.32), new Vector(246.452, 7.630),
+                new Vector(246.452, 0));
+
+        Polygon cargoBayClose = new Polygon(new Vector(325.01, 133.082), new Vector(250.072, 133.082),
+                new Vector(220.216, 138.249), new Vector(220.216, 183.751), new Vector(250.011, 189),
+                new Vector(325.01, 189));
+        Polygon rightRocketClose = new Polygon(new Vector(209.073, 321.608), new Vector(209.073, 313.089),
+                new Vector(219.51, 294.559), new Vector(238.01, 294.559), new Vector(248.447, 313.089),
+                new Vector(248.447, 321.608));
         obstacles[0] = habZoneClose;
         obstacles[1] = leftRocketClose;
         obstacles[2] = cargoBayClose;
