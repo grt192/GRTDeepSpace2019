@@ -1,4 +1,4 @@
-# Config file for 2018 omega2
+# Config file for 2019 beta
 # Domain: roborio-192-frc.local
 
 swerve_width=26
@@ -14,35 +14,36 @@ swerve_kd=0.0
 
 
 # Offsets are inverted
-fl_rotate=1
-fl_drive=2
-fl_offset=150
-fr_rotate=15
-fr_drive=16
-fr_offset=-731
-bl_rotate=3
-bl_drive=4
-bl_offset=225
-br_rotate=13
-br_drive=14
-br_offset=-30
+fl_rotate=5
+fl_drive=1
+fl_offset=0
+fr_rotate=8
+fr_drive=4
+fr_offset=0
+bl_rotate=12
+bl_drive=16
+bl_offset=0
+br_rotate=9
+br_drive=13
+br_offset=0
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.884955592
 
-# roller=?
+# roller=7
 # roller_sol=?
 
-# winch=?
-# winch_follwer=?
+# winch=3
+# winch_follwer=2
 
 # climber_sol=?
-# left_climber=?
-# right_climber=?
+# left_climber=15
+# right_climber=14
 
-# carriage=?
+# intake=6
 
-name=omega22018
+name=beta2019
 
 hatch1=0
 hatch2=1
+
