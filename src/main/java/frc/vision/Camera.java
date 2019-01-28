@@ -23,7 +23,7 @@ public class Camera {
         double angle = Config.getDouble(name + "_angle");
         relativePosition = new Position(new Vector(x, y), angle);
         jeVois = new JeVois();
-        // jeVois.start();
+        jeVois.start();
     }
 
     public Position getPositionEstimate(long maxAge) {
@@ -32,7 +32,7 @@ public class Camera {
         JeVoisMessage message = jeVois.getLastMessage();
         if (message == null)
             return null;
-        Vector imageDisplacement = new Vector(message.translateZ, message.translateY);
+        Vector imageDisplacement = new Vector(message.translateZ, message.translateX);
         Vector myPosition = relativePosition.pos.rotate(Robot.GYRO.getAngle())
                 .add(new Vector(Robot.POS_TRACKER.getX(), Robot.POS_TRACKER.getY()));
         VisionTarget target = Robot.FIELD_MAP.getNearestTarget(myPosition, imageDisplacement);

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 
 public class JeVois extends Thread {
 
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     private SerialPort camera;
     public String lastString;
@@ -16,7 +16,7 @@ public class JeVois extends Thread {
     }
 
     public JeVois(SerialPort.Port port) { // port should be kUSB, kUSB1, or kUSB2
-        // this.camera = new SerialPort(115200, port);
+        this.camera = new SerialPort(115200, port);
     }
 
     @Override

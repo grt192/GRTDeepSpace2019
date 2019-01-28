@@ -56,12 +56,12 @@ public class KalmanFilterPositionTracker implements PositionTracker {
 
     @Override
     public double getX() {
-        return 0;// kf.get_statePost().get(0, 0)[0];
+        return kf.get_statePost().get(0, 0)[0];
     }
 
     @Override
     public double getY() {
-        return 0;// kf.get_statePost().get(1, 0)[0];
+        return kf.get_statePost().get(1, 0)[0];
     }
 
     @Override
