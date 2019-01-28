@@ -16,5 +16,6 @@ import frc.networking.FieldGUIServer;
 public class Input {
 
     public static final XboxController XBOX = new XboxController(0);
+    public static final XboxController MECH_XBOX = new XboxController(1);
     public static final FieldGUIServer GUI = new FieldGUIServer();
 }

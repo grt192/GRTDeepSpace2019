@@ -38,6 +38,8 @@ class DriverControl extends Mode {
         double intakePower = JoystickProfile.applyDeadband(Input.XBOX.getY(Hand.kRight));
         Robot.BOTTOM_INTAKE.setPower(intakePower);
         Robot.TOP_INTAKE.setPower(intakePower);
+        double elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft));
+        Robot.ELEVATOR.setPower(elevatorPower);
     }
 
     private void driveSwerve() {
