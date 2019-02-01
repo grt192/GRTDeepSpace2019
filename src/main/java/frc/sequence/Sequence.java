@@ -17,6 +17,7 @@ public abstract class Sequence implements Runnable {
     public static RumbleSeguence RUMBLE_SEQUENCE;
     public static PlaceHatch PLACE_HATCH;
     public static ClimbSequence CLIMB_SEQUENCE;
+    public static IntakeSequence INTAKE_SEQUENCE;
 
     private volatile boolean isRunning;
 
@@ -24,7 +25,7 @@ public abstract class Sequence implements Runnable {
         RUMBLE_SEQUENCE = new RumbleSeguence();
         PLACE_HATCH = new PlaceHatch();
         CLIMB_SEQUENCE = new ClimbSequence();
-
+        INTAKE_SEQUENCE = new IntakeSequence();
     }
 
     private Notifier notifier;

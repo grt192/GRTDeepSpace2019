@@ -32,12 +32,18 @@ class DriverControl extends Mode {
         if (Input.XBOX.getAButtonPressed()) {
             Sequence.PLACE_HATCH.start();
         }
-        if (Input.XBOX.getBButtonPressed()) {
-            Robot.BOTTOM_INTAKE.toggle();
+        double intakePower = JoystickProfile.applyDeadband(Input.XBOX.getY(Hand.kRight), 0.3);
+        if (Input.XBOX.getBButton()) {
+            Robot.BOTTOM_INTAKE.out();
+            intakePower = -1.0;
         }
-        double intakePower = JoystickProfile.applyDeadband(Input.XBOX.getY(Hand.kRight));
-        Robot.BOTTOM_INTAKE.setPower(intakePower);
-        Robot.TOP_INTAKE.setPower(intakePower);
+        if (Input.XBOX.getBButtonReleased()) {
+            Sequence.INTAKE_SEQUENCE.start();
+        }
+        if (!Sequence.INTAKE_SEQUENCE.isRunning()) {
+            Robot.BOTTOM_INTAKE.setPower(intakePower);
+            Robot.TOP_INTAKE.setPower(intakePower);
+        }
         double elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft));
         Robot.ELEVATOR.setPower(elevatorPower);
     }
