@@ -25,6 +25,7 @@ public class Swerve implements Runnable {
 
 	private volatile double userVX, userVY, userW, angle;
 	private volatile boolean robotCentric;
+	private volatile boolean withPID;
 	private volatile SwerveData swerveData;
 
 	public Swerve() {
@@ -32,6 +33,7 @@ public class Swerve implements Runnable {
 		gyro.reset();
 		angle = 0.0;
 		robotCentric = false;
+		withPID = false;
 		wheels = new Wheel[4];
 		wheels[0] = new Wheel("fr");
 		wheels[1] = new Wheel("br");
@@ -52,7 +54,7 @@ public class Swerve implements Runnable {
 
 	public void run() {
 		double w = userW;
-		if (w == 0 && userVX != 0 && userVY != 0)
+		if (w == 0 && withPID)
 			w = calcPID();
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
@@ -64,7 +66,7 @@ public class Swerve implements Runnable {
 
 	private double calcPID() {
 		double currentAngle = GRTUtil.positiveMod(Math.toRadians(gyro.getAngle()), TWO_PI);
-		double targetAngle = GRTUtil.positiveMod(angle, TWO_PI)
+		double targetAngle = GRTUtil.positiveMod(angle, TWO_PI);
 		double error = targetAngle - currentAngle;
 		if (Math.abs(error) > Math.PI) {
 			error -= Math.signum(error) * TWO_PI;
@@ -77,12 +79,14 @@ public class Swerve implements Runnable {
 		userVX = vx;
 		userVY = vy;
 		userW = w;
-		if (w == 0)
+		if (w != 0)
 			angle = Math.toRadians(gyro.getAngle());
+		withPID = false;
 	}
 
 	public void setAngle(double angle) {
 		userW = 0;
+		withPID = true;
 		this.angle = angle;
 	}
 
