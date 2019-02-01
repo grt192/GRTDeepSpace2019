@@ -20,9 +20,10 @@ public class Elevator {
     public static int cargoShip = 295877;
     public static final int pickup = 0;
 
-    private static int rollerBottom = 0;
+    private static int rollerBottom = 500;
     private static int rollerTop = 1566700;
-    private static int rollerThreshold;
+    private static int rollerThreshold = 156670;
+    private static int dangerSpeed = 15;
 
     public Elevator() {
         winch = new TalonSRX(Config.getInt("winch"));
@@ -40,10 +41,16 @@ public class Elevator {
 
     public void setPosition(int position) {
         closedLoop = true;
-        if (position != pickup)
+        int pos = winch.getSelectedSensorPosition();
+        if (position != pickup) {
             winch.set(ControlMode.Position, position);
-        else
+            if (pos < rollerTop)
+                Robot.BOTTOM_INTAKE.forceOut();
+        } else {
             winch.set(ControlMode.PercentOutput, -0.3);
+            if (pos < rollerTop + rollerThreshold && pos > rollerBottom)
+                Robot.BOTTOM_INTAKE.forceOut();
+        }
     }
 
     public boolean isClosedLoop() {
@@ -57,11 +64,11 @@ public class Elevator {
         if (pos >= rollerBottom && pos <= rollerTop) {
             danger = true;
         } else if (pos >= rollerBottom - rollerThreshold && pos <= rollerBottom) {
-            if (speed > 0) {
+            if (speed > dangerSpeed) {
                 danger = true;
             }
         } else if (pos <= rollerTop - rollerThreshold && pos >= rollerTop) {
-            if (speed < 0) {
+            if (speed < -dangerSpeed) {
                 danger = true;
             }
         }
