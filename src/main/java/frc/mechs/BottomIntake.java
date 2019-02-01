@@ -11,6 +11,7 @@ public class BottomIntake {
 
     private Solenoid intake;
     private TalonSRX intakeMotor;
+    private boolean desiredPos;
 
     public BottomIntake() {
         this.intake = new Solenoid(Config.getInt("roller_sol"));
@@ -24,17 +25,27 @@ public class BottomIntake {
     }
 
     public void in() {
-        setPower(0.0);
+        desiredPos = false;
         intake.set(false);
-
     }
 
     public void out() {
+        desiredPos = true;
         intake.set(true);
     }
 
     public void toggle() {
-        setPower(0);
-        intake.set(!intake.get());
+        if (intake.get())
+            in();
+        else
+            out();
+    }
+
+    public void forceOut() {
+        intake.set(true);
+    }
+
+    public void setToDesiredPos() {
+        intake.set(desiredPos);
     }
 }

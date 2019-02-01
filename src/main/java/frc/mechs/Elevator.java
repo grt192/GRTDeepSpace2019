@@ -5,17 +5,24 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import frc.config.Config;
+import frc.robot.Robot;
 
 public class Elevator {
 
     private TalonSRX winch;
     private TalonSRX winchFollower;
 
-    public int rocketTop = 448228;
-    public int rocketMiddle;
-    public int rocketBottom = 209000;
-    public int cargoShip;
-    public final int pickup = 0;
+    private boolean closedLoop;
+
+    public static int rocketTop = 448228;
+    public static int rocketMiddle;
+    public static int rocketBottom = 209000;
+    public static int cargoShip;
+    public static final int pickup = 0;
+
+    private static int rollerBottom;
+    private static int rollerTop;
+    private static int rollerThreshold;
 
     public Elevator() {
         winch = new TalonSRX(Config.getInt("winch"));
@@ -26,14 +33,39 @@ public class Elevator {
     }
 
     public void setPower(double power) {
-        if (power >= 0.0)
-            power = Math.max(power, 0.13);
+        closedLoop = false;
         winch.set(ControlMode.PercentOutput, power);
 
     }
 
     public void setPosition(int position) {
+        closedLoop = true;
         winch.set(ControlMode.Position, position);
+    }
+
+    public boolean isClosedLoop() {
+        return closedLoop;
+    }
+
+    public void dontKillRoller() {
+        int pos = winch.getSelectedSensorPosition();
+        int speed = winch.getSelectedSensorVelocity();
+        boolean danger = false;
+        if (pos >= rollerBottom && pos <= rollerTop) {
+            danger = true;
+        } else if (pos >= rollerBottom - rollerThreshold && pos <= rollerBottom) {
+            if (speed > 0) {
+                danger = true;
+            }
+        } else if (pos <= rollerTop - rollerThreshold && pos >= rollerTop) {
+            if (speed < 0) {
+                danger = true;
+            }
+        }
+        if (danger)
+            Robot.BOTTOM_INTAKE.forceOut();
+        else
+            Robot.BOTTOM_INTAKE.setToDesiredPos();
     }
 
     private void configTalon(TalonSRX talon) {
@@ -44,9 +76,9 @@ public class Elevator {
         talon.configReverseSoftLimitEnable(true);
         talon.configForwardSoftLimitThreshold(rocketTop);
         talon.configForwardSoftLimitEnable(true);
-        talon.config_kP(0, 0);
+        talon.config_kP(0, 1024.0 / 40000);
         talon.config_kI(0, 0);
-        talon.config_kD(0, 0);
+        talon.config_kD(0, 1024.0 / 100000);
         talon.config_kF(0, 0);
     }
 }

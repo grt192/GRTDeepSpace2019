@@ -12,6 +12,7 @@ import frc.input.Input;
 import frc.input.JoystickProfile;
 import frc.robot.Robot;
 import frc.sequence.Sequence;
+import frc.mechs.*;
 
 /**
  * Add your docs here.
@@ -44,8 +45,21 @@ class DriverControl extends Mode {
             Robot.BOTTOM_INTAKE.setPower(intakePower);
             Robot.TOP_INTAKE.setPower(intakePower);
         }
-        double elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft));
-        Robot.ELEVATOR.setPower(elevatorPower);
+        double elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft), 0.2);
+        if (!Robot.ELEVATOR.isClosedLoop() || elevatorPower != 0)
+            Robot.ELEVATOR.setPower(elevatorPower);
+        if (Input.MECH_XBOX.getAButtonPressed()) {
+            Robot.ELEVATOR.setPosition(Elevator.rocketBottom);
+        }
+        if (Input.MECH_XBOX.getBButtonPressed()) {
+            Robot.ELEVATOR.setPosition(Elevator.cargoShip);
+        }
+        if (Input.MECH_XBOX.getXButtonPressed()) {
+            Robot.ELEVATOR.setPosition(Elevator.rocketMiddle);
+        }
+        if (Input.MECH_XBOX.getYButtonPressed()) {
+            Robot.ELEVATOR.setPosition(Elevator.rocketTop);
+        }
     }
 
     private void driveSwerve() {
