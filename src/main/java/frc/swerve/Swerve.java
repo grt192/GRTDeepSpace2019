@@ -50,11 +50,12 @@ public class Swerve implements Runnable {
 		calcSwerveData();
 		notifier = new Notifier(this);
 		notifier.startPeriodic(0.02);
+		setAngle(0.0);
 	}
 
 	public void run() {
 		double w = userW;
-		if (w == 0 && withPID)
+		if (withPID)
 			w = calcPID();
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
@@ -80,12 +81,10 @@ public class Swerve implements Runnable {
 		userVY = vy;
 		userW = w;
 		if (w != 0)
-			angle = Math.toRadians(gyro.getAngle());
-		withPID = false;
+			withPID = false;
 	}
 
 	public void setAngle(double angle) {
-		userW = 0;
 		withPID = true;
 		this.angle = angle;
 	}
