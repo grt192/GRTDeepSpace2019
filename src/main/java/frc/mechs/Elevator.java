@@ -14,14 +14,14 @@ public class Elevator {
 
     private boolean closedLoop;
 
-    public static int rocketTop = 448228;
-    public static int rocketMiddle;
+    public static int rocketTop = 434890;
+    public static int rocketMiddle = 360962;
     public static int rocketBottom = 209000;
-    public static int cargoShip;
+    public static int cargoShip = 295877;
     public static final int pickup = 0;
 
-    private static int rollerBottom;
-    private static int rollerTop;
+    private static int rollerBottom = 0;
+    private static int rollerTop = 1566700;
     private static int rollerThreshold;
 
     public Elevator() {
@@ -40,7 +40,10 @@ public class Elevator {
 
     public void setPosition(int position) {
         closedLoop = true;
-        winch.set(ControlMode.Position, position);
+        if (position != pickup)
+            winch.set(ControlMode.Position, position);
+        else
+            winch.set(ControlMode.PercentOutput, -0.3);
     }
 
     public boolean isClosedLoop() {
@@ -76,9 +79,9 @@ public class Elevator {
         talon.configReverseSoftLimitEnable(true);
         talon.configForwardSoftLimitThreshold(rocketTop);
         talon.configForwardSoftLimitEnable(true);
-        talon.config_kP(0, 1024.0 / 40000);
+        talon.config_kP(0, 1024.0 / 4000);
         talon.config_kI(0, 0);
-        talon.config_kD(0, 1024.0 / 100000);
+        talon.config_kD(0, 1024.0 / 10000);
         talon.config_kF(0, 0);
     }
 }

@@ -60,6 +60,9 @@ class DriverControl extends Mode {
         if (Input.MECH_XBOX.getYButtonPressed()) {
             Robot.ELEVATOR.setPosition(Elevator.rocketTop);
         }
+        if (Input.MECH_XBOX.getBackButtonPressed()) {
+            Robot.ELEVATOR.setPosition(Elevator.pickup);
+        }
     }
 
     private void driveSwerve() {
