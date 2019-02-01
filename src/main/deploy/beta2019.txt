@@ -8,7 +8,7 @@ robot_width=32.75
 robot_height=28
 
 
-swerve_inverted=true
+swerve_inverted=false
 swerve_kp=0.3
 swerve_kd=0.0
 
@@ -16,34 +16,34 @@ swerve_kd=0.0
 # Offsets are inverted
 fl_rotate=5
 fl_drive=1
-fl_offset=0
+fl_offset=-229
 fr_rotate=8
 fr_drive=4
-fr_offset=0
+fr_offset=349
 bl_rotate=12
 bl_drive=16
-bl_offset=0
+bl_offset=-228
 br_rotate=9
 br_drive=13
-br_offset=0
+br_offset=-193
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.884955592
 
-# roller=7
-# roller_sol=?
+roller=7
+roller_sol=3
 
-# winch=3
-# winch_follwer=2
+winch=3
+winch_follower=2
 
-# climber_sol=?
-# left_climber=15
-# right_climber=14
+climber_sol=0
+left_climber=15
+right_climber=14
 
-# intake=6
+intake=6
 
 name=beta2019
 
-hatch1=0
+hatch1=2
 hatch2=1
 

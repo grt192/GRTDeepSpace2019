@@ -71,8 +71,6 @@ public class Robot extends TimedRobot {
         DEFAULT_MODE = Mode.DRIVER_CONTROL;
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
-        CameraServer.getInstance().startAutomaticCapture(0);
-        CameraServer.getInstance().startAutomaticCapture(1);
     }
 
     private void loop() {

@@ -11,11 +11,11 @@ public class Elevator {
     private TalonSRX winch;
     private TalonSRX winchFollower;
 
-    public int rocketTop;
+    public int rocketTop = 448228;
     public int rocketMiddle;
-    public int rocketBottom;
+    public int rocketBottom = 209000;
     public int cargoShip;
-    public int pickup;
+    public final int pickup = 0;
 
     public Elevator() {
         winch = new TalonSRX(Config.getInt("winch"));
@@ -26,7 +26,10 @@ public class Elevator {
     }
 
     public void setPower(double power) {
+        if (power >= 0.0)
+            power = Math.max(power, 0.13);
         winch.set(ControlMode.PercentOutput, power);
+
     }
 
     public void setPosition(int position) {
@@ -36,6 +39,11 @@ public class Elevator {
     private void configTalon(TalonSRX talon) {
         Config.defaultConfigTalon(talon);
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        talon.setSensorPhase(true);
+        talon.configReverseSoftLimitThreshold(pickup);
+        talon.configReverseSoftLimitEnable(true);
+        talon.configForwardSoftLimitThreshold(rocketTop);
+        talon.configForwardSoftLimitEnable(true);
         talon.config_kP(0, 0);
         talon.config_kI(0, 0);
         talon.config_kD(0, 0);
