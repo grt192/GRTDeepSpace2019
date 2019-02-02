@@ -24,7 +24,7 @@ public abstract class Sequence implements Runnable {
     public static void initSequneces() {
         RUMBLE_SEQUENCE = new RumbleSeguence();
         PLACE_HATCH = new PlaceHatch();
-        CLIMB_SEQUENCE = new ClimbSequence();
+        // CLIMB_SEQUENCE = new ClimbSequence();
         INTAKE_SEQUENCE = new IntakeSequence();
     }
 

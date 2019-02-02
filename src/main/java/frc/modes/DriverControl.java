@@ -44,8 +44,9 @@ class DriverControl extends Mode {
             Robot.BOTTOM_INTAKE.setPower(intakePower);
             Robot.TOP_INTAKE.setPower(intakePower);
         }
-        double elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft));
-        Robot.ELEVATOR.setPower(elevatorPower);
+        double leftPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft));
+        double rightPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kRight));
+        Robot.CLIMBER.manualControl(leftPower, rightPower);
     }
 
     private void driveSwerve() {

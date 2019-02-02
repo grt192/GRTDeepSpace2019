@@ -57,6 +57,11 @@ public class Climber {
         }
     }
 
+    public void manualControl(double left, double right) {
+        leftRack.set(ControlMode.PercentOutput, left);
+        rightRack.set(ControlMode.PercentOutput, left);
+    }
+
     public boolean isUp() {
         return leftRack.getSelectedSensorPosition() >= limit && rightRack.getSelectedSensorPosition() >= limit;
     }
