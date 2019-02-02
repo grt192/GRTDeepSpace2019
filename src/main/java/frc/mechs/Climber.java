@@ -59,7 +59,7 @@ public class Climber {
 
     public void manualControl(double left, double right) {
         leftRack.set(ControlMode.PercentOutput, left);
-        rightRack.set(ControlMode.PercentOutput, left);
+        rightRack.set(ControlMode.PercentOutput, right);
     }
 
     public boolean isUp() {
