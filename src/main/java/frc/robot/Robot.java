@@ -54,38 +54,38 @@ public class Robot extends TimedRobot {
         // HATCH_JEVOIS = new JeVois();
         // HATCH_JEVOIS.start();
         GYRO = new NavXGyro();
-        HATCHES = new Hatches();
-        POS_TRACKER = new KalmanFilterPositionTracker();
+        // HATCHES = new Hatches();
+        POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
         SWERVE = new Swerve();
         Sequence.initSequneces();
         Mode.initModes();
         DEFAULT_MODE = Mode.DRIVER_CONTROL;
         currentMode = DEFAULT_MODE;
-        Input.GUI.start();
+        // Input.GUI.start();
         // CameraServer.getInstance().startAutomaticCapture(0);
     }
 
     private void loop() {
         // handle mode switching
-        String line = Input.GUI.readLine();
-        while (line != "") {
-            System.out.println(line);
-            String[] message = line.split(" ");
-            switch (message[0]) {
-            case "move":
-                double x = Double.parseDouble(message[1]);
-                double y = Double.parseDouble(message[2]);
-                PathfindingControl.PATHFINDING_CONTROL.setTarget(x, y);
-            case "resume":
-                changeMode(Mode.PATHFINDING_CONTROL);
-                break;
-            case "pause":
-                changeMode(DEFAULT_MODE);
-                break;
-            }
-            line = Input.GUI.readLine();
-        }
+        // String line = Input.GUI.readLine();
+        // while (line != "") {
+        // System.out.println(line);
+        // String[] message = line.split(" ");
+        // switch (message[0]) {
+        // case "move":
+        // double x = Double.parseDouble(message[1]);
+        // double y = Double.parseDouble(message[2]);
+        // PathfindingControl.PATHFINDING_CONTROL.setTarget(x, y);
+        // case "resume":
+        // changeMode(Mode.PATHFINDING_CONTROL);
+        // break;
+        // case "pause":
+        // changeMode(DEFAULT_MODE);
+        // break;
+        // }
+        // line = Input.GUI.readLine();
+        // }
         if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
         }

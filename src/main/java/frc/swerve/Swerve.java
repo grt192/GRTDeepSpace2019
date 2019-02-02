@@ -1,5 +1,7 @@
 package frc.swerve;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.config.Config;
@@ -58,8 +60,14 @@ public class Swerve implements Runnable {
 		Robot.POS_TRACKER.update();
 		SmartDashboard.putNumber("X Position", Robot.POS_TRACKER.getX());
 		SmartDashboard.putNumber("Y Position", Robot.POS_TRACKER.getY());
-		Input.GUI.sendData("position " + Robot.POS_TRACKER.getX() + " " + Robot.POS_TRACKER.getY());
 		SmartDashboard.putNumber("Angle", gyro.getAngle());
+		NetworkTableInstance.getDefault().getTable("PositionTracking").getEntry("x")
+				.setDouble(Robot.POS_TRACKER.getX());
+		NetworkTableInstance.getDefault().getTable("PositionTracking").getEntry("y")
+				.setDouble(Robot.POS_TRACKER.getY());
+		NetworkTableInstance.getDefault().getTable("PositionTracking").getEntry("angle")
+				.setDouble(Math.toRadians(gyro.getAngle()));
+
 	}
 
 	private double calcPID() {

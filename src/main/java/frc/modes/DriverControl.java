@@ -26,9 +26,9 @@ class DriverControl extends Mode {
 
     @Override
     public boolean loop() {
-        if (Input.XBOX.getAButtonPressed()) {
-            Sequence.PLACE_HATCH.start();
-        }
+        // if (Input.XBOX.getAButtonPressed()) {
+        // Sequence.PLACE_HATCH.start();
+        // }
 
         driveSwerve();
         return true;
