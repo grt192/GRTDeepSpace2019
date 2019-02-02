@@ -35,7 +35,7 @@ class DriverControl extends Mode {
         double intakePower = JoystickProfile.applyDeadband(Input.XBOX.getY(Hand.kRight), 0.3);
         if (Input.XBOX.getBButton()) {
             Robot.BOTTOM_INTAKE.out();
-            intakePower = -1.0;
+            intakePower = 1.0;
         }
         if (Input.XBOX.getBButtonReleased()) {
             Sequence.INTAKE_SEQUENCE.start();

@@ -16,7 +16,7 @@ public class IntakeSequence extends Sequence {
 
     @Override
     public void runSequence() {
-        Robot.BOTTOM_INTAKE.setPower(-1.0);
+        Robot.BOTTOM_INTAKE.setPower(1.0);
         Robot.BOTTOM_INTAKE.in();
         try {
             Thread.sleep(500);
