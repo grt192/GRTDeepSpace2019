@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.fieldmap.FieldMap;
@@ -73,6 +72,10 @@ public class Robot extends TimedRobot {
         Input.GUI.start();
     }
 
+    /**
+     * gets data from GUI and does pathfinding if the pathfinding mode is activated
+     * Also handles pausing/resuming pathfinding
+     */
     private void loop() {
         // handle mode switching
         String line = Input.GUI.readLine();

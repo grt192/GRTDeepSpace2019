@@ -18,6 +18,9 @@ public class Node implements Comparable<Node> {
         neighbors = new HashSet<>();
     }
 
+    /**
+     * values used to evaluate best node
+     */
     public void update(Node node) {
         double newG = node.g + distance(node);
         if (newG < g) {

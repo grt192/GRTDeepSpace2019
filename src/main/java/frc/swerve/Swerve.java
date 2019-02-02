@@ -48,23 +48,36 @@ public class Swerve implements Runnable {
 		WHEEL_ANGLE = Math.atan2(SWERVE_WIDTH, SWERVE_HEIGHT);
 		ROTATE_SCALE = 1 / RADIUS;
 		calcSwerveData();
+		/** QUESTION: What does the notifier do? Is it for networking? */
 		notifier = new Notifier(this);
 		notifier.startPeriodic(0.02);
 		setAngle(0.0);
 	}
 
+	/**
+	 * Self-explanatory, runs swerve
+	 */
 	public void run() {
 		double w = userW;
+		/**
+		 * withPID boolean is false when using bumpers to turn
+		 */
 		if (withPID)
 			w = calcPID();
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
 		Robot.POS_TRACKER.update();
+		/** sends postion for FieldGUI */
 		SmartDashboard.putNumber("X Position", Robot.POS_TRACKER.getX());
 		SmartDashboard.putNumber("Y Position", Robot.POS_TRACKER.getY());
 		SmartDashboard.putNumber("Angle", gyro.getAngle());
 	}
 
+	/**
+	 * Calculates the angular velocity needed to return to the target angle
+	 * 
+	 * @return
+	 */
 	private double calcPID() {
 		double currentAngle = GRTUtil.positiveMod(Math.toRadians(gyro.getAngle()), TWO_PI);
 		double targetAngle = GRTUtil.positiveMod(angle, TWO_PI);
@@ -76,6 +89,10 @@ public class Swerve implements Runnable {
 		return w;
 	}
 
+	/**
+	 * QUESTION: Does swerve.drive() actually drive swerve? Because how is this
+	 * different than swerve.run()?
+	 */
 	public void drive(double vx, double vy, double w) {
 		userVX = vx;
 		userVY = vy;
@@ -84,11 +101,17 @@ public class Swerve implements Runnable {
 			withPID = false;
 	}
 
+	/**
+	 * When not using bumpers to turn, PID is used
+	 */
 	public void setAngle(double angle) {
 		withPID = true;
 		this.angle = angle;
 	}
 
+	/**
+	 * RobotCentric is initally false
+	 */
 	public void setRobotCentric(boolean mode) {
 		robotCentric = mode;
 	}
@@ -112,6 +135,7 @@ public class Swerve implements Runnable {
 		return swerveData;
 	}
 
+	/** Math which I don't understand */
 	private void calcSwerveData() {
 		double gyroAngle = Math.toRadians(gyro.getAngle());
 		double gyroRate = Math.toRadians(gyro.getRate());

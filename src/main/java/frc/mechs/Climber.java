@@ -40,6 +40,9 @@ public class Climber {
         railSolenoid.set(true);
     }
 
+    /**
+     * QUESTION: What exactly does this do? As in, why is error being calculated?
+     */
     public void ascend() {
         int leftPos = leftRack.getSelectedSensorPosition();
         int rightPos = rightRack.getSelectedSensorPosition();

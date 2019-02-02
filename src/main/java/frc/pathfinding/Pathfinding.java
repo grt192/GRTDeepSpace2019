@@ -6,8 +6,14 @@ import java.util.PriorityQueue;
 import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
 
+/** Waypoint pathfinding */
+
 public class Pathfinding {
 
+    /**
+     * Nodes are prespecified. I originally used a HashSet because it only stored
+     * objects Also, HashSets have the .contains method which makes time O(1)
+     */
     private HashSet<Node> nodes;
     private Node targetNode;
 
@@ -22,13 +28,24 @@ public class Pathfinding {
         cleanTree();
         Node startNode = new Node(x, y);
         addNode(startNode);
+        /**
+         * calcH is calculating heuristic value from the start to target node
+         */
         startNode.calcH(targetNode);
         open.add(startNode);
 
         while (!open.isEmpty()) {
+
+            /**
+             * gets the first object in the queue
+             */
             Node current = open.poll();
             closed.add(current);
 
+            /**
+             * checks if node is the targetNode, else, it removes node and evaluates the
+             * next node
+             */
             if (current == targetNode) {
                 Node next = current;
                 while (next.parent != startNode) {
@@ -49,6 +66,9 @@ public class Pathfinding {
         return null;
     }
 
+    /**
+     * adds nodes to the HashSet, using coordinates
+     */
     private void initNodes() {
         nodes = new HashSet<>();
         addNode(new Node(142, 30));

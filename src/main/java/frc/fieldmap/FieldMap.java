@@ -13,18 +13,35 @@ import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
 
 /**
- * Add your docs here.
+ * FieldMap is used for waypoint pathfinding.
  */
 public class FieldMap {
 
+    /**
+     * We know our obstacles beforehand, this array holds all of the known obstacles
+     * Main drawback is that we have no way of pathfinding around other robots on
+     * the field
+     */
     private Polygon[] obstacles;
 
+    /** initalizes the map */
     public FieldMap() {
         // buildMap();
         testMap();
     }
 
+    /**
+     * lineOfSight checks to see if a specific node can be "seen" by the robot. As
+     * in, can the robot move to this node in a straight line without hitting any of
+     * the obstacles.
+     * 
+     * @param v1
+     * @param v2
+     * @return
+     */
     public boolean lineOfSight(Vector v1, Vector v2) {
+
+        /** QUESTION: What exactly is the math here? */
         Vector dif = v2.subtract(v1);
         double d = v1.distanceTo(v2);
         if (d == 0.0)
@@ -55,25 +72,32 @@ public class FieldMap {
         return false;
     }
 
+    /**
+     * pretty self-explanatory, makes all of the obstacles on the map and puts them
+     * into the obstacles array
+     */
     private void buildMap() {
+
+        /**
+         * QUESTION: Why are we using vectors? It seems like we are using them to
+         * represent the borders of each obstacle, but why vectors and not lines?
+         */
         Polygon habZoneClose = new Polygon(new Vector(48, 73.6291), new Vector(0, 73.6291), new Vector(0, 251.2433),
                 new Vector(48, 251.2433));
-        Polygon leftRocketClose = new Polygon(new Vector(209.5727, 0), new Vector(209.5727, 7.63),
-                new Vector(219.179, 27.32), new Vector(238.01, 27.32), new Vector(246.452, 7.630),
-                new Vector(246.452, 0));
-
-        Polygon cargoBayClose = new Polygon(new Vector(325.01, 133.082), new Vector(250.072, 133.082),
-                new Vector(220.216, 138.249), new Vector(220.216, 183.751), new Vector(250.011, 189),
-                new Vector(325.01, 189));
-        Polygon rightRocketClose = new Polygon(new Vector(209.073, 321.608), new Vector(209.073, 313.089),
-                new Vector(219.51, 294.559), new Vector(238.01, 294.559), new Vector(248.447, 313.089),
-                new Vector(248.447, 321.608));
+        Polygon leftRocketClose = new Polygon(new Vector(209.5727, 0), new Vector(209.5727, 6.6388),
+                new Vector(219.678, 26.2055), new Vector(238.8411, 0), new Vector(238.8411, 26.2055));
+        Polygon cargoBayClose = new Polygon(new Vector(222.8754, 139.1743), new Vector(222.8754, 185.11),
+                new Vector(251.3519, 133.8589), new Vector(251.3519, 189.5825), new Vector(324, 133.8589),
+                new Vector(324, 189.5825));
+        Polygon rightRocketClose = new Polygon(new Vector(209.5727, 324), new Vector(209.527, 314.125),
+                new Vector(219.6789, 303.9730), new Vector(238.8411, 295.5230), new Vector(238.8411, 324));
         obstacles[0] = habZoneClose;
         obstacles[1] = leftRocketClose;
         obstacles[2] = cargoBayClose;
         obstacles[3] = rightRocketClose;
     }
 
+    /** GRT test map */
     private void testMap() {
         obstacles = new Polygon[1];
         Polygon table = new Polygon(new Vector(41, 53), new Vector(41, 74), new Vector(119, 74), new Vector(119, 53));
