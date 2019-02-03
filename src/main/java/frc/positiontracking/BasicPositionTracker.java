@@ -13,7 +13,7 @@ import frc.robot.*;
 /**
  * Add your docs here.
  */
-public class BasicPositionTracker implements PositionTracker {
+public class BasicPositionTracker extends PositionTracker {
 
     private volatile double x;
     private volatile double y;

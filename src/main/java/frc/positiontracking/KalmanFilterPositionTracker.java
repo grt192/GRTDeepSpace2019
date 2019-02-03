@@ -17,7 +17,7 @@ import frc.swerve.SwerveData;
 /**
  * Add your docs here.
  */
-public class KalmanFilterPositionTracker implements PositionTracker {
+public class KalmanFilterPositionTracker extends PositionTracker {
 
     private static final int TYPE = CvType.CV_64F;
     private static final int STATES = 2;

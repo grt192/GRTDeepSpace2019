@@ -1,8 +1,13 @@
 package frc.pathfinding;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
 
@@ -10,8 +15,11 @@ public class Pathfinding {
 
     private HashSet<Node> nodes;
     private Node targetNode;
+    private NetworkTableEntry path;
 
     public Pathfinding() {
+        path = NetworkTableInstance.getDefault().getTable("Pathfinding").getEntry("path");
+        path.setDoubleArray(new double[0]);
         initNodes();
         targetNode = new Node(0, 0);// to avoid null checks
     }
@@ -30,10 +38,21 @@ public class Pathfinding {
             closed.add(current);
 
             if (current == targetNode) {
+                ArrayList<Double> list = new ArrayList<>();
                 Node next = current;
+                list.add(next.pos.y);
+                list.add(next.pos.x);
                 while (next.parent != startNode) {
                     next = next.parent;
+                    list.add(next.pos.y);
+                    list.add(next.pos.x);
                 }
+                int len = list.size();
+                double[] data = new double[len];
+                for (int i = 0; i < len; ++i) {
+                    data[i] = list.get(len - 1 - i);
+                }
+                path.setDoubleArray(data);
                 removeNode(startNode);
                 return next.pos;
             }
@@ -45,6 +64,7 @@ public class Pathfinding {
                 node.update(current);
             }
         }
+        System.out.println(startNode + " --> " + targetNode);
         removeNode(startNode);
         return null;
     }

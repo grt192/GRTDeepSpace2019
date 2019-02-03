@@ -7,20 +7,21 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.fieldmap.FieldMap;
 import frc.input.Input;
+import frc.input.JoystickProfile;
 import frc.mechs.Hatches;
 import frc.modes.Mode;
-import frc.modes.PathfindingControl;
 import frc.positiontracking.BasicPositionTracker;
-import frc.positiontracking.KalmanFilterPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.sequence.Sequence;
 import frc.swerve.NavXGyro;
-import frc.swerve.Swerve;
-import frc.vision.JeVois;;
+import frc.swerve.Swerve;;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,8 +32,7 @@ import frc.vision.JeVois;;
  */
 public class Robot extends TimedRobot {
 
-    private Mode DEFAULT_MODE;
-    private Mode currentMode;
+    private NetworkTableEntry mode;
 
     public static Swerve SWERVE;
     public static NavXGyro GYRO;
@@ -42,7 +42,6 @@ public class Robot extends TimedRobot {
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
     public static double ROBOT_RADIUS;
-    // public static JeVois HATCH_JEVOIS;
 
     @Override
     public void robotInit() {
@@ -51,52 +50,36 @@ public class Robot extends TimedRobot {
         ROBOT_HEIGHT = Config.getDouble("robot_height");
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
         FIELD_MAP = new FieldMap();
-        // HATCH_JEVOIS = new JeVois();
-        // HATCH_JEVOIS.start();
         GYRO = new NavXGyro();
-        // HATCHES = new Hatches();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
         SWERVE = new Swerve();
         Sequence.initSequneces();
         Mode.initModes();
-        DEFAULT_MODE = Mode.DRIVER_CONTROL;
-        currentMode = DEFAULT_MODE;
+        mode = NetworkTableInstance.getDefault().getTable("Robot").getEntry("mode");
+        mode.setNumber(0);
         // Input.GUI.start();
         // CameraServer.getInstance().startAutomaticCapture(0);
     }
 
     private void loop() {
         // handle mode switching
-        // String line = Input.GUI.readLine();
-        // while (line != "") {
-        // System.out.println(line);
-        // String[] message = line.split(" ");
-        // switch (message[0]) {
-        // case "move":
-        // double x = Double.parseDouble(message[1]);
-        // double y = Double.parseDouble(message[2]);
-        // PathfindingControl.PATHFINDING_CONTROL.setTarget(x, y);
-        // case "resume":
-        // changeMode(Mode.PATHFINDING_CONTROL);
-        // break;
-        // case "pause":
-        // changeMode(DEFAULT_MODE);
-        // break;
-        // }
-        // line = Input.GUI.readLine();
-        // }
-        if (!currentMode.loop()) {
-            changeMode(DEFAULT_MODE);
+        int i = mode.getNumber(0).intValue();
+        if (manualOverride()) {
+            mode.setNumber(0);
+            i = 0;
+        }
+        if (!Mode.getMode(i).loop()) {
+            mode.setNumber(0);
         }
     }
 
-    private void changeMode(Mode newMode) {
-        if (currentMode == newMode)
-            return;
-        currentMode.exit();
-        newMode.enter();
-        currentMode = newMode;
+    private boolean manualOverride() {
+        double x = JoystickProfile.applyDeadband(-Input.XBOX.getY(Hand.kLeft));
+        double y = JoystickProfile.applyDeadband(Input.XBOX.getX(Hand.kLeft));
+        if (x != 0 || y != 0)
+            return true;
+        return false;
     }
 
     @Override
