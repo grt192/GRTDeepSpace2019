@@ -17,6 +17,10 @@ public class Elevator {
     public int cargoShip;
     public final int pickup = 0;
 
+    /*
+     * Code for elevator mech which lifts the balls up to the third level of the
+     * rocket
+     */
     public Elevator() {
         winch = new TalonSRX(Config.getInt("winch"));
         winchFollower = new TalonSRX(Config.getInt("winch_follower"));
@@ -25,6 +29,9 @@ public class Elevator {
         winchFollower.follow(winch);
     }
 
+    /*
+     * Sets the power of the winch
+     */
     public void setPower(double power) {
         if (power >= 0.0)
             power = Math.max(power, 0.13);
