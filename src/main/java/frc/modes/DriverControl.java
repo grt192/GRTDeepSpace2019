@@ -18,12 +18,6 @@ import frc.robot.Robot;
 class DriverControl extends Mode {
 
     @Override
-    public void enter() {
-        // Input.RUMBLE.start();
-
-    }
-
-    @Override
     public boolean loop() {
         // if (Input.XBOX.getAButtonPressed()) {
         // Sequence.PLACE_HATCH.start();

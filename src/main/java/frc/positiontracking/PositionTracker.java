@@ -7,13 +7,30 @@
 
 package frc.positiontracking;
 
-public interface PositionTracker {
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
-    public void set(double x, double y);
+public abstract class PositionTracker {
 
-    public double getX();
+    private NetworkTableEntry xPos, yPos;
 
-    public double getY();
+    public PositionTracker() {
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("PositionTracking");
+        xPos = table.getEntry("x");
+        yPos = table.getEntry("y");
+    }
 
-    public void update();
+    public abstract void set(double x, double y);
+
+    public abstract double getX();
+
+    public abstract double getY();
+
+    public abstract void update();
+
+    public final void sendToNetwork() {
+        xPos.setDouble(getX());
+        yPos.setDouble(getY());
+    }
 }

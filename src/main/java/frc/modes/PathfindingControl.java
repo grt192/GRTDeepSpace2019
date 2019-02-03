@@ -7,6 +7,10 @@
 
 package frc.modes;
 
+import edu.wpi.first.networktables.EntryListenerFlags;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.fieldmap.geometry.Vector;
 import frc.pathfinding.Pathfinding;
 import frc.robot.Robot;
@@ -17,19 +21,29 @@ import frc.robot.Robot;
 public class PathfindingControl extends Mode {
 
     private Vector target;
+    private volatile boolean newTarget;
     private Pathfinding pathfinding;
+    private NetworkTableEntry targetEntry;
 
     public PathfindingControl() {
         pathfinding = new Pathfinding();
-    }
-
-    public void enter() {
-        System.out.println("pathfinding");
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("Pathfinding");
+        targetEntry = table.getEntry("target");
+        targetEntry.setString("0.0 0.0");
+        targetEntry.addListener(event -> {
+            String data = event.value.getString();
+            String[] split = data.split(" ");
+            target = new Vector(Double.parseDouble(split[0]), Double.parseDouble(split[1]));
+            newTarget = true;
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
     }
 
     @Override
     public boolean loop() {
-
+        if (newTarget) {
+            setTarget(target.x, target.y);
+            newTarget = false;
+        }
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
         Vector pos = new Vector(xPos, yPos);
@@ -40,7 +54,7 @@ public class PathfindingControl extends Mode {
         }
         double d = pos.distanceTo(endPos);
         double distance = pos.distanceTo(target);
-        double speed = 0.5;// * Math.min((d - 36) / 36.0, 1);
+        double speed = 0.75 * Math.min(d / 36.0, 1);
         Vector velocity = endPos.subtract(pos).multiply(speed / d);
         if (distance < 4) {
             return false;
@@ -54,7 +68,6 @@ public class PathfindingControl extends Mode {
         System.out.println("Setting target to " + x + ", " + y);
         target = new Vector(x, y);
         pathfinding.setTargetNode(x, y);
-
     }
 
 }

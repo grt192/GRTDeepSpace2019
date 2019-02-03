@@ -43,4 +43,9 @@ public class Node implements Comparable<Node> {
         return -1;
     }
 
+    @Override
+    public String toString() {
+        return pos.toString();
+    }
+
 }
