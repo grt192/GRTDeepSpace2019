@@ -15,11 +15,18 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * Add your docs here.
+ * Like the name suggests, FieldGUIServer creates a server that sends and
+ * recieves data from FieldGUI
  */
 public class FieldGUIServer extends Thread {
 
+    /**
+     * differentiating between ServerSocket and Socket, I originally had this
+     * question
+     */
+    // sends data
     private ServerSocket server;
+    // recieves data
     private Socket client;
     private InputStream input;
     private Scanner scanner;
@@ -49,6 +56,9 @@ public class FieldGUIServer extends Thread {
         }
     }
 
+    /**
+     * reads data sent from the FieldGUI
+     */
     public String readLine() {
         try {
             if (scanner == null || input.available() == 0)
@@ -60,6 +70,9 @@ public class FieldGUIServer extends Thread {
         return scanner.nextLine();
     }
 
+    /**
+     * Sends data to FieldGUI
+     */
     public void sendData(String data) {
         if (output != null)
             output.println(data);
