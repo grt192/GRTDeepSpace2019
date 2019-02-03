@@ -15,6 +15,9 @@ public class TopIntake {
     // private final Double LEVEL_THREE = 7.4583;
     // private final Double CARGO_BAY = 3.3125;
 
+    /*
+     * Code for top intake which is what places the ball into the cargo bay/rocket
+     */
     public TopIntake() {
         intakeMotor2 = new TalonSRX(Config.getInt("intake"));
     }
