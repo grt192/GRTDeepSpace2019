@@ -86,11 +86,14 @@ public class FieldMap {
     }
 
     private void testMap() {
-        obstacles = new Polygon[1];
-        Polygon table = new Polygon(new Vector(41, 53), new Vector(41, 74), new Vector(119, 74), new Vector(119, 53));
+        obstacles = new Polygon[2];
+        Polygon table = new Polygon(new Vector(48, 72), new Vector(48, 96), new Vector(120, 96), new Vector(120, 72));
+        Polygon cargoShip = new Polygon(new Vector(84, 168), new Vector(84, 151), new Vector(108, 151),
+                new Vector(108, 168));
         obstacles[0] = table;
+        obstacles[1] = cargoShip;
 
         visionTargets = new VisionTarget[1];
-        visionTargets[0] = new VisionTarget(new Vector(139, 142.5), -Math.PI / 2, false);
+        visionTargets[0] = new VisionTarget(new Vector(96, 151), -Math.PI / 2, false);
     }
 }

@@ -70,6 +70,7 @@ public class Pathfinding {
     }
 
     private void initNodes() {
+        // TODO: fix nodes for new field
         nodes = new HashSet<>();
         addNode(new Node(142, 30));
         addNode(new Node(142, 97));

@@ -36,9 +36,9 @@ velocity_p=0.5
 
 name=omega22018
 
-hatch1=0
-hatch2=1
+#hatch1=0
+#hatch2=1
 
-# hatch_cam_x=?
-# hatch_cam_y=?
-# hatch_cam_angle=0
+# hatch_cam_x=-14
+# hatch_cam_y=0
+# hatch_cam_angle=3.1415926535
