@@ -18,7 +18,7 @@ public class Elevator {
     public final int pickup = 0;
 
     /*
-     * Code for elevator mech which lifts the balls up to the third level of the
+     * Code for elevator mech which carries a ball up to the third level of the
      * rocket
      */
     public Elevator() {
@@ -31,6 +31,8 @@ public class Elevator {
 
     /*
      * Sets the power of the winch
+     * 
+     * @param power
      */
     public void setPower(double power) {
         if (power >= 0.0)
@@ -39,10 +41,18 @@ public class Elevator {
 
     }
 
+    /*
+     * Sets the position of the winch
+     *
+     * @param position
+     */
     public void setPosition(int position) {
         winch.set(ControlMode.Position, position);
     }
 
+    /*
+    * 
+    */
     private void configTalon(TalonSRX talon) {
         Config.defaultConfigTalon(talon);
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
