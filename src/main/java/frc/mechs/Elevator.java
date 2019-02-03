@@ -51,8 +51,10 @@ public class Elevator {
     }
 
     /*
-    * 
-    */
+     * Sets up the talons
+     *
+     * @param talon
+     */
     private void configTalon(TalonSRX talon) {
         Config.defaultConfigTalon(talon);
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
