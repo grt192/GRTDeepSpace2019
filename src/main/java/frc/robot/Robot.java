@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
     }
 
     private void loop() {
+        ELEVATOR.dontKillRoller(); // pls
         // handle mode switching
         String line = Input.GUI.readLine();
         while (line != "") {
