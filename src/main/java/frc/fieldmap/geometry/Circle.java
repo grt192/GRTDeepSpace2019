@@ -23,4 +23,9 @@ public class Circle {
     public boolean intersects(Polygon p) {
         return p.getClosestDistance(position) <= radius;
     }
+
+    public boolean outsideBounds(Vector bounds) {
+        return (position.x - radius <= 0 || position.x + radius >= bounds.x || position.y - radius <= 0
+                || position.x + radius >= bounds.y);
+    }
 }

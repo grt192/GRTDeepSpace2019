@@ -57,4 +57,17 @@ public class Vector {
     public String toString() {
         return "Vector[" + x + ", " + y + "]";
     }
+
+    @Override
+    public int hashCode() {
+        return (int) (x * 1000 + y * 1000 * 1000);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Vector))
+            return false;
+        Vector v = (Vector) other;
+        return (x == v.x && y == v.y);
+    }
 }

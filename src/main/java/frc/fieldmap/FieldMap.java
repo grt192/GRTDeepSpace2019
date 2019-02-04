@@ -7,6 +7,9 @@
 
 package frc.fieldmap;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import frc.fieldmap.geometry.Circle;
 import frc.fieldmap.geometry.Polygon;
 import frc.fieldmap.geometry.Vector;
@@ -17,6 +20,8 @@ import frc.robot.Robot;
  */
 public class FieldMap {
 
+    private double FIELD_WIDTH, FIELD_HEIGHT;
+    private Vector bounds;
     private Polygon[] obstacles;
     private VisionTarget[] visionTargets;
 
@@ -41,6 +46,8 @@ public class FieldMap {
     }
 
     public boolean shapeIntersects(Polygon p) {
+        if (p.outsideBounds(bounds))
+            return true;
         for (Polygon poly : obstacles) {
             if (p.intersects(poly))
                 return true;
@@ -49,6 +56,8 @@ public class FieldMap {
     }
 
     public boolean shapeIntersects(Circle c) {
+        if (c.outsideBounds(bounds))
+            return true;
         for (Polygon poly : obstacles) {
             if (c.intersects(poly))
                 return true;
@@ -69,7 +78,25 @@ public class FieldMap {
         return best;
     }
 
+    public Set<Vector> generateNodes() {
+        double radius = Robot.ROBOT_RADIUS + 2.0;
+        double bigRadius = radius + 1.0;
+        Set<Vector> nodeSet = new HashSet<>();
+        for (Polygon p : obstacles) {
+            Vector[] nodes = p.getPossibleNodes(bigRadius);
+            for (Vector v : nodes) {
+                Circle c = new Circle(v, radius);
+                if (!shapeIntersects(c))
+                    nodeSet.add(v);
+            }
+        }
+        return nodeSet;
+    }
+
     private void buildMap() {
+        FIELD_WIDTH = 27 * 12;
+        FIELD_HEIGHT = 54 * 12;
+        bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
         Polygon habZoneClose = new Polygon(new Vector(48, 73.6291), new Vector(0, 73.6291), new Vector(0, 251.2433),
                 new Vector(48, 251.2433));
         Polygon leftRocketClose = new Polygon(new Vector(209.5727, 0), new Vector(209.5727, 6.6388),
@@ -86,6 +113,9 @@ public class FieldMap {
     }
 
     private void testMap() {
+        FIELD_WIDTH = 14 * 12;
+        FIELD_HEIGHT = 14 * 12;
+        bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
         obstacles = new Polygon[2];
         Polygon table = new Polygon(new Vector(48, 72), new Vector(48, 96), new Vector(120, 96), new Vector(120, 72));
         Polygon cargoShip = new Polygon(new Vector(84, 168), new Vector(84, 151), new Vector(108, 151),

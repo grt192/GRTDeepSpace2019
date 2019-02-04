@@ -32,9 +32,16 @@ public class Polygon {
 
     }
 
+    public boolean outsideBounds(Vector bounds) {
+        for (Vector p : points)
+            if (p.x >= bounds.x || p.x <= 0 || p.y >= bounds.y || p.y <= 0)
+                return true;
+        return false;
+    }
+
     public boolean intersects(Polygon other) {
         Vector[] axes = getAxes();
-        for (int i = 0; i < axes.length; i++) {
+        for (int i = 0; i < axes.length; ++i) {
             double min1 = getMin(axes[i]);
             double max1 = getMax(axes[i]);
             double min2 = other.getMin(axes[i]);
@@ -44,7 +51,7 @@ public class Polygon {
             }
         }
         Vector[] otherAxes = other.getAxes();
-        for (int i = 0; i < otherAxes.length; i++) {
+        for (int i = 0; i < otherAxes.length; ++i) {
             double min1 = getMin(otherAxes[i]);
             double max1 = getMax(otherAxes[i]);
             double min2 = other.getMin(otherAxes[i]);
@@ -81,6 +88,31 @@ public class Polygon {
         for (int i = 0; i < points.length; ++i)
             min = Math.min(min, center.distanceSquaredTo(points[i]));
         return Math.sqrt(min);
+    }
+
+    public Vector[] getPossibleNodes(double radius) {
+        Vector[] nodes = new Vector[points.length * 2];
+        double ROOT_2 = Math.sqrt(2.0);
+        int j = 0;
+        for (int i = 0; i < points.length; ++i) {
+            Vector p = points[i];
+            Vector p1, p2;
+            if (i == 0)
+                p1 = points[points.length - 1];
+            else
+                p1 = points[i - 1];
+            if (i == points.length - 1)
+                p2 = points[0];
+            else
+                p2 = points[i + 1];
+            Vector d1 = p1.subtract(p).multiply(1 / p1.distanceTo(p));
+            Vector d2 = p2.subtract(p).multiply(1 / p2.distanceTo(p));
+            double d = radius / Math.sqrt((1 - d1.dot(d2)) / 2);
+            Vector v = d1.add(d2).multiply(d / ROOT_2);
+            nodes[j++] = p.add(v);
+            nodes[j++] = p.subtract(v);
+        }
+        return nodes;
     }
 
 }
