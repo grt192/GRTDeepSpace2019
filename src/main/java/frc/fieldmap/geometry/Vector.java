@@ -53,6 +53,10 @@ public class Vector {
         return new Vector(x * Math.cos(angle) - y * Math.sin(angle), x * Math.sin(angle) + y * Math.cos(angle));
     }
 
+    public double magnitude() {
+        return Math.sqrt(x * x + y * y);
+    }
+
     @Override
     public String toString() {
         return "Vector[" + x + ", " + y + "]";

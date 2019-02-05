@@ -1,10 +1,9 @@
 package frc.pathfinding;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -21,14 +20,14 @@ public class Pathfinding {
         path = NetworkTableInstance.getDefault().getTable("Pathfinding").getEntry("path");
         path.setDoubleArray(new double[0]);
         initNodes();
-        targetNode = new Node(0, 0);// to avoid null checks
+        targetNode = new Node(new Vector(0, 0));// to avoid null checks
     }
 
     public Vector search(double x, double y) {
         HashSet<Node> closed = new HashSet<>();
         PriorityQueue<Node> open = new PriorityQueue<>();
         cleanTree();
-        Node startNode = new Node(x, y);
+        Node startNode = new Node(new Vector(x, y));
         addNode(startNode);
         startNode.calcH(targetNode);
         open.add(startNode);
@@ -70,18 +69,16 @@ public class Pathfinding {
     }
 
     private void initNodes() {
-        // TODO: fix nodes for new field
         nodes = new HashSet<>();
-        addNode(new Node(142, 30));
-        addNode(new Node(142, 97));
-        addNode(new Node(18, 97));
-        addNode(new Node(18, 30));
+        Set<Vector> pos = Robot.FIELD_MAP.generateNodes();
+        for (Vector v : pos)
+            addNode(new Node(v));
         // etc, etc
     }
 
     public void setTargetNode(double x, double y) {
         removeNode(targetNode);
-        targetNode = new Node(x, y);
+        targetNode = new Node(new Vector(x, y));
         addNode(targetNode);
         for (Node node : nodes) {
             node.calcH(targetNode);

@@ -83,11 +83,17 @@ public class Polygon {
         return max;
     }
 
-    public double getClosestDistance(Vector center) {
-        double min = Double.POSITIVE_INFINITY;
-        for (int i = 0; i < points.length; ++i)
-            min = Math.min(min, center.distanceSquaredTo(points[i]));
-        return Math.sqrt(min);
+    public Vector getClosestPoint(Vector center) {
+        double d = center.distanceSquaredTo(points[0]);
+        Vector min = points[0];
+        for (int i = 1; i < points.length; ++i) {
+            double temp = center.distanceSquaredTo(points[i]);
+            if (temp < d) {
+                d = temp;
+                min = points[i];
+            }
+        }
+        return min;
     }
 
     public Vector[] getPossibleNodes(double radius) {
