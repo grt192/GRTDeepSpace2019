@@ -121,7 +121,7 @@ class Wheel {
 
 	private void configDriveMotor() {
 		driveMotor.setIdleMode(IdleMode.kBrake);
-		driveMotor.setRampRate(6);
+		driveMotor.setRampRate(1);
 	}
 
 }

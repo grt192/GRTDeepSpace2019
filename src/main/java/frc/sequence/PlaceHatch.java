@@ -16,12 +16,12 @@ public class PlaceHatch extends Sequence {
 
     @Override
     public void runSequence() {
-        Robot.HATCHES.setOut();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Robot.HATCHES.setIn();
+        Robot.HATCHES.setTop(true);
+        sleep(500);
+        Robot.HATCHES.setBottom(true);
+        sleep(500);
+        Robot.HATCHES.setTop(false);
+        sleep(500);
+        Robot.HATCHES.setBottom(false);
     }
 }

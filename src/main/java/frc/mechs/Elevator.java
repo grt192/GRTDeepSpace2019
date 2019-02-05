@@ -14,15 +14,15 @@ public class Elevator {
 
     private boolean closedLoop;
 
-    public static int rocketTop = 434890;
-    public static int rocketMiddle = 360962;
-    public static int rocketBottom = 209000;
-    public static int cargoShip = 295877;
+    public static final int rocketTop = 434890;
+    public static final int rocketMiddle = 360962;
+    public static final int rocketBottom = 209000;
+    public static final int cargoShip = 295877;
     public static final int pickup = 0;
 
     private static int rollerBottom = 500;
-    private static int rollerTop = 1566700;
-    private static int rollerThreshold = 156670;
+    private static int rollerTop = 156670;
+    private static int rollerThreshold = 206670;
     private static int dangerSpeed = 15;
 
     public Elevator() {
@@ -72,6 +72,7 @@ public class Elevator {
                 danger = true;
             }
         }
+        System.out.println(danger);
         if (danger)
             Robot.BOTTOM_INTAKE.forceOut();
         else

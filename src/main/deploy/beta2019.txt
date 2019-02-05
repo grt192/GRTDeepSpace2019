@@ -16,16 +16,16 @@ swerve_kd=0.0
 # Offsets are inverted
 fl_rotate=5
 fl_drive=1
-fl_offset=-229
+fl_offset=3
 fr_rotate=8
 fr_drive=4
-fr_offset=349
+fr_offset=362
 bl_rotate=12
 bl_drive=16
-bl_offset=-228
+bl_offset=1816
 br_rotate=9
 br_drive=13
-br_offset=-193
+br_offset=-625
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.884955592
@@ -44,6 +44,6 @@ intake=6
 
 name=beta2019
 
-hatch1=2
-hatch2=1
+hatch_top=1
+hatch_bottom=2
 

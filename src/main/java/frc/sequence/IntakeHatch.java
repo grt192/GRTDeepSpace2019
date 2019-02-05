@@ -7,20 +7,19 @@
 
 package frc.sequence;
 
-import frc.mechs.Elevator;
-import frc.robot.Robot;
+import frc.robot.*;
 
 /**
  * Add your docs here.
  */
-public class IntakeSequence extends Sequence {
+public class IntakeHatch extends Sequence {
 
     @Override
     public void runSequence() {
-        Robot.BOTTOM_INTAKE.out();
-        Robot.BOTTOM_INTAKE.setPower(0.0);
-        Robot.ELEVATOR.setPosition(Elevator.rocketBottom);
-        sleep(1500);
-        Robot.BOTTOM_INTAKE.in();
+        Robot.HATCHES.setBottom(false);
+        Robot.HATCHES.setTop(true);
+        sleep(1000);
+        Robot.HATCHES.setTop(false);
     }
+
 }

@@ -30,6 +30,9 @@ class DriverControl extends Mode {
     }
 
     private void driveMechs() {
+        if (Input.XBOX.getXButtonPressed()) {
+            Sequence.INTAKE_HATCH.start();
+        }
         if (Input.XBOX.getAButtonPressed()) {
             Sequence.PLACE_HATCH.start();
         }

@@ -5,21 +5,19 @@ import frc.config.Config;
 
 public class Hatches {
 
-    private Solenoid hatch1;
-    private Solenoid hatch2;
+    private Solenoid top;
+    private Solenoid bottom;
 
     public Hatches() {
-        this.hatch1 = new Solenoid(Config.getInt("hatch1"));
-        this.hatch2 = new Solenoid(Config.getInt("hatch2"));
+        top = new Solenoid(Config.getInt("hatch_top"));
+        bottom = new Solenoid(Config.getInt("hatch_bottom"));
     }
 
-    public void setIn() {
-        hatch1.set(false);
-        hatch2.set(false);
+    public void setTop(boolean on) {
+        top.set(on);
     }
 
-    public void setOut() {
-        hatch1.set(true);
-        hatch2.set(true);
+    public void setBottom(boolean on) {
+        bottom.set(on);
     }
 }
