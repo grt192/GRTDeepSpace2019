@@ -23,9 +23,9 @@ public class KalmanFilterPositionTracker extends PositionTracker {
     private static final int TYPE = CvType.CV_64F;
     private static final int STATES = 2;
 
-    private static final double INITIAL_VARIANCE = 0.5;
+    private static final double INITIAL_VARIANCE = 1.5;
     private static final double PROCESS_NOISE = 0.2;
-    private static final double MEASUREMENT_NOISE = 1.0;
+    private static final double MEASUREMENT_NOISE = 2.0;
 
     private long lastUpdate;
     private KalmanFilter kf;
@@ -34,9 +34,6 @@ public class KalmanFilterPositionTracker extends PositionTracker {
         kf = new KalmanFilter(STATES, STATES, STATES, TYPE);
         kf.set_transitionMatrix(Mat.eye(STATES, STATES, TYPE));
         kf.set_measurementMatrix(Mat.eye(STATES, STATES, TYPE));
-        Mat R = new Mat(STATES, STATES, TYPE);
-        R.put(0, 0, PROCESS_NOISE, PROCESS_NOISE, PROCESS_NOISE, PROCESS_NOISE);
-        kf.set_processNoiseCov(R);
         Mat Q = new Mat(STATES, STATES, TYPE);
         Q.put(0, 0, MEASUREMENT_NOISE, 0, 0, MEASUREMENT_NOISE);
         kf.set_measurementNoiseCov(Q);
@@ -81,6 +78,10 @@ public class KalmanFilterPositionTracker extends PositionTracker {
         long temp = System.currentTimeMillis();
         long ticks = (temp - lastUpdate);
         double dt = ticks / 1000.0;
+        double speed = Math.sqrt(data.encoderVX * data.encoderVX + data.encoderVY * data.encoderVY);
+        Mat R = new Mat(STATES, STATES, TYPE);
+        R.put(0, 0, PROCESS_NOISE * dt * speed, 0, 0, PROCESS_NOISE * dt * speed);
+        kf.set_processNoiseCov(R);
         kf.get_controlMatrix().put(0, 0, dt, 0, 0, dt);
         lastUpdate = temp;
         Mat U = new Mat(STATES, 1, TYPE);

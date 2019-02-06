@@ -1,6 +1,5 @@
 package frc.swerve;
 
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -8,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.config.Config;
 import frc.robot.Robot;
 import frc.util.GRTUtil;
-import frc.input.*;
 
 public class Swerve implements Runnable {
 
