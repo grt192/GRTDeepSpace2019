@@ -22,12 +22,15 @@ public class FieldMap {
 
     private double FIELD_WIDTH, FIELD_HEIGHT;
     private Vector bounds;
+    private Polygon wall;
     private Polygon[] obstacles;
     private VisionTarget[] visionTargets;
 
     public FieldMap() {
         // buildMap();
         testMap();
+        wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
+                new Vector(0, FIELD_WIDTH));
     }
 
     public boolean lineOfSight(Vector v1, Vector v2) {
@@ -37,8 +40,11 @@ public class FieldMap {
             return true;
         Vector norm = dif.multiply(Robot.ROBOT_RADIUS / d).normal();
         Polygon rect = new Polygon(v1.add(norm), v2.add(norm), v2.subtract(norm), v1.subtract(norm));
+        Circle startCircle = new Circle(v1, Robot.ROBOT_RADIUS);
         Circle endCircle = new Circle(v2, Robot.ROBOT_RADIUS);
         if (shapeIntersects(rect))
+            return false;
+        if (shapeIntersects(startCircle))
             return false;
         if (shapeIntersects(endCircle))
             return false;
@@ -78,9 +84,17 @@ public class FieldMap {
         return best;
     }
 
+    public Vector closestWallPoint(Vector p) {
+        return wall.closestPoint(p);
+    }
+
+    public Polygon[] getObstacles() {
+        return obstacles;
+    }
+
     public Set<Vector> generateNodes() {
-        double radius = Robot.ROBOT_RADIUS + 2.0;
-        double bigRadius = radius + 1.0;
+        double radius = Robot.ROBOT_RADIUS + 1.0;
+        double bigRadius = radius + 0.5;
         Set<Vector> nodeSet = new HashSet<>();
         for (Polygon p : obstacles) {
             Vector[] nodes = p.getPossibleNodes(bigRadius);

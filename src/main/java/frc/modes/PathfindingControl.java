@@ -13,6 +13,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.fieldmap.geometry.Vector;
 import frc.pathfinding.Pathfinding;
+import frc.pathfinding.PotentialFieldPathfinding;
 import frc.robot.Robot;
 
 /**
@@ -23,10 +24,12 @@ public class PathfindingControl extends Mode {
     private Vector target;
     private volatile boolean newTarget;
     private Pathfinding pathfinding;
+    private PotentialFieldPathfinding pfpf;
     private NetworkTableEntry targetEntry;
 
     public PathfindingControl() {
         pathfinding = new Pathfinding();
+        pfpf = new PotentialFieldPathfinding();
         NetworkTable table = NetworkTableInstance.getDefault().getTable("Pathfinding");
         targetEntry = table.getEntry("target");
         targetEntry.setString("0.0 0.0");
@@ -47,15 +50,17 @@ public class PathfindingControl extends Mode {
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
         Vector pos = new Vector(xPos, yPos);
+        Vector velocity;
         Vector endPos = pathfinding.search(xPos, yPos);
         if (endPos == null) {
-            System.out.println("NO PATH FOUND");
-            return false;
+            velocity = pfpf.search(xPos, yPos);
+        } else {
+            double d = pos.distanceTo(endPos);
+            velocity = endPos.subtract(pos).multiply(1 / d);
         }
-        double d = pos.distanceTo(endPos);
         double distance = pos.distanceTo(target);
-        double speed = 0.75 * Math.min(d / 36.0, 1);
-        Vector velocity = endPos.subtract(pos).multiply(speed / d);
+        double speed = 0.75 * Math.min(distance / 36.0, 1);
+        velocity = velocity.multiply(speed);
         if (distance < 4) {
             return false;
         }
@@ -68,6 +73,7 @@ public class PathfindingControl extends Mode {
         System.out.println("Setting target to " + x + ", " + y);
         target = new Vector(x, y);
         pathfinding.setTargetNode(x, y);
+        pfpf.setTarget(x, y);
     }
 
 }

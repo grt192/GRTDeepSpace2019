@@ -63,7 +63,6 @@ public class Pathfinding {
                 node.update(current);
             }
         }
-        System.out.println(startNode + " --> " + targetNode);
         removeNode(startNode);
         return null;
     }
@@ -71,6 +70,7 @@ public class Pathfinding {
     private void initNodes() {
         nodes = new HashSet<>();
         Set<Vector> pos = Robot.FIELD_MAP.generateNodes();
+        System.out.println(pos);
         for (Vector v : pos)
             addNode(new Node(v));
         // etc, etc

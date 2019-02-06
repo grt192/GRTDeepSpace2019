@@ -34,7 +34,6 @@ public class JeVois extends Thread {
                         continue;
                     }
                     this.lastString = line;
-                    System.out.println(lastString);
                     if (!lastString.equals("")) {
                         lastReceivedTimestamp = System.currentTimeMillis();
                         this.lastMessage = new JeVoisMessage(lastString, lastReceivedTimestamp);

@@ -83,7 +83,7 @@ public class Polygon {
         return max;
     }
 
-    public Vector getClosestPoint(Vector center) {
+    public Vector getClosestVertex(Vector center) {
         double d = center.distanceSquaredTo(points[0]);
         Vector min = points[0];
         for (int i = 1; i < points.length; ++i) {
@@ -94,6 +94,30 @@ public class Polygon {
             }
         }
         return min;
+    }
+
+    public Vector closestPoint(Vector p) {
+        Vector closest = closestPointOnSegment(points[0], points[points.length - 1], p);
+        double d2 = p.distanceSquaredTo(closest);
+        for (int i = 0; i < points.length - 1; ++i) {
+            Vector temp = closestPointOnSegment(points[i], points[i + 1], p);
+            double tempd2 = p.distanceSquaredTo(temp);
+            if (tempd2 < d2) {
+                closest = temp;
+                d2 = tempd2;
+            }
+        }
+        return closest;
+    }
+
+    private static Vector closestPointOnSegment(Vector v1, Vector v2, Vector p) {
+        double d2 = v1.distanceSquaredTo(v2);
+        double t = p.subtract(v1).dot(v2.subtract(v1)) / d2;
+        if (t <= 0)
+            return v1;
+        if (t >= 1)
+            return v2;
+        return v1.add(v2.subtract(v1).multiply(t));
     }
 
     public Vector[] getPossibleNodes(double radius) {

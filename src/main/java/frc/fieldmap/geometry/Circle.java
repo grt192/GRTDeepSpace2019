@@ -21,7 +21,7 @@ public class Circle {
     }
 
     public boolean intersects(Polygon other) {
-        Vector firstAxis = other.getClosestPoint(position).subtract(position).normal();
+        Vector firstAxis = other.getClosestVertex(position).subtract(position);
         double min1 = getMin(firstAxis);
         double max1 = getMax(firstAxis);
         double min2 = other.getMin(firstAxis);

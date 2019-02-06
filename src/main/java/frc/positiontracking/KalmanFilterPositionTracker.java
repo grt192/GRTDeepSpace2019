@@ -7,6 +7,7 @@
 
 package frc.positiontracking;
 
+import org.opencv.core.CvException;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.video.KalmanFilter;
@@ -56,12 +57,22 @@ public class KalmanFilterPositionTracker extends PositionTracker {
 
     @Override
     public double getX() {
-        return kf.get_statePost().get(0, 0)[0];
+        try {
+            return kf.get_statePost().get(0, 0)[0];
+        } catch (CvException e) {
+            e.printStackTrace();
+            return 0.0;
+        }
     }
 
     @Override
     public double getY() {
-        return kf.get_statePost().get(1, 0)[0];
+        try {
+            return kf.get_statePost().get(1, 0)[0];
+        } catch (CvException e) {
+            e.printStackTrace();
+            return 0.0;
+        }
     }
 
     @Override
