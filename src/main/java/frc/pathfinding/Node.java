@@ -13,8 +13,8 @@ public class Node implements Comparable<Node> {
     public Node parent;
     public final Vector pos;
 
-    public Node(double x, double y) {
-        pos = new Vector(x, y);
+    public Node(Vector pos) {
+        this.pos = pos;
         neighbors = new HashSet<>();
     }
 
@@ -41,6 +41,11 @@ public class Node implements Comparable<Node> {
         if (other.f < f)
             return 1;
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        return pos.toString();
     }
 
 }

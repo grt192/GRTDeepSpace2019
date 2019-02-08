@@ -9,7 +9,7 @@ package frc.networking;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -23,7 +23,7 @@ public class FieldGUIServer extends Thread {
     private Socket client;
     private InputStream input;
     private Scanner scanner;
-    private PrintWriter output;
+    private PrintStream output;
 
     public FieldGUIServer() {
         try {
@@ -41,7 +41,7 @@ public class FieldGUIServer extends Thread {
             client = server.accept();
             input = client.getInputStream();
             scanner = new Scanner(input);
-            output = new PrintWriter(client.getOutputStream());
+            output = new PrintStream(client.getOutputStream());
             System.out.println("Successfully connected");
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,8 +61,9 @@ public class FieldGUIServer extends Thread {
     }
 
     public void sendData(String data) {
-        if (output != null)
+        if (output != null) {
             output.println(data);
+        }
     }
 
 }

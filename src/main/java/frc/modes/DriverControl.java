@@ -10,9 +10,9 @@ package frc.modes;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.input.Input;
 import frc.input.JoystickProfile;
+import frc.mechs.Elevator;
 import frc.robot.Robot;
-import frc.sequence.*;
-import frc.mechs.*;
+import frc.sequence.Sequence;
 
 /**
  * Add your docs here.

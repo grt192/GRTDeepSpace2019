@@ -49,8 +49,29 @@ public class Vector {
         return Math.sqrt(distanceSquaredTo(v));
     }
 
+    public Vector rotate(double angle) {
+        return new Vector(x * Math.cos(angle) - y * Math.sin(angle), x * Math.sin(angle) + y * Math.cos(angle));
+    }
+
+    public double magnitude() {
+        return Math.sqrt(x * x + y * y);
+    }
+
     @Override
     public String toString() {
         return "Vector[" + x + ", " + y + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (x * 1000 + y * 1000 * 1000);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Vector))
+            return false;
+        Vector v = (Vector) other;
+        return (x == v.x && y == v.y);
     }
 }

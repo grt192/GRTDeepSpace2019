@@ -1,8 +1,12 @@
 package frc.pathfinding;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.PriorityQueue;
+import java.util.Set;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
 
@@ -10,17 +14,20 @@ public class Pathfinding {
 
     private HashSet<Node> nodes;
     private Node targetNode;
+    private NetworkTableEntry path;
 
     public Pathfinding() {
+        path = NetworkTableInstance.getDefault().getTable("Pathfinding").getEntry("path");
+        path.setDoubleArray(new double[0]);
         initNodes();
-        targetNode = new Node(0, 0);// to avoid null checks
+        targetNode = new Node(new Vector(0, 0));// to avoid null checks
     }
 
     public Vector search(double x, double y) {
         HashSet<Node> closed = new HashSet<>();
         PriorityQueue<Node> open = new PriorityQueue<>();
         cleanTree();
-        Node startNode = new Node(x, y);
+        Node startNode = new Node(new Vector(x, y));
         addNode(startNode);
         startNode.calcH(targetNode);
         open.add(startNode);
@@ -30,10 +37,21 @@ public class Pathfinding {
             closed.add(current);
 
             if (current == targetNode) {
+                ArrayList<Double> list = new ArrayList<>();
                 Node next = current;
+                list.add(next.pos.y);
+                list.add(next.pos.x);
                 while (next.parent != startNode) {
                     next = next.parent;
+                    list.add(next.pos.y);
+                    list.add(next.pos.x);
                 }
+                int len = list.size();
+                double[] data = new double[len];
+                for (int i = 0; i < len; ++i) {
+                    data[i] = list.get(len - 1 - i);
+                }
+                path.setDoubleArray(data);
                 removeNode(startNode);
                 return next.pos;
             }
@@ -51,16 +69,16 @@ public class Pathfinding {
 
     private void initNodes() {
         nodes = new HashSet<>();
-        addNode(new Node(142, 30));
-        addNode(new Node(142, 97));
-        addNode(new Node(18, 97));
-        addNode(new Node(18, 30));
+        Set<Vector> pos = Robot.FIELD_MAP.generateNodes();
+        System.out.println(pos);
+        for (Vector v : pos)
+            addNode(new Node(v));
         // etc, etc
     }
 
     public void setTargetNode(double x, double y) {
         removeNode(targetNode);
-        targetNode = new Node(x, y);
+        targetNode = new Node(new Vector(x, y));
         addNode(targetNode);
         for (Node node : nodes) {
             node.calcH(targetNode);

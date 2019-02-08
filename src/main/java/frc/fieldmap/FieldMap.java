@@ -7,6 +7,9 @@
 
 package frc.fieldmap;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import frc.fieldmap.geometry.Circle;
 import frc.fieldmap.geometry.Polygon;
 import frc.fieldmap.geometry.Vector;
@@ -17,11 +20,17 @@ import frc.robot.Robot;
  */
 public class FieldMap {
 
+    private double FIELD_WIDTH, FIELD_HEIGHT;
+    private Vector bounds;
+    private Polygon wall;
     private Polygon[] obstacles;
+    private VisionTarget[] visionTargets;
 
     public FieldMap() {
         // buildMap();
         testMap();
+        wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
+                new Vector(0, FIELD_WIDTH));
     }
 
     public boolean lineOfSight(Vector v1, Vector v2) {
@@ -31,8 +40,11 @@ public class FieldMap {
             return true;
         Vector norm = dif.multiply(Robot.ROBOT_RADIUS / d).normal();
         Polygon rect = new Polygon(v1.add(norm), v2.add(norm), v2.subtract(norm), v1.subtract(norm));
+        Circle startCircle = new Circle(v1, Robot.ROBOT_RADIUS);
         Circle endCircle = new Circle(v2, Robot.ROBOT_RADIUS);
         if (shapeIntersects(rect))
+            return false;
+        if (shapeIntersects(startCircle))
             return false;
         if (shapeIntersects(endCircle))
             return false;
@@ -40,6 +52,8 @@ public class FieldMap {
     }
 
     public boolean shapeIntersects(Polygon p) {
+        if (p.outsideBounds(bounds))
+            return true;
         for (Polygon poly : obstacles) {
             if (p.intersects(poly))
                 return true;
@@ -48,6 +62,8 @@ public class FieldMap {
     }
 
     public boolean shapeIntersects(Circle c) {
+        if (c.outsideBounds(bounds))
+            return true;
         for (Polygon poly : obstacles) {
             if (c.intersects(poly))
                 return true;
@@ -55,7 +71,46 @@ public class FieldMap {
         return false;
     }
 
+    public VisionTarget getNearestTarget(Vector robotPos, Vector image) {
+        double min = Double.POSITIVE_INFINITY;
+        VisionTarget best = null;
+        for (VisionTarget vt : visionTargets) {
+            double dist = vt.pos.pos.add(image.rotate(vt.pos.angle)).distanceSquaredTo(robotPos);
+            if (dist < min) {
+                dist = min;
+                best = vt;
+            }
+        }
+        return best;
+    }
+
+    public Vector closestWallPoint(Vector p) {
+        return wall.closestPoint(p);
+    }
+
+    public Polygon[] getObstacles() {
+        return obstacles;
+    }
+
+    public Set<Vector> generateNodes() {
+        double radius = Robot.ROBOT_RADIUS + 1.0;
+        double bigRadius = radius + 0.5;
+        Set<Vector> nodeSet = new HashSet<>();
+        for (Polygon p : obstacles) {
+            Vector[] nodes = p.getPossibleNodes(bigRadius);
+            for (Vector v : nodes) {
+                Circle c = new Circle(v, radius);
+                if (!shapeIntersects(c))
+                    nodeSet.add(v);
+            }
+        }
+        return nodeSet;
+    }
+
     private void buildMap() {
+        FIELD_WIDTH = 27 * 12;
+        FIELD_HEIGHT = 54 * 12;
+        bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
         Polygon habZoneClose = new Polygon(new Vector(48, 73.6291), new Vector(0, 73.6291), new Vector(0, 251.2433),
                 new Vector(48, 251.2433));
         Polygon leftRocketClose = new Polygon(new Vector(209.5727, 0), new Vector(209.5727, 7.63),
@@ -75,8 +130,17 @@ public class FieldMap {
     }
 
     private void testMap() {
-        obstacles = new Polygon[1];
-        Polygon table = new Polygon(new Vector(41, 53), new Vector(41, 74), new Vector(119, 74), new Vector(119, 53));
+        FIELD_WIDTH = 14 * 12;
+        FIELD_HEIGHT = 14 * 12;
+        bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
+        obstacles = new Polygon[2];
+        Polygon table = new Polygon(new Vector(48, 72), new Vector(48, 96), new Vector(120, 96), new Vector(120, 72));
+        Polygon cargoShip = new Polygon(new Vector(84, 168), new Vector(84, 151), new Vector(108, 151),
+                new Vector(108, 168));
         obstacles[0] = table;
+        obstacles[1] = cargoShip;
+
+        visionTargets = new VisionTarget[1];
+        visionTargets[0] = new VisionTarget(new Vector(96, 151), -Math.PI / 2, false);
     }
 }
