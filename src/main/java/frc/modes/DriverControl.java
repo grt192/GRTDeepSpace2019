@@ -21,6 +21,8 @@ class DriverControl extends Mode {
 
     private int pov = -1;
     private int lastPov;
+    private double intakePower;
+    private double elevatorPower;
 
     @Override
     public boolean loop() {
@@ -30,51 +32,95 @@ class DriverControl extends Mode {
     }
 
     private void driveMechs() {
-        if (Input.XBOX.getXButtonPressed()) {
+
+        // Swerve Driver: Intake hatch
+        if (Input.SWERVE_XBOX.getXButtonPressed()) {
             Sequence.INTAKE_HATCH.start();
         }
-        if (Input.XBOX.getAButtonPressed()) {
+
+        // Swerve Driver: Place Hatch
+        if (Input.SWERVE_XBOX.getAButtonPressed()) {
             Sequence.PLACE_HATCH.start();
         }
-        double intakePower = JoystickProfile.applyDeadband(Input.XBOX.getY(Hand.kRight), 0.3);
-        if (Input.XBOX.getBButton()) {
+
+        // Swerve Driver: Right joystick to intake power
+        intakePower = JoystickProfile.applyDeadband(Input.SWERVE_XBOX.getY(Hand.kRight), 0.3);
+
+        // Swerve Driver: Activate roller
+        if (Input.SWERVE_XBOX.getBButton()) {
             Robot.BOTTOM_INTAKE.out();
             intakePower = 1.0;
         }
-        if (Input.XBOX.getBButtonReleased()) {
+
+        // Swerve Driver: Intake sequence, pull ball into inner roller
+        if (Input.SWERVE_XBOX.getBButtonReleased()) {
             Sequence.INTAKE_SEQUENCE.start();
         }
+
+        // If no sequence is running, give manual control to rollers
         if (!Sequence.INTAKE_SEQUENCE.isRunning()) {
             Robot.BOTTOM_INTAKE.setPower(intakePower);
             Robot.TOP_INTAKE.setPower(intakePower);
         }
-        double elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft), 0.2);
-        if (!Robot.ELEVATOR.isClosedLoop() || elevatorPower != 0)
+
+        // Mech Driver: Get manual elevator power (from controller)
+        elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft), 0.2);
+
+        // If no elecator sequence is running, give manual control to height
+        if (!Robot.ELEVATOR.isClosedLoop() || elevatorPower != 0) {
             Robot.ELEVATOR.setPower(elevatorPower);
-        if (Input.MECH_XBOX.getAButtonPressed()) {
-            Robot.ELEVATOR.setPosition(Elevator.rocketBottom);
         }
-        if (Input.MECH_XBOX.getBButtonPressed()) {
-            Robot.ELEVATOR.setPosition(Elevator.cargoShip);
-        }
-        if (Input.MECH_XBOX.getXButtonPressed()) {
-            Robot.ELEVATOR.setPosition(Elevator.rocketMiddle);
-        }
-        if (Input.MECH_XBOX.getYButtonPressed()) {
+
+        // Mech Driver: goto elevator position
+        switch (Input.MECH_XBOX.getPOV()) {
+        case 0:
             Robot.ELEVATOR.setPosition(Elevator.rocketTop);
+            System.out.println("Rocket Top");
+            break;
+        case 90:
+            Robot.ELEVATOR.setPosition(Elevator.rocketMiddle);
+            System.out.println("Rocket Middle");
+            break;
+        case 180:
+            Robot.ELEVATOR.setPosition(Elevator.rocketBottom);
+            System.out.println("Rocket Bottom");
+            break;
+        case 270:
+            Robot.ELEVATOR.setPosition(Elevator.cargoShip);
+            System.out.println("Cargo Ship");
+            break;
         }
         if (Input.MECH_XBOX.getBackButtonPressed()) {
             Robot.ELEVATOR.setPosition(Elevator.pickup);
         }
+        // if (Input.MECH_XBOX.getAButtonPressed()) {
+        // Robot.ELEVATOR.setPosition(Elevator.rocketBottom);
+        // }
+        // if (Input.MECH_XBOX.getBButtonPressed()) {
+        // Robot.ELEVATOR.setPosition(Elevator.cargoShip);
+        // }
+        // if (Input.MECH_XBOX.getXButtonPressed()) {
+        // Robot.ELEVATOR.setPosition(Elevator.rocketMiddle);
+        // }
+        // if (Input.MECH_XBOX.getYButtonPressed()) {
+        // Robot.ELEVATOR.setPosition(Elevator.rocketTop);
+        // }
+
+        if (Input.MECH_XBOX.getAButtonPressed()) {
+            Robot.BOTTOM_INTAKE.out();
+        } else if (Input.MECH_XBOX.getBButtonPressed()) {
+            Robot.BOTTOM_INTAKE.in();
+        }
     }
 
     private void driveSwerve() {
-        if (Input.XBOX.getYButtonPressed())
+        if (Input.SWERVE_XBOX.getStartButtonPressed())
             Robot.SWERVE.setRobotCentric(true);
-        if (Input.XBOX.getXButtonPressed())
+        if (Input.SWERVE_XBOX.getBackButtonPressed())
             Robot.SWERVE.setRobotCentric(false);
-        double x = JoystickProfile.applyDeadband(-Input.XBOX.getY(Hand.kLeft));
-        double y = JoystickProfile.applyDeadband(Input.XBOX.getX(Hand.kLeft));
+
+        double x = JoystickProfile.applyDeadband(-Input.SWERVE_XBOX.getY(Hand.kLeft));
+        double y = JoystickProfile.applyDeadband(Input.SWERVE_XBOX.getX(Hand.kLeft));
         double mag = Math.sqrt(x * x + y * y);
         x *= mag;
         y *= mag;
@@ -82,11 +128,11 @@ class DriverControl extends Mode {
         if (pov == -1) {
             buttonPressed = true;
         }
-        pov = Input.XBOX.getPOV();
-        if (Input.XBOX.getBumperPressed(Hand.kLeft)) {
+        pov = Input.SWERVE_XBOX.getPOV();
+        if (Input.SWERVE_XBOX.getBumperPressed(Hand.kLeft)) {
             pov = lastPov - 45;
         }
-        if (Input.XBOX.getBumperPressed(Hand.kRight)) {
+        if (Input.SWERVE_XBOX.getBumperPressed(Hand.kRight)) {
             pov = lastPov + 45;
         }
         if (buttonPressed) {
@@ -110,8 +156,8 @@ class DriverControl extends Mode {
 
         }
 
-        double lTrigger = Input.XBOX.getTriggerAxis(Hand.kLeft);
-        double rTrigger = Input.XBOX.getTriggerAxis(Hand.kRight);
+        double lTrigger = Input.SWERVE_XBOX.getTriggerAxis(Hand.kLeft);
+        double rTrigger = Input.SWERVE_XBOX.getTriggerAxis(Hand.kRight);
         double rotate = 0;
         if (lTrigger + rTrigger > 0.05) {
             rotate = rTrigger * rTrigger - lTrigger * lTrigger;

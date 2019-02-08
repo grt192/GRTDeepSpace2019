@@ -31,6 +31,8 @@ public class Elevator {
         Config.defaultConfigTalon(winchFollower);
         configTalon(winch);
         winchFollower.follow(winch);
+
+        this.setPower(0);
     }
 
     public void setPower(double power) {

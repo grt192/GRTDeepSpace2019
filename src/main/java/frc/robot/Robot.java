@@ -62,7 +62,6 @@ public class Robot extends TimedRobot {
         TOP_INTAKE = new TopIntake();
         BOTTOM_INTAKE = new BottomIntake();
         HATCHES = new Hatches();
-        CLIMBER = new Climber();
         POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
         SWERVE = new Swerve();
@@ -71,6 +70,7 @@ public class Robot extends TimedRobot {
         DEFAULT_MODE = Mode.DRIVER_CONTROL;
         currentMode = DEFAULT_MODE;
         Input.GUI.start();
+
     }
 
     private void loop() {
@@ -94,9 +94,7 @@ public class Robot extends TimedRobot {
             }
             line = Input.GUI.readLine();
         }
-        if (Input.XBOX.getBackButtonPressed()) {
-            changeMode(Mode.CLIMB_MODE);
-        }
+
         if (!currentMode.loop()) {
             changeMode(DEFAULT_MODE);
         }
