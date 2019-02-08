@@ -74,7 +74,6 @@ public class Elevator {
                 danger = true;
             }
         }
-        System.out.println(danger);
         if (danger)
             Robot.BOTTOM_INTAKE.forceOut();
         else

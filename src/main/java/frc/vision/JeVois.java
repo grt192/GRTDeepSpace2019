@@ -1,5 +1,6 @@
 package frc.vision;
 
+import edu.wpi.first.hal.util.UncleanStatusException;
 import edu.wpi.first.wpilibj.SerialPort;
 
 public class JeVois extends Thread {
@@ -16,11 +17,17 @@ public class JeVois extends Thread {
     }
 
     public JeVois(SerialPort.Port port) { // port should be kUSB, kUSB1, or kUSB2
-        this.camera = new SerialPort(115200, port);
+        try {
+            this.camera = new SerialPort(115200, port);
+        } catch (UncleanStatusException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void run() {
+        if (camera == null)
+            return;
         while (true) {
             if (this.enabled) {
                 try {
