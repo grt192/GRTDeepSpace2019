@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.input.Input;
 import frc.input.JoystickProfile;
 import frc.robot.Robot;
-import frc.sequence.Sequence;
+import frc.sequence.*;
 import frc.mechs.*;
 
 /**
