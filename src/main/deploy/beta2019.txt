@@ -35,6 +35,13 @@ roller_sol=3
 
 winch=3
 winch_follower=2
+roller_bottom=500
+roller_top=156670
+pickup=0
+rocket_1=209000
+cargo_ship=295877
+rocket_2=360962
+rocket_3=434890
 
 climber_sol=0
 left_climber=15
@@ -46,4 +53,3 @@ name=beta2019
 
 hatch_top=1
 hatch_bottom=2
-
