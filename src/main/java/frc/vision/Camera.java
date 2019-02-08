@@ -11,7 +11,7 @@ import frc.config.Config;
 import frc.fieldmap.VisionTarget;
 import frc.fieldmap.geometry.Vector;
 import frc.positiontracking.Position;
-import frc.robot.*;
+import frc.robot.Robot;
 
 public class Camera {
     private Position relativePosition;

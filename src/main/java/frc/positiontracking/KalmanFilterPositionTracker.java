@@ -24,8 +24,8 @@ public class KalmanFilterPositionTracker extends PositionTracker {
     private static final int STATES = 2;
 
     private static final double INITIAL_VARIANCE = 1.5;
-    private static final double PROCESS_NOISE = 0.02;
-    private static final double MEASUREMENT_NOISE = 3.0;
+    private static final double PROCESS_NOISE = 0.05;
+    private static final double MEASUREMENT_NOISE = 4.0;
 
     private long lastUpdate;
     private KalmanFilter kf;
