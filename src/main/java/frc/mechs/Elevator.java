@@ -25,21 +25,16 @@ public class Elevator {
     public static final int CARGO_SHIP = 1;
     public static final int PICKUP = -1;
 
-    public static final int rocketTop = 434890;
-    public static final int rocketMiddle = 360962;
-    public static final int rocketBottom = 209000;
-    public static final int cargoShip = 295877;
-    public static final int pickup = 0;
     private int[] positions;
 
-    private static int rollerBottom = 500;
-    private static int rollerTop = 156670;
-    private static int rollerThreshold = 206670;
-    private static int dangerSpeed = 15;
+    private int rollerBottom = 500;
+    private int rollerTop = 156670;
 
     public Elevator() {
         winch = new TalonSRX(Config.getInt("winch"));
         winchFollower = new TalonSRX(Config.getInt("winch_follower"));
+        rollerBottom = Config.getInt("roller_bottom");
+        rollerTop = Config.getInt("roller_bottom");
         positions = new int[4];
         positions[ROCKET_BOTTOM] = Config.getInt("rocket_1");
         positions[ROCKET_MIDDLE] = Config.getInt("rocket_2");
@@ -48,21 +43,23 @@ public class Elevator {
         Config.defaultConfigTalon(winchFollower);
         configTalon(winch);
         winchFollower.follow(winch);
-        this.setPower(0);
         desiredPos = NetworkTableInstance.getDefault().getTable("Robot").getSubTable("Elevator").getEntry("target");
         desiredPos.setNumber(-2);
         desiredPos.addListener((event) -> {
             int val = (int) event.value.getDouble();
+            System.out.println("go");
             if (val < -1)
                 return;
             closedLoop = true;
-            if ((val == PICKUP && winch.getSelectedSensorPosition() > rollerBottom)
-                    || winch.getSelectedSensorPosition() < rollerTop)
+            if (!Robot.BOTTOM_INTAKE.getPosition()
+                    && ((val == PICKUP && winch.getSelectedSensorPosition() > rollerBottom)
+                            || winch.getSelectedSensorPosition() < rollerTop)) {
                 Robot.BOTTOM_INTAKE.forceOut();
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                try {
+                    Thread.sleep(700);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             if (val == PICKUP)
                 winch.set(ControlMode.PercentOutput, -0.3);
@@ -74,7 +71,8 @@ public class Elevator {
                 e.printStackTrace();
             }
             Robot.BOTTOM_INTAKE.setToDesiredPos();
-        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
+        this.setPower(0);
     }
 
     public void setPower(double power) {
@@ -84,41 +82,21 @@ public class Elevator {
     }
 
     public void setPosition(int position) {
-        desiredPos.setNumber(position);
+        if (desiredPos.getNumber(-2).intValue() != position)
+            desiredPos.setNumber(position);
     }
 
     public boolean isClosedLoop() {
         return closedLoop;
     }
 
-    public void dontKillRoller() {
-        int pos = winch.getSelectedSensorPosition();
-        int speed = winch.getSelectedSensorVelocity();
-        boolean danger = false;
-        if (pos >= rollerBottom && pos <= rollerTop) {
-            danger = true;
-        } else if (pos >= rollerBottom - rollerThreshold && pos <= rollerBottom) {
-            if (speed > dangerSpeed) {
-                danger = true;
-            }
-        } else if (pos <= rollerTop - rollerThreshold && pos >= rollerTop) {
-            if (speed < -dangerSpeed) {
-                danger = true;
-            }
-        }
-        if (danger)
-            Robot.BOTTOM_INTAKE.forceOut();
-        else
-            Robot.BOTTOM_INTAKE.setToDesiredPos();
-    }
-
     private void configTalon(TalonSRX talon) {
         Config.defaultConfigTalon(talon);
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         talon.setSensorPhase(true);
-        talon.configReverseSoftLimitThreshold(pickup);
+        talon.configReverseSoftLimitThreshold(0);
         talon.configReverseSoftLimitEnable(true);
-        talon.configForwardSoftLimitThreshold(rocketTop);
+        talon.configForwardSoftLimitThreshold(positions[ROCKET_TOP]);
         talon.configForwardSoftLimitEnable(true);
         talon.config_kP(0, 1024.0 / 4000);
         talon.config_kI(0, 0);

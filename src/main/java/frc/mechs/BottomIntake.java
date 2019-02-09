@@ -48,4 +48,8 @@ public class BottomIntake {
     public void setToDesiredPos() {
         intake.set(desiredPos);
     }
+
+    public boolean getPosition() {
+        return intake.get();
+    }
 }
