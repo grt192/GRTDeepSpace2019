@@ -138,7 +138,8 @@ public class Polygon {
             Vector d1 = p1.subtract(p).multiply(1 / p1.distanceTo(p));
             Vector d2 = p2.subtract(p).multiply(1 / p2.distanceTo(p));
             double d = radius / Math.sqrt((1 - d1.dot(d2)) / 2);
-            Vector v = d1.add(d2).multiply(d / ROOT_2);
+            Vector v = d1.add(d2);
+            v = v.multiply(d / v.magnitude());
             nodes[j++] = p.add(v);
             nodes[j++] = p.subtract(v);
         }
