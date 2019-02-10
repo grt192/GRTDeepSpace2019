@@ -77,7 +77,7 @@ public class FieldMap {
         for (VisionTarget vt : visionTargets) {
             double dist = vt.pos.pos.add(image.rotate(vt.pos.angle)).distanceSquaredTo(robotPos);
             if (dist < min) {
-                dist = min;
+                min = dist;
                 best = vt;
             }
         }
