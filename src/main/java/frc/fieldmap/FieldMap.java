@@ -28,9 +28,11 @@ public class FieldMap {
 
     public FieldMap() {
         // buildMap();
-        testMap();
-        wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
-                new Vector(0, FIELD_WIDTH));
+        // testMap();
+        // wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new
+        // Vector(FIELD_HEIGHT, FIELD_WIDTH),
+        // new Vector(0, FIELD_WIDTH));
+        testMapShop();
     }
 
     public boolean lineOfSight(Vector v1, Vector v2) {
@@ -139,5 +141,33 @@ public class FieldMap {
 
         visionTargets = new VisionTarget[1];
         visionTargets[0] = new VisionTarget(new Vector(96, 151), -Math.PI / 2, false);
+    }
+
+    private void testMapShop() {
+        FIELD_WIDTH = 14 * 12 + 10;
+        FIELD_HEIGHT = 16 * 12;
+        bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
+        obstacles = new Polygon[2];
+        Polygon rocket = new Polygon(new Vector(105, FIELD_WIDTH), new Vector(105, FIELD_WIDTH - 3.5),
+                new Vector(105 + 9, FIELD_WIDTH - 22), new Vector(105 + 18.5 + 9, FIELD_WIDTH - 22),
+                new Vector(105 + 9 + 9 + 18.5, FIELD_WIDTH - 3.5), new Vector(105 + 9 + 9 + 18.5, FIELD_WIDTH));
+        Polygon habzone = new Polygon(new Vector(0, 65.5), new Vector(67, 65.5), new Vector(67, 116),
+                new Vector(0, 116));
+        obstacles[0] = rocket;
+        obstacles[1] = habzone;
+
+        visionTargets = new VisionTarget[4];
+        VisionTarget intake = new VisionTarget(new Vector(0, 33.5), 0, false);
+        VisionTarget rightSideRocket = new VisionTarget(
+                new Vector((2 * (105 + 18.5 + 9) + 9) / 2, (2 * FIELD_WIDTH - 3.5 - 22) / 2), -2.0944 + Math.PI / 2,
+                false);
+        VisionTarget centerSideRocket = new VisionTarget(new Vector((114 + 114 + 18.5) / 2, FIELD_WIDTH - 22),
+                -Math.PI / 2, true);
+        VisionTarget leftSideRocket = new VisionTarget(
+                new Vector((2 * (105) + 9) / 2, (2 * FIELD_WIDTH - 3.5 - 22) / 2), -1.0472 - Math.PI / 2, false);
+        visionTargets[0] = intake;
+        visionTargets[1] = leftSideRocket;
+        visionTargets[2] = rightSideRocket;
+        visionTargets[3] = centerSideRocket;
     }
 }
