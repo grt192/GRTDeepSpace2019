@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
         HATCHES = new Hatches();
         HATCH_JEVOIS = new Camera("hatch_cam");
         POS_TRACKER = new KalmanFilterPositionTracker();
-        POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
+        POS_TRACKER.set(68 + ROBOT_HEIGHT / 2, 14.75 + ROBOT_WIDTH / 2);
         SWERVE = new Swerve();
         Sequence.initSequneces();
         Mode.initModes();

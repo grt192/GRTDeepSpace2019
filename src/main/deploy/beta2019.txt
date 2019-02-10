@@ -1,11 +1,11 @@
 # Config file for 2019 beta
 # Domain: roborio-192-frc.local
 
-swerve_width=26
-swerve_height=21
+swerve_width=22.25
+swerve_height=21.70
 
-robot_width=32.75
-robot_height=28
+robot_width=37.00
+robot_height=41
 
 
 swerve_inverted=false
@@ -53,3 +53,7 @@ name=beta2019
 
 hatch_top=1
 hatch_bottom=2
+
+hatch_cam_x=-14.5
+hatch_cam_y=0
+hatch_cam_angle=3.1415926535

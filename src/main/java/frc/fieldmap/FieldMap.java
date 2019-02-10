@@ -29,10 +29,10 @@ public class FieldMap {
     public FieldMap() {
         // buildMap();
         // testMap();
-        // wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new
-        // Vector(FIELD_HEIGHT, FIELD_WIDTH),
-        // new Vector(0, FIELD_WIDTH));
         testMapShop();
+        wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
+                new Vector(0, FIELD_WIDTH));
+
     }
 
     public boolean lineOfSight(Vector v1, Vector v2) {
