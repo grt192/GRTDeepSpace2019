@@ -38,6 +38,7 @@ public class ScoreMode extends Mode {
             double speed = Math.max(0.1, d / 36.0);
             velocity = displacement.multiply(-speed / d);
         }
+        velocity = velocity.rotate(angle);
         Robot.SWERVE.drive(velocity.x, velocity.y, 0);
         return true;
     }
