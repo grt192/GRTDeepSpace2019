@@ -29,9 +29,8 @@ public class FieldMap {
     public FieldMap() {
         // buildMap();
         // testMap();
-        // wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new
-        // Vector(FIELD_HEIGHT, FIELD_WIDTH),
-        // new Vector(0, FIELD_WIDTH));
+        wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
+                new Vector(0, FIELD_WIDTH));
         testMapShop();
     }
 
@@ -78,6 +77,19 @@ public class FieldMap {
         VisionTarget best = null;
         for (VisionTarget vt : visionTargets) {
             double dist = vt.pos.pos.add(image.rotate(vt.pos.angle)).distanceSquaredTo(robotPos);
+            if (dist < min) {
+                min = dist;
+                best = vt;
+            }
+        }
+        return best;
+    }
+
+    public VisionTarget getNearestTarget(Vector estimate) {
+        double min = Double.POSITIVE_INFINITY;
+        VisionTarget best = null;
+        for (VisionTarget vt : visionTargets) {
+            double dist = vt.pos.pos.distanceSquaredTo(estimate);
             if (dist < min) {
                 min = dist;
                 best = vt;
