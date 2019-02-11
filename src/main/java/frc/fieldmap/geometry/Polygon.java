@@ -146,4 +146,19 @@ public class Polygon {
         return nodes;
     }
 
+    public Polygon flipPolygonX(double line) {
+        Vector[] flippedPoints = new Vector[points.length];
+        for (int i = 0; i < points.length; i++) {
+            flippedPoints[i] = new Vector(2 * line - points[i].x, points[i].y);
+        }
+        return new Polygon(flippedPoints);
+    }
+
+    public Polygon flipPolygonY(double line) {
+        Vector[] flippedPoints = new Vector[points.length];
+        for (int i = 0; i < points.length; i++) {
+            flippedPoints[i] = new Vector(points[i].x, 2 * line - points[i].y);
+        }
+        return new Polygon(flippedPoints);
+    }
 }

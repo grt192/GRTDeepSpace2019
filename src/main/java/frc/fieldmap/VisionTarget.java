@@ -29,4 +29,24 @@ public class VisionTarget {
             height = LOW_HEIGHT;
         }
     }
+
+    public VisionTarget flipVisionTargetX(double line) {
+        boolean high;
+        if (height == HIGH_HEIGHT) {
+            high = true;
+        } else {
+            high = false;
+        }
+        return new VisionTarget(new Vector(2 * line - pos.pos.x, pos.pos.y), Math.PI - pos.angle, high);
+    }
+
+    public VisionTarget flipVisionTargetY(double line) {
+        boolean high;
+        if (height == HIGH_HEIGHT) {
+            high = true;
+        } else {
+            high = false;
+        }
+        return new VisionTarget(new Vector(pos.pos.x, 2 * line - pos.pos.y), Math.PI - pos.angle, high);
+    }
 }

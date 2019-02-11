@@ -25,6 +25,7 @@ public class FieldMap {
     private Polygon wall;
     private Polygon[] obstacles;
     private VisionTarget[] visionTargets;
+    private double reflectionLine;
 
     public FieldMap() {
         // buildMap();
@@ -113,22 +114,74 @@ public class FieldMap {
         FIELD_WIDTH = 27 * 12;
         FIELD_HEIGHT = 54 * 12;
         bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
+        visionTargets = new VisionTarget[32];
+        reflectionLine = FIELD_HEIGHT / 2;
+        VisionTarget leftIntake = new VisionTarget(new Vector(0, 25.715), 0, false);
+        VisionTarget rightIntake = new VisionTarget(new Vector(0, 296.285), 0, false);
+
+        VisionTarget leftSideLeftRocket = new VisionTarget(new Vector(214.626, 18.116), 2.64, false);
+        VisionTarget centerLeftRocket = new VisionTarget(new Vector(229.26, 27.474), Math.PI / 2, true);
+        VisionTarget rightSideLeftRocket = new VisionTarget(new Vector(243.894, 18.116), .5, false);
+
+        VisionTarget leftLeftSideCargoBay = new VisionTarget(new Vector(304.385, 133.125), -Math.PI / 2, false);
+        VisionTarget centerLeftSideCargoBay = new VisionTarget(new Vector(282.635, 133.125), -Math.PI / 2, false);
+        VisionTarget rightLeftSideCargoBay = new VisionTarget(new Vector(264.885, 133.125), -Math.PI / 2, false);
+
+        VisionTarget leftRightSideCargoBay = new VisionTarget(new Vector(304.385, 188.875), Math.PI / 2, false);
+        VisionTarget centerRightSideCargoBay = new VisionTarget(new Vector(282.635, 188.875), Math.PI / 2, false);
+        VisionTarget rightRightSideCargoBay = new VisionTarget(new Vector(264.885, 188.875), Math.PI / 2, false);
+
+        VisionTarget leftFrontCargoBay = new VisionTarget(new Vector(220.25, 150.125), Math.PI, false);
+        VisionTarget rightFrontCargoBay = new VisionTarget(new Vector(220.25, 171.875), Math.PI, false);
+
+        VisionTarget rightSideRightRocket = new VisionTarget(new Vector(214.626, 305.884), -2.64, false);
+        VisionTarget centerRightRocket = new VisionTarget(new Vector(229.26, 296.526), -Math.PI / 2, true);
+        VisionTarget leftSideRightRocket = new VisionTarget(new Vector(243.894, 305.884), -.5, false);
+
+        visionTargets[0] = leftIntake;
+        visionTargets[1] = rightIntake;
+        visionTargets[2] = leftSideLeftRocket;
+        visionTargets[3] = centerLeftRocket;
+        visionTargets[4] = rightSideLeftRocket;
+        visionTargets[5] = leftSideRightRocket;
+        visionTargets[6] = centerRightRocket;
+        visionTargets[7] = rightSideRightRocket;
+        visionTargets[8] = leftFrontCargoBay;
+        visionTargets[9] = rightFrontCargoBay;
+        visionTargets[10] = leftRightSideCargoBay;
+        visionTargets[11] = rightRightSideCargoBay;
+        visionTargets[12] = centerRightSideCargoBay;
+        visionTargets[13] = leftLeftSideCargoBay;
+        visionTargets[14] = rightLeftSideCargoBay;
+        visionTargets[15] = centerLeftSideCargoBay;
+        for (int i = 0; i < visionTargets.length / 2; i++) {
+            visionTargets[i + visionTargets.length / 2] = visionTargets[i].flipVisionTargetX(reflectionLine);
+        }
+
+        obstacles = new Polygon[10];
         Polygon habZoneClose = new Polygon(new Vector(48, 73.6291), new Vector(0, 73.6291), new Vector(0, 251.2433),
                 new Vector(48, 251.2433));
-        Polygon leftRocketClose = new Polygon(new Vector(209.5727, 0), new Vector(209.5727, 7.63),
-                new Vector(219.179, 27.32), new Vector(238.01, 27.32), new Vector(246.452, 7.630),
-                new Vector(246.452, 0));
+        Polygon levelsClose = new Polygon(new Vector(48, 239.276), new Vector(95.41, 239.276),
+                new Vector(95.41, 85.724), new Vector(48, 85.724));
+        Polygon leftRocketClose = new Polygon(new Vector(208.935, 0), new Vector(208.935, 7.75),
+                new Vector(219.801, 27.474), new Vector(238.719, 27.474), new Vector(249.585, 7.75),
+                new Vector(249.585, 0));
 
-        Polygon cargoBayClose = new Polygon(new Vector(325.01, 133.082), new Vector(250.072, 133.082),
-                new Vector(220.216, 138.249), new Vector(220.216, 183.751), new Vector(250.011, 189),
-                new Vector(325.01, 189));
-        Polygon rightRocketClose = new Polygon(new Vector(209.073, 321.608), new Vector(209.073, 313.089),
-                new Vector(219.51, 294.559), new Vector(238.01, 294.559), new Vector(248.447, 313.089),
-                new Vector(248.447, 321.608));
+        Polygon cargoBayClose = new Polygon(new Vector(220.25, 139.1743), new Vector(251.3519, 133.125),
+                new Vector(324, 133.125), new Vector(324, 188.875), new Vector(251.3519, 188.875),
+                new Vector(220.25, 185.11));
+
+        Polygon rightRocketClose = new Polygon(new Vector(208.935, 324), new Vector(208.935, 316.25),
+                new Vector(219.801, 296.526), new Vector(238.719, 296.526), new Vector(249.585, 316.25),
+                new Vector(249.585, 324));
         obstacles[0] = habZoneClose;
         obstacles[1] = leftRocketClose;
         obstacles[2] = cargoBayClose;
         obstacles[3] = rightRocketClose;
+        obstacles[4] = levelsClose;
+        for (int i = 0; i < obstacles.length / 2; i++) {
+            obstacles[i + obstacles.length / 2] = obstacles[i].flipPolygonX(reflectionLine);
+        }
     }
 
     private void testMap() {
@@ -136,11 +189,15 @@ public class FieldMap {
         FIELD_HEIGHT = 14 * 12;
         bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
         obstacles = new Polygon[2];
+        reflectionLine = FIELD_HEIGHT / 2;
         Polygon table = new Polygon(new Vector(48, 72), new Vector(48, 96), new Vector(120, 96), new Vector(120, 72));
         Polygon cargoShip = new Polygon(new Vector(84, 168), new Vector(84, 151), new Vector(108, 151),
                 new Vector(108, 168));
-        obstacles[0] = table;
-        obstacles[1] = cargoShip;
+        obstacles[1] = table;
+        obstacles[0] = cargoShip;
+        // obstacles[0] = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new
+        // Vector(FIELD_HEIGHT, FIELD_WIDTH),
+        // new Vector(0, FIELD_WIDTH));
 
         visionTargets = new VisionTarget[1];
         visionTargets[0] = new VisionTarget(new Vector(96, 151), -Math.PI / 2, false);
@@ -151,6 +208,7 @@ public class FieldMap {
         FIELD_HEIGHT = 16 * 12;
         bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
         obstacles = new Polygon[2];
+        reflectionLine = FIELD_HEIGHT / 2;
         Polygon rocket = new Polygon(new Vector(105, FIELD_WIDTH), new Vector(105, FIELD_WIDTH - 3.5),
                 new Vector(105 + 9, FIELD_WIDTH - 22), new Vector(105 + 18.5 + 9, FIELD_WIDTH - 22),
                 new Vector(105 + 9 + 9 + 18.5, FIELD_WIDTH - 3.5), new Vector(105 + 9 + 9 + 18.5, FIELD_WIDTH));
