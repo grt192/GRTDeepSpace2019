@@ -122,7 +122,6 @@ public class Polygon {
 
     public Vector[] getPossibleNodes(double radius) {
         Vector[] nodes = new Vector[points.length * 2];
-        double ROOT_2 = Math.sqrt(2.0);
         int j = 0;
         for (int i = 0; i < points.length; ++i) {
             Vector p = points[i];
