@@ -35,7 +35,7 @@ public class ScoreMode extends Mode {
             velocity = new Vector(-0.2, -0.1 * displacement.y / ALLOWABLE_Y_ERROR);
         } else {
             double d = displacement.magnitude();
-            double speed = Math.max(0.1, d / 36.0);
+            double speed = Math.max(0.1, d / 120.0);
             velocity = displacement.multiply(-speed / d);
         }
         velocity = velocity.rotate(angle);

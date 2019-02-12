@@ -24,14 +24,14 @@ public class FieldMap {
     private Vector bounds;
     private Polygon wall;
     private Polygon[] obstacles;
-    private VisionTarget[] visionTargets;
+    public VisionTarget[] visionTargets;
 
     public FieldMap() {
         // buildMap();
         // testMap();
+        testMapShop();
         wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
                 new Vector(0, FIELD_WIDTH));
-        testMapShop();
     }
 
     public boolean lineOfSight(Vector v1, Vector v2) {
@@ -88,7 +88,8 @@ public class FieldMap {
     public VisionTarget getNearestTarget(Vector estimate) {
         double min = Double.POSITIVE_INFINITY;
         VisionTarget best = null;
-        for (VisionTarget vt : visionTargets) {
+        for (int i = 0; i < visionTargets.length; ++i) {
+            VisionTarget vt = visionTargets[i];
             double dist = vt.pos.pos.distanceSquaredTo(estimate);
             if (dist < min) {
                 min = dist;
@@ -168,7 +169,7 @@ public class FieldMap {
         obstacles[0] = rocket;
         obstacles[1] = habzone;
 
-        visionTargets = new VisionTarget[4];
+        visionTargets = new VisionTarget[3];
         VisionTarget intake = new VisionTarget(new Vector(0, 33.5), 0, false);
         VisionTarget rightSideRocket = new VisionTarget(
                 new Vector((2 * (105 + 18.5 + 9) + 9) / 2, (2 * FIELD_WIDTH - 3.5 - 22) / 2), -2.0944 + Math.PI / 2,
@@ -179,7 +180,7 @@ public class FieldMap {
                 new Vector((2 * (105) + 9) / 2, (2 * FIELD_WIDTH - 3.5 - 22) / 2), -1.0472 - Math.PI / 2, false);
         visionTargets[0] = intake;
         visionTargets[1] = leftSideRocket;
-        visionTargets[2] = rightSideRocket;
-        visionTargets[3] = centerSideRocket;
+        // visionTargets[2] = rightSideRocket;
+        visionTargets[2] = centerSideRocket;
     }
 }

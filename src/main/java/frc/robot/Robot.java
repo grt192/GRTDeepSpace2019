@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
         GYRO = new NavXGyro();
         HATCH_JEVOIS = new Camera("hatch_cam");
         POS_TRACKER = new KalmanFilterPositionTracker();
-        POS_TRACKER.set(ROBOT_HEIGHT / 2, ROBOT_WIDTH / 2);
+        POS_TRACKER.set(ROBOT_HEIGHT / 2 + 68, ROBOT_WIDTH / 2 + 18);
         SWERVE = new Swerve();
         Sequence.initSequneces();
         Mode.initModes();
@@ -66,6 +66,21 @@ public class Robot extends TimedRobot {
     private void loop() {
         // handle mode switching
         int i = mode.getNumber(0).intValue();
+        if (Input.XBOX.getAButtonPressed()) {
+            Mode.SCORE_MODE.setTarget(Robot.FIELD_MAP.visionTargets[0]);
+            mode.setNumber(2);
+            i = 2;
+        }
+        if (Input.XBOX.getBButtonPressed()) {
+            Mode.SCORE_MODE.setTarget(Robot.FIELD_MAP.visionTargets[1]);
+            mode.setNumber(2);
+            i = 2;
+        }
+        if (Input.XBOX.getYButtonPressed()) {
+            Mode.SCORE_MODE.setTarget(Robot.FIELD_MAP.visionTargets[2]);
+            mode.setNumber(2);
+            i = 2;
+        }
         if (manualOverride()) {
             mode.setNumber(0);
             i = 0;

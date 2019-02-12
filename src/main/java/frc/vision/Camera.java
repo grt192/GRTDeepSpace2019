@@ -35,9 +35,9 @@ public class Camera {
         Vector imageDisplacement = new Vector(message.translateZ, message.translateX);
         Vector robotPos = new Vector(Robot.POS_TRACKER.getX(), Robot.POS_TRACKER.getY());
         Vector estimate = relativePosition.pos.add(imageDisplacement.rotate(relativePosition.angle))
-                .rotate(Robot.GYRO.getAngle()).add(robotPos);
+                .rotate(Math.toRadians(Robot.GYRO.getAngle())).add(robotPos);
         VisionTarget target = Robot.FIELD_MAP.getNearestTarget(estimate);
-        double angleEstimate = message.rotateZ + Math.PI + target.pos.angle - relativePosition.angle;
+        double angleEstimate = -message.rotateY + Math.PI + target.pos.angle - relativePosition.angle;
         Vector posEstimate = robotPos.add(target.pos.pos.subtract(estimate));
         Position pos = new Position(posEstimate, angleEstimate);
         return pos;
