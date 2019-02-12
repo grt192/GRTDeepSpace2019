@@ -94,11 +94,11 @@ class DriverControl extends Mode {
             Robot.ELEVATOR.setPosition(Elevator.PICKUP);
         }
 
-        if (Input.MECH_XBOX.getAButtonPressed()) {
-            Robot.BOTTOM_INTAKE.out();
-        } else if (Input.MECH_XBOX.getBButtonPressed()) {
-            Robot.BOTTOM_INTAKE.in();
-        }
+        // if (Input.MECH_XBOX.getAButtonPressed()) {
+        // Robot.BOTTOM_INTAKE.out();
+        // } else if (Input.MECH_XBOX.getBButtonPressed()) {
+        // Robot.BOTTOM_INTAKE.in();
+        // }
     }
 
     private void driveSwerve() {
