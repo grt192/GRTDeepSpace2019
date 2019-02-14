@@ -89,14 +89,17 @@ public class FieldMap {
     public VisionTarget getNearestTarget(Vector estimate) {
         double min = Double.POSITIVE_INFINITY;
         VisionTarget best = null;
+        int j = -1;
         for (int i = 0; i < visionTargets.length; ++i) {
             VisionTarget vt = visionTargets[i];
             double dist = vt.pos.pos.distanceSquaredTo(estimate);
             if (dist < min) {
                 min = dist;
                 best = vt;
+                j = i;
             }
         }
+        System.out.println(j);
         return best;
     }
 

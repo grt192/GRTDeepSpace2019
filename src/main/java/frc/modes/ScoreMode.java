@@ -27,7 +27,7 @@ public class ScoreMode extends Mode {
         Vector pos = new Vector(Robot.POS_TRACKER.getX(), Robot.POS_TRACKER.getY());
         double angle = target.pos.angle;
         Vector displacement = pos.subtract(target.pos.pos).rotate(-angle)
-                .subtract(new Vector(Robot.ROBOT_HEIGHT + 6.0, 0));
+                .subtract(new Vector((Robot.ROBOT_HEIGHT / 2) + 6.0, 0));
         if (displacement.x <= -6.0)
             return false;
         Vector velocity;

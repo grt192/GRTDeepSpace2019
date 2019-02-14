@@ -38,7 +38,7 @@ public class PathfindingControl extends Mode {
             String[] split = data.split(" ");
             target = new Vector(Double.parseDouble(split[0]), Double.parseDouble(split[1]));
             newTarget = true;
-        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
     }
 
     @Override

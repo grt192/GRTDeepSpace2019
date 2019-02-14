@@ -16,19 +16,19 @@ swerve_kd=0.0
 # Offsets are inverted
 fl_rotate=5
 fl_drive=1
-fl_offset=3
+fl_offset=-678
 fr_rotate=8
 fr_drive=4
 fr_offset=362
 bl_rotate=12
 bl_drive=16
-bl_offset=1816
+bl_offset=-769
 br_rotate=9
 br_drive=13
-br_offset=-625
+br_offset=-357
 
 ticks_per_rotation=1024
-drive_encoder_scale=1.884955592
+drive_encoder_scale=1.83259571
 
 roller=7
 roller_sol=3

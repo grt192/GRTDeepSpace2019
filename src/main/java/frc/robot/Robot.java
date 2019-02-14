@@ -21,6 +21,7 @@ import frc.mechs.Elevator;
 import frc.mechs.Hatches;
 import frc.mechs.TopIntake;
 import frc.modes.Mode;
+import frc.positiontracking.BasicPositionTracker;
 import frc.positiontracking.KalmanFilterPositionTracker;
 import frc.positiontracking.PositionTracker;
 import frc.sequence.Sequence;
@@ -67,6 +68,7 @@ public class Robot extends TimedRobot {
         HATCHES = new Hatches();
         HATCH_JEVOIS = new Camera("hatch_cam");
         POS_TRACKER = new KalmanFilterPositionTracker();
+        // POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(68 + ROBOT_HEIGHT / 2, 14.75 + ROBOT_WIDTH / 2);
         SWERVE = new Swerve();
         Sequence.initSequneces();

@@ -12,6 +12,7 @@ import frc.fieldmap.VisionTarget;
 import frc.fieldmap.geometry.Vector;
 import frc.positiontracking.Position;
 import frc.robot.Robot;
+import frc.util.GRTUtil;
 
 public class Camera {
     private Position relativePosition;
@@ -39,6 +40,7 @@ public class Camera {
         VisionTarget target = Robot.FIELD_MAP.getNearestTarget(estimate);
         double angleEstimate = -message.rotateY + Math.PI + target.pos.angle - relativePosition.angle;
         Vector posEstimate = robotPos.add(target.pos.pos.subtract(estimate));
+        System.out.println(GRTUtil.positiveMod(Math.toDegrees(angleEstimate), 360.0));
         Position pos = new Position(posEstimate, angleEstimate);
         return pos;
     }

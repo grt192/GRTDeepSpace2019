@@ -77,13 +77,13 @@ public class KalmanFilterPositionTracker extends PositionTracker {
         SwerveData data = Robot.SWERVE.getSwerveData();
         long temp = System.currentTimeMillis();
         long ticks = (temp - lastUpdate);
+        lastUpdate = temp;
         double dt = ticks / 1000.0;
         double speed = Math.sqrt(data.encoderVX * data.encoderVX + data.encoderVY * data.encoderVY);
         Mat R = new Mat(STATES, STATES, TYPE);
         R.put(0, 0, PROCESS_NOISE * dt * speed, 0, 0, PROCESS_NOISE * dt * speed);
         kf.set_processNoiseCov(R);
         kf.get_controlMatrix().put(0, 0, dt, 0, 0, dt);
-        lastUpdate = temp;
         Mat U = new Mat(STATES, 1, TYPE);
         U.put(0, 0, data.encoderVX, data.encoderVY);
         kf.predict(U);
