@@ -17,11 +17,11 @@ public class PlaceHatch extends Sequence {
     @Override
     public void runSequence() {
         Robot.HATCHES.setTop(true);
-        sleep(500);
+        sleep(250);
         Robot.HATCHES.setBottom(true);
-        sleep(500);
+        sleep(250);
         Robot.HATCHES.setTop(false);
-        sleep(500);
+        sleep(1250);
         Robot.HATCHES.setBottom(false);
     }
 }

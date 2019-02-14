@@ -22,14 +22,17 @@ public class ScoreMode extends Mode {
 
     @Override
     public boolean loop() {
+        Robot.SWERVE.setRobotCentric(false);
         if (target == null)
             return false;
         Vector pos = new Vector(Robot.POS_TRACKER.getX(), Robot.POS_TRACKER.getY());
         double angle = target.pos.angle;
         Vector displacement = pos.subtract(target.pos.pos).rotate(-angle)
                 .subtract(new Vector((Robot.ROBOT_HEIGHT / 2) + 6.0, 0));
-        if (displacement.x <= -6.0)
+        if (displacement.x <= -2.0) {
+            Robot.SWERVE.drive(0, 0, 0);
             return false;
+        }
         Vector velocity;
         if (Math.abs(displacement.y) < ALLOWABLE_Y_ERROR) {
             velocity = new Vector(-0.2, -0.1 * displacement.y / ALLOWABLE_Y_ERROR);

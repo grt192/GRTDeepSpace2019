@@ -20,7 +20,7 @@ import frc.robot.Robot;
  */
 public class FieldMap {
 
-    private double FIELD_WIDTH, FIELD_HEIGHT;
+    public double FIELD_WIDTH, FIELD_HEIGHT;
     private Vector bounds;
     private Polygon wall;
     private Polygon[] obstacles;
@@ -234,7 +234,7 @@ public class FieldMap {
         obstacles[1] = habzone;
 
         visionTargets = new VisionTarget[3];
-        VisionTarget intake = new VisionTarget(new Vector(0, 33.5), 0, false);
+        VisionTarget intake = new VisionTarget(new Vector(0, 29.75), 0, false);
         VisionTarget rightSideRocket = new VisionTarget(
                 new Vector((2 * (105 + 18.5 + 9) + 9) / 2, (2 * FIELD_WIDTH - 3.5 - 22) / 2), -2.0944 + Math.PI / 2,
                 false);

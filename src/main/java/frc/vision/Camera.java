@@ -39,6 +39,8 @@ public class Camera {
                 .rotate(Math.toRadians(Robot.GYRO.getAngle())).add(robotPos);
         VisionTarget target = Robot.FIELD_MAP.getNearestTarget(estimate);
         double angleEstimate = -message.rotateY + Math.PI + target.pos.angle - relativePosition.angle;
+        Vector betterEstimate = relativePosition.pos.add(imageDisplacement.rotate(relativePosition.angle))
+                .rotate(Math.toRadians(Robot.GYRO.getAngle())).add(robotPos);
         Vector posEstimate = robotPos.add(target.pos.pos.subtract(estimate));
         System.out.println(GRTUtil.positiveMod(Math.toDegrees(angleEstimate), 360.0));
         Position pos = new Position(posEstimate, angleEstimate);

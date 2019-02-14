@@ -23,12 +23,13 @@ public class KalmanFilterPositionTracker extends PositionTracker {
     private static final int TYPE = CvType.CV_64F;
     private static final int STATES = 2;
 
-    private static final double INITIAL_VARIANCE = 1.5;
-    private static final double PROCESS_NOISE = 0.05;
-    private static final double MEASUREMENT_NOISE = 4.0;
+    private static final double INITIAL_VARIANCE = 4.0;
+    private static final double PROCESS_NOISE = 0.07;
+    private static final double MEASUREMENT_NOISE = 0.5;
 
     private long lastUpdate;
     private KalmanFilter kf;
+    private double cachedX, cachedY;
 
     public KalmanFilterPositionTracker() {
         kf = new KalmanFilter(STATES, STATES, STATES, TYPE);
@@ -50,6 +51,8 @@ public class KalmanFilterPositionTracker extends PositionTracker {
         kf.set_errorCovPre(error);
         kf.set_errorCovPost(error);
         lastUpdate = System.currentTimeMillis();
+        cachedX = x;
+        cachedY = y;
     }
 
     @Override
@@ -92,6 +95,19 @@ public class KalmanFilterPositionTracker extends PositionTracker {
             Mat Z = new Mat(STATES, 1, TYPE);
             Z.put(0, 0, estimate.pos.x, estimate.pos.y);
             kf.correct(Z);
+        }
+        // Occasionally position tracking jumps billions of miles away (no joke) and
+        // wrecks stuff
+        // this should hopefully prevent that :)
+        double tempX = getX();
+        double tempY = getY();
+        if (tempX < -Robot.FIELD_MAP.FIELD_HEIGHT || tempX > 2 * Robot.FIELD_MAP.FIELD_HEIGHT
+                || tempY < -Robot.FIELD_MAP.FIELD_WIDTH || tempY > 2 * Robot.FIELD_MAP.FIELD_WIDTH) {
+            System.out.println("An error occured, resetting to last position");
+            set(cachedX, cachedY);
+        } else {
+            cachedX = tempX;
+            cachedY = tempY;
         }
     }
 }

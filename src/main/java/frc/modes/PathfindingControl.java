@@ -43,6 +43,7 @@ public class PathfindingControl extends Mode {
 
     @Override
     public boolean loop() {
+        Robot.SWERVE.setRobotCentric(false);
         if (newTarget) {
             setTarget(target.x, target.y);
             newTarget = false;
@@ -62,6 +63,7 @@ public class PathfindingControl extends Mode {
         double speed = 0.75 * Math.min(distance / 36.0, 1);
         velocity = velocity.multiply(speed);
         if (distance < 4) {
+            Robot.SWERVE.drive(0, 0, 0);
             return false;
         }
         Robot.SWERVE.drive(velocity.x, velocity.y, 0);

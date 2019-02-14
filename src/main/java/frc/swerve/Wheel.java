@@ -90,7 +90,7 @@ class Wheel {
 	}
 
 	public double getDriveSpeed() {
-		return (57.0 / 50.0) * driveEncoder.getVelocity() * DRIVE_TICKS_TO_METERS * (reversed ? -1 : 1) / 60.0;
+		return driveEncoder.getVelocity() * DRIVE_TICKS_TO_METERS * (reversed ? -1 : 1) / 60.0;
 	}
 
 	public double getCurrentPosition() {

@@ -13,7 +13,7 @@ public class PotentialFieldPathfinding {
 	}
 
 	public Vector search(double x, double y) {
-		double radius = Robot.ROBOT_RADIUS + 3.0;
+		double radius = Robot.ROBOT_RADIUS + 4.0;
 		double r2 = radius * radius;
 		Vector pos = new Vector(x, y);
 		Vector velocity = target.subtract(pos).multiply(1 / target.distanceTo(pos));
