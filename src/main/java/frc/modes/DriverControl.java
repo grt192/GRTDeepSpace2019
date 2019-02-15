@@ -7,7 +7,9 @@
 
 package frc.modes;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.config.Config;
 import frc.input.Input;
 import frc.input.JoystickProfile;
 import frc.mechs.Elevator;
@@ -24,6 +26,12 @@ class DriverControl extends Mode {
     private double intakePower;
     private double elevatorPower;
 
+    private Solenoid hatchThing;
+
+    public DriverControl() {
+        hatchThing = new Solenoid(Config.getInt("climber_sol"));
+    }
+
     @Override
     public boolean loop() {
         driveMechs();
@@ -35,7 +43,8 @@ class DriverControl extends Mode {
 
         // Swerve Driver: Intake hatch
         if (Input.SWERVE_XBOX.getXButtonPressed()) {
-            Sequence.INTAKE_HATCH.start();
+            // Sequence.INTAKE_HATCH.start();
+            hatchThing.set(!hatchThing.get());
         }
 
         // Swerve Driver: Place Hatch

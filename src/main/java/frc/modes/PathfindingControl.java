@@ -27,6 +27,8 @@ public class PathfindingControl extends Mode {
     private PotentialFieldPathfinding pfpf;
     private NetworkTableEntry targetEntry;
 
+    public static final double SPEED = 0.35;
+
     public PathfindingControl() {
         pathfinding = new Pathfinding();
         pfpf = new PotentialFieldPathfinding();
@@ -60,7 +62,7 @@ public class PathfindingControl extends Mode {
             velocity = endPos.subtract(pos).multiply(1 / d);
         }
         double distance = pos.distanceTo(target);
-        double speed = 0.75 * Math.min(distance / 36.0, 1);
+        double speed = SPEED * Math.min(distance / 36.0, 1);
         velocity = velocity.multiply(speed);
         if (distance < 4) {
             Robot.SWERVE.drive(0, 0, 0);
