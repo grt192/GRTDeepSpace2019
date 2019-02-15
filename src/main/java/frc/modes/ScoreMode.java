@@ -7,6 +7,9 @@
 
 package frc.modes;
 
+import edu.wpi.first.networktables.EntryListenerFlags;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.fieldmap.VisionTarget;
 import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
@@ -17,11 +20,25 @@ import frc.robot.Robot;
 public class ScoreMode extends Mode {
 
     private static final double ALLOWABLE_Y_ERROR = 1.5;
-
     private VisionTarget target;
+    private NetworkTableEntry targetEntry;
+
+    public ScoreMode() {
+        targetEntry = NetworkTableInstance.getDefault().getTable("Pathfinding").getEntry("visionTarget");
+        targetEntry.addListener(event -> {
+            int data = (int) event.value.getDouble();
+            if (data > 0) {
+                setTarget(Robot.FIELD_MAP.getVisionTargets()[data]);
+            } else {
+                setTarget(null);
+            }
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
+        targetEntry.setNumber(-1);
+    }
 
     @Override
     public boolean loop() {
+        Robot.SWERVE.setAngle(target.pos.angle);
         Robot.SWERVE.setRobotCentric(false);
         if (target == null)
             return false;
@@ -48,6 +65,7 @@ public class ScoreMode extends Mode {
 
     public void setTarget(VisionTarget vt) {
         target = vt;
-        Robot.SWERVE.setAngle(vt.pos.angle);
+        if (target != null)
+            Robot.SWERVE.setAngle(vt.pos.angle);
     }
 }

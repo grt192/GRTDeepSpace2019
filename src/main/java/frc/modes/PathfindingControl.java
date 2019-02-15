@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.fieldmap.geometry.Circle;
 import frc.fieldmap.geometry.Vector;
 import frc.pathfinding.Pathfinding;
 import frc.pathfinding.PotentialFieldPathfinding;
@@ -39,6 +40,8 @@ public class PathfindingControl extends Mode {
             String data = event.value.getString();
             String[] split = data.split(" ");
             target = new Vector(Double.parseDouble(split[0]), Double.parseDouble(split[1]));
+            if (Robot.FIELD_MAP.shapeIntersects(new Circle(target, Robot.ROBOT_RADIUS)))
+                target = null;
             newTarget = true;
         }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
     }
@@ -47,9 +50,12 @@ public class PathfindingControl extends Mode {
     public boolean loop() {
         Robot.SWERVE.setRobotCentric(false);
         if (newTarget) {
-            setTarget(target.x, target.y);
+            if (target != null)
+                setTarget(target.x, target.y);
             newTarget = false;
         }
+        if (target == null)
+            return false;
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
         Vector pos = new Vector(xPos, yPos);

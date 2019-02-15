@@ -111,6 +111,10 @@ public class FieldMap {
         return obstacles;
     }
 
+    public VisionTarget[] getVisionTargets() {
+        return visionTargets;
+    }
+
     public Set<Vector> generateNodes() {
         double radius = Robot.ROBOT_RADIUS + 1.0;
         double bigRadius = radius + 0.5;
@@ -238,10 +242,8 @@ public class FieldMap {
         VisionTarget rightSideRocket = new VisionTarget(
                 new Vector((2 * (105 + 18.5 + 9) + 9) / 2, (2 * FIELD_WIDTH - 3.5 - 22) / 2), -2.0944 + Math.PI / 2,
                 false);
-        VisionTarget centerSideRocket = new VisionTarget(new Vector((114 + 114 + 18.5) / 2, FIELD_WIDTH - 22),
-                -Math.PI / 2, true);
-        VisionTarget leftSideRocket = new VisionTarget(
-                new Vector((2 * (105) + 9) / 2, (2 * FIELD_WIDTH - 3.5 - 22) / 2), -1.0472 - Math.PI / 2, false);
+        VisionTarget centerSideRocket = new VisionTarget(new Vector(123.25, 156), -Math.PI / 2, true);
+        VisionTarget leftSideRocket = new VisionTarget(new Vector(109.5, 165.25), -1.0472 - Math.PI / 2, false);
         visionTargets[0] = intake;
         visionTargets[1] = leftSideRocket;
         // visionTargets[2] = rightSideRocket;
