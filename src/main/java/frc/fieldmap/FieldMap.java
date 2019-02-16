@@ -99,7 +99,7 @@ public class FieldMap {
                 j = i;
             }
         }
-        System.out.println(j);
+        // System.out.println(j);
         return best;
     }
 
@@ -229,9 +229,9 @@ public class FieldMap {
         bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
         obstacles = new Polygon[2];
         reflectionLine = FIELD_HEIGHT / 2;
-        Polygon rocket = new Polygon(new Vector(105, FIELD_WIDTH), new Vector(105, FIELD_WIDTH - 3.5),
-                new Vector(105 + 9, FIELD_WIDTH - 22), new Vector(105 + 18.5 + 9, FIELD_WIDTH - 22),
-                new Vector(105 + 9 + 9 + 18.5, FIELD_WIDTH - 3.5), new Vector(105 + 9 + 9 + 18.5, FIELD_WIDTH));
+        Polygon rocket = new Polygon(new Vector(130, FIELD_WIDTH), new Vector(130, FIELD_WIDTH - 3.5),
+                new Vector(130 + 9, FIELD_WIDTH - 22), new Vector(130 + 18.5 + 9, FIELD_WIDTH - 22),
+                new Vector(130 + 9 + 9 + 18.5, FIELD_WIDTH - 3.5), new Vector(130 + 9 + 9 + 18.5, FIELD_WIDTH));
         Polygon habzone = new Polygon(new Vector(0, 65.5), new Vector(67, 65.5), new Vector(67, 116),
                 new Vector(0, 116));
         obstacles[0] = rocket;
@@ -240,10 +240,10 @@ public class FieldMap {
         visionTargets = new VisionTarget[3];
         VisionTarget intake = new VisionTarget(new Vector(0, 29.75), 0, false);
         VisionTarget rightSideRocket = new VisionTarget(
-                new Vector((2 * (105 + 18.5 + 9) + 9) / 2, (2 * FIELD_WIDTH - 3.5 - 22) / 2), -2.0944 + Math.PI / 2,
-                false);
-        VisionTarget centerSideRocket = new VisionTarget(new Vector(123.25, 156), -Math.PI / 2, true);
-        VisionTarget leftSideRocket = new VisionTarget(new Vector(109.5, 165.25), -1.0472 - Math.PI / 2, false);
+                new Vector((2 * (105 + 18.5 + 9) + 9) / 2 + 25, (2 * FIELD_WIDTH - 3.5 - 22) / 2),
+                -2.0944 + Math.PI / 2, false);
+        VisionTarget centerSideRocket = new VisionTarget(new Vector(123.25 + 25, 156), -Math.PI / 2, true);
+        VisionTarget leftSideRocket = new VisionTarget(new Vector(109.5 + 25, 165.25), -1.0472 - Math.PI / 2, false);
         visionTargets[0] = intake;
         visionTargets[1] = leftSideRocket;
         // visionTargets[2] = rightSideRocket;

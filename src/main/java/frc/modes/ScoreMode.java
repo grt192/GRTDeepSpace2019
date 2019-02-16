@@ -27,7 +27,8 @@ public class ScoreMode extends Mode {
         targetEntry = NetworkTableInstance.getDefault().getTable("Pathfinding").getEntry("visionTarget");
         targetEntry.addListener(event -> {
             int data = (int) event.value.getDouble();
-            if (data > 0) {
+            System.out.println(data);
+            if (data >= 0) {
                 setTarget(Robot.FIELD_MAP.getVisionTargets()[data]);
             } else {
                 setTarget(null);
@@ -38,10 +39,10 @@ public class ScoreMode extends Mode {
 
     @Override
     public boolean loop() {
-        Robot.SWERVE.setAngle(target.pos.angle);
-        Robot.SWERVE.setRobotCentric(false);
         if (target == null)
             return false;
+        Robot.SWERVE.setAngle(target.pos.angle);
+        Robot.SWERVE.setRobotCentric(false);
         Vector pos = new Vector(Robot.POS_TRACKER.getX(), Robot.POS_TRACKER.getY());
         double angle = target.pos.angle;
         Vector displacement = pos.subtract(target.pos.pos).rotate(-angle)
@@ -64,6 +65,7 @@ public class ScoreMode extends Mode {
     }
 
     public void setTarget(VisionTarget vt) {
+        System.out.println(target);
         target = vt;
         if (target != null)
             Robot.SWERVE.setAngle(vt.pos.angle);

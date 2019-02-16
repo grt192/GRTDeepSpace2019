@@ -43,7 +43,6 @@ cargo_ship=295877
 rocket_2=360962
 rocket_3=434890
 
-climber_sol=0
 left_climber=15
 right_climber=14
 
@@ -52,7 +51,9 @@ intake=6
 name=beta2019
 
 hatch_top=1
+hatch_middle=0
 hatch_bottom=2
+hatch_servo=1
 
 hatch_cam_x=-14.5
 hatch_cam_y=0

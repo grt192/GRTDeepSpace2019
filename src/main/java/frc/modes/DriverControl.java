@@ -26,12 +26,6 @@ class DriverControl extends Mode {
     private double intakePower;
     private double elevatorPower;
 
-    private Solenoid hatchThing;
-
-    public DriverControl() {
-        hatchThing = new Solenoid(Config.getInt("climber_sol"));
-    }
-
     @Override
     public boolean loop() {
         driveMechs();
@@ -43,8 +37,7 @@ class DriverControl extends Mode {
 
         // Swerve Driver: Intake hatch
         if (Input.SWERVE_XBOX.getXButtonPressed()) {
-            // Sequence.INTAKE_HATCH.start();
-            hatchThing.set(!hatchThing.get());
+            Robot.HATCHES.toggleMiddle();
         }
 
         // Swerve Driver: Place Hatch
@@ -103,11 +96,12 @@ class DriverControl extends Mode {
             Robot.ELEVATOR.setPosition(Elevator.PICKUP);
         }
 
-        // if (Input.MECH_XBOX.getAButtonPressed()) {
-        // Robot.BOTTOM_INTAKE.out();
-        // } else if (Input.MECH_XBOX.getBButtonPressed()) {
-        // Robot.BOTTOM_INTAKE.in();
-        // }
+        if (Input.MECH_XBOX.getAButtonPressed()) {
+            System.out.println("a");
+            Sequence.EXTEND_HOOK.start();
+        } else if (Input.MECH_XBOX.getBButtonPressed()) {
+            Sequence.RETRACT_HOOK.start();
+        }
     }
 
     private void driveSwerve() {

@@ -63,6 +63,7 @@ public class Pathfinding {
                 node.update(current);
             }
         }
+        path.setDoubleArray(new double[0]);
         removeNode(startNode);
         return null;
     }

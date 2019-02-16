@@ -28,7 +28,7 @@ public class PathfindingControl extends Mode {
     private PotentialFieldPathfinding pfpf;
     private NetworkTableEntry targetEntry;
 
-    public static final double SPEED = 0.35;
+    public static final double SPEED = 0.5;
 
     public PathfindingControl() {
         pathfinding = new Pathfinding();

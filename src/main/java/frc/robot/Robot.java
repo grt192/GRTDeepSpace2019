@@ -80,21 +80,6 @@ public class Robot extends TimedRobot {
     private void loop() {
         // handle mode switching
         int i = mode.getNumber(0).intValue();
-        if (Input.MECH_XBOX.getAButtonPressed()) {
-            Mode.SCORE_MODE.setTarget(Robot.FIELD_MAP.visionTargets[0]);
-            mode.setNumber(2);
-            i = 2;
-        }
-        if (Input.MECH_XBOX.getBButtonPressed()) {
-            Mode.SCORE_MODE.setTarget(Robot.FIELD_MAP.visionTargets[1]);
-            mode.setNumber(2);
-            i = 2;
-        }
-        if (Input.MECH_XBOX.getYButtonPressed()) {
-            Mode.SCORE_MODE.setTarget(Robot.FIELD_MAP.visionTargets[2]);
-            mode.setNumber(2);
-            i = 2;
-        }
         if (manualOverride()) {
             mode.setNumber(0);
             i = 0;

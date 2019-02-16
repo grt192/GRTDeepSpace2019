@@ -19,6 +19,8 @@ public abstract class Sequence implements Runnable {
     public static ClimbSequence CLIMB_SEQUENCE;
     public static IntakeSequence INTAKE_SEQUENCE;
     public static IntakeHatch INTAKE_HATCH;
+    public static ExtendHook EXTEND_HOOK;
+    public static RetractHook RETRACT_HOOK;
 
     private volatile boolean isRunning;
 
@@ -28,6 +30,8 @@ public abstract class Sequence implements Runnable {
         CLIMB_SEQUENCE = new ClimbSequence();
         INTAKE_SEQUENCE = new IntakeSequence();
         INTAKE_HATCH = new IntakeHatch();
+        EXTEND_HOOK = new ExtendHook();
+        RETRACT_HOOK = new RetractHook();
     }
 
     private Notifier notifier;
