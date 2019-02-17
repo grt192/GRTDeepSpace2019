@@ -19,8 +19,6 @@ public class IntakeSequence extends Sequence {
     public void runSequence() {
         Robot.BOTTOM_INTAKE.out();
         Robot.BOTTOM_INTAKE.setPower(0.0);
-        Robot.ELEVATOR.setPosition(Elevator.ROCKET_BOTTOM);
-        sleep(1500);
         Robot.BOTTOM_INTAKE.in();
     }
 }

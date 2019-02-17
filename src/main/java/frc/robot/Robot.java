@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -69,12 +70,13 @@ public class Robot extends TimedRobot {
         HATCH_JEVOIS = new Camera("hatch_cam");
         POS_TRACKER = new KalmanFilterPositionTracker();
         // POS_TRACKER = new BasicPositionTracker();
-        POS_TRACKER.set(66 + ROBOT_HEIGHT / 2, 14.75 + ROBOT_WIDTH / 2);
+        POS_TRACKER.set(67.5, 111.5);
         SWERVE = new Swerve();
         Sequence.initSequneces();
         Mode.initModes();
         mode = NetworkTableInstance.getDefault().getTable("Robot").getEntry("mode");
         mode.setNumber(0);
+        CameraServer.getInstance().startAutomaticCapture();
     }
 
     private void loop() {

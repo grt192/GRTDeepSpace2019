@@ -28,9 +28,9 @@ public class FieldMap {
     private double reflectionLine;
 
     public FieldMap() {
-        // buildMap();
+        buildMap();
         // testMap();
-        testMapShop();
+        // testMapShop();
         wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
                 new Vector(0, FIELD_WIDTH));
     }
@@ -187,7 +187,7 @@ public class FieldMap {
                 new Vector(219.801, 27.474), new Vector(238.719, 27.474), new Vector(249.585, 7.75),
                 new Vector(249.585, 0));
 
-        Polygon cargoBayClose = new Polygon(new Vector(220.25, 139.1743), new Vector(251.3519, 133.125),
+        Polygon cargoBayClose = new Polygon(new Vector(220.25, 136.89), new Vector(251.3519, 133.125),
                 new Vector(324, 133.125), new Vector(324, 188.875), new Vector(251.3519, 188.875),
                 new Vector(220.25, 185.11));
 

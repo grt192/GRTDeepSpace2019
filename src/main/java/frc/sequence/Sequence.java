@@ -32,7 +32,8 @@ public abstract class Sequence implements Runnable {
         INTAKE_HATCH = new IntakeHatch();
         EXTEND_HOOK = new ExtendHook();
         RETRACT_HOOK = new RetractHook();
-    }
+      }
+
 
     private Notifier notifier;
 

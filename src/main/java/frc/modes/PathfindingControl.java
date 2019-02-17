@@ -23,6 +23,7 @@ import frc.robot.Robot;
 public class PathfindingControl extends Mode {
 
     private Vector target;
+    private volatile Vector tempTarget;
     private volatile boolean newTarget;
     private Pathfinding pathfinding;
     private PotentialFieldPathfinding pfpf;
@@ -39,9 +40,9 @@ public class PathfindingControl extends Mode {
         targetEntry.addListener(event -> {
             String data = event.value.getString();
             String[] split = data.split(" ");
-            target = new Vector(Double.parseDouble(split[0]), Double.parseDouble(split[1]));
-            if (Robot.FIELD_MAP.shapeIntersects(new Circle(target, Robot.ROBOT_RADIUS)))
-                target = null;
+            tempTarget = new Vector(Double.parseDouble(split[0]), Double.parseDouble(split[1]));
+            if (Robot.FIELD_MAP.shapeIntersects(new Circle(tempTarget, Robot.ROBOT_RADIUS)))
+                tempTarget = null;
             newTarget = true;
         }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
     }
@@ -50,6 +51,7 @@ public class PathfindingControl extends Mode {
     public boolean loop() {
         Robot.SWERVE.setRobotCentric(false);
         if (newTarget) {
+            target = tempTarget;
             if (target != null)
                 setTarget(target.x, target.y);
             newTarget = false;
