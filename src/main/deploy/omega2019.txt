@@ -31,7 +31,7 @@ ticks_per_rotation=1024
 drive_encoder_scale=1.83259571
 
 roller=7
-roller_sol=3
+roller_sol=0
 
 winch=14
 winch_follower=15
@@ -50,10 +50,10 @@ intake=6
 
 name=omega2019
 
-hatch_top=1
-hatch_middle=0
-hatch_bottom=2
-hatch_servo=1
+hatch_top=2
+hatch_middle=3
+hatch_bottom=1
+hatch_servo=0
 
 hatch_cam_x=14.5
 hatch_cam_y=0
