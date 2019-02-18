@@ -37,7 +37,7 @@ class DriverControl extends Mode {
 
         // Swerve Driver: Intake hatch
         if (Input.SWERVE_XBOX.getXButtonPressed()) {
-            Robot.HATCHES.toggleMiddle();
+            Robot.HATCHES.setMiddle(false);
         }
 
         // Swerve Driver: Place Hatch

@@ -14,6 +14,7 @@ import frc.fieldmap.geometry.Circle;
 import frc.fieldmap.geometry.Polygon;
 import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
+import frc.util.GRTUtil;
 
 /**
  * Add your docs here.
@@ -28,9 +29,9 @@ public class FieldMap {
     private double reflectionLine;
 
     public FieldMap() {
-        buildMap();
+        // buildMap();
         // testMap();
-        // testMapShop();
+        testMapShop();
         wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
                 new Vector(0, FIELD_WIDTH));
     }
@@ -86,20 +87,23 @@ public class FieldMap {
         return best;
     }
 
-    public VisionTarget getNearestTarget(Vector estimate) {
+    public VisionTarget getNearestTarget(Vector estimate, double angleEstimate) {
         double min = Double.POSITIVE_INFINITY;
         VisionTarget best = null;
         int j = -1;
+        double angleError = Math.toRadians(20);
         for (int i = 0; i < visionTargets.length; ++i) {
             VisionTarget vt = visionTargets[i];
-            double dist = vt.pos.pos.distanceSquaredTo(estimate);
-            if (dist < min) {
-                min = dist;
-                best = vt;
-                j = i;
+            if (Math.abs(GRTUtil.distanceToAngle(vt.pos.angle, angleEstimate)) < angleError) {
+                double dist = vt.pos.pos.distanceSquaredTo(estimate);
+                if (dist < min) {
+                    min = dist;
+                    best = vt;
+                    j = i;
+                }
             }
         }
-        // System.out.println(j);
+        System.out.println(j);
         return best;
     }
 

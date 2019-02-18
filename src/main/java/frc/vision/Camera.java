@@ -33,14 +33,19 @@ public class Camera {
         JeVoisMessage message = jeVois.getLastMessage();
         if (message == null)
             return null;
+        double gyroAngle = Math.toRadians(Robot.GYRO.getAngle());
         Vector imageDisplacement = new Vector(message.translateZ, message.translateX);
         Vector robotPos = new Vector(Robot.POS_TRACKER.getX(), Robot.POS_TRACKER.getY());
-        Vector estimate = relativePosition.pos.add(imageDisplacement.rotate(relativePosition.angle))
-                .rotate(Math.toRadians(Robot.GYRO.getAngle())).add(robotPos);
-        VisionTarget target = Robot.FIELD_MAP.getNearestTarget(estimate);
+        Vector estimate = relativePosition.pos.add(imageDisplacement.rotate(relativePosition.angle)).rotate(gyroAngle)
+                .add(robotPos);
+        double targetAngleEstimate = gyroAngle + message.rotateY + relativePosition.angle + Math.PI;
+        System.out.println(GRTUtil.positiveMod(Math.toDegrees(targetAngleEstimate), 360.0));
+        VisionTarget target = Robot.FIELD_MAP.getNearestTarget(estimate, targetAngleEstimate);
+        if (target == null)
+            return null;
         double angleEstimate = -message.rotateY + Math.PI + target.pos.angle - relativePosition.angle;
         Vector betterEstimate = relativePosition.pos.add(imageDisplacement.rotate(relativePosition.angle))
-                .rotate(Math.toRadians(Robot.GYRO.getAngle())).add(robotPos);
+                .rotate(gyroAngle).add(robotPos);
         Vector posEstimate = robotPos.add(target.pos.pos.subtract(estimate));
         // System.out.println(GRTUtil.positiveMod(Math.toDegrees(angleEstimate),
         // 360.0));

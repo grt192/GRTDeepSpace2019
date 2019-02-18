@@ -73,12 +73,7 @@ public class Swerve implements Runnable {
 	}
 
 	private double calcPID() {
-		double currentAngle = GRTUtil.positiveMod(Math.toRadians(gyro.getAngle()), TWO_PI);
-		double targetAngle = GRTUtil.positiveMod(angle, TWO_PI);
-		double error = targetAngle - currentAngle;
-		if (Math.abs(error) > Math.PI) {
-			error -= Math.signum(error) * TWO_PI;
-		}
+		double error = GRTUtil.distanceToAngle(Math.toRadians(gyro.getAngle()), angle);
 		double w = error * kP - Math.toRadians(gyro.getRate()) * kD;
 		return w;
 	}
