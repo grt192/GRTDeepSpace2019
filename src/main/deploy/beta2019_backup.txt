@@ -14,18 +14,18 @@ swerve_kd=0.0
 
 
 # Offsets are inverted
-br_rotate=5
-br_drive=1
-br_offset=-166
-bl_rotate=8
-bl_drive=4
-bl_offset=542
-fr_rotate=12
-fr_drive=16
-fr_offset=766
-fl_rotate=9
-fl_drive=13
-fl_offset=-35
+fl_rotate=5
+fl_drive=1
+fl_offset=-678
+fr_rotate=8
+fr_drive=4
+fr_offset=30
+bl_rotate=12
+bl_drive=16
+bl_offset=254
+br_rotate=9
+br_drive=13
+br_offset=477
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.83259571
@@ -55,6 +55,6 @@ hatch_middle=0
 hatch_bottom=2
 hatch_servo=1
 
-hatch_cam_x=14.5
+hatch_cam_x=-14.5
 hatch_cam_y=0
-hatch_cam_angle=0
+hatch_cam_angle=3.1415926535

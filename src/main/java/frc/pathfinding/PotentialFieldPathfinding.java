@@ -68,7 +68,6 @@ public class PotentialFieldPathfinding {
 			if (d2 < r2) {
 				Vector displacement = pos.subtract(close);
 				double project = (displacement.dot(velocity) / d2);
-				System.out.println(project);
 				if (project < 0) {
 					Vector force = displacement.multiply(-project);
 					velocity = velocity.add(force);
@@ -80,7 +79,6 @@ public class PotentialFieldPathfinding {
 		if (d2 < r2) {
 			Vector displacement = pos.subtract(close);
 			double project = (displacement.dot(velocity) / d2);
-			System.out.println(project);
 			if (project < 0) {
 				Vector force = displacement.multiply(-project);
 				velocity = velocity.add(force);

@@ -47,7 +47,6 @@ public class Elevator {
         desiredPos.setNumber(-2);
         desiredPos.addListener((event) -> {
             int val = (int) event.value.getDouble();
-            System.out.println("go");
             if (val < -1)
                 return;
             closedLoop = true;

@@ -19,10 +19,12 @@ public class VisionTarget {
     private static final double LOW_HEIGHT = 31.5;
 
     public final Position pos;
+    public final boolean high;
     public final double height;
 
     public VisionTarget(Vector pos, double angle, boolean high) {
         this.pos = new Position(pos, angle);
+        this.high = high;
         if (high) {
             height = HIGH_HEIGHT;
         } else {
