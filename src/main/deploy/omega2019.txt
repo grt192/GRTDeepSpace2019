@@ -9,6 +9,7 @@ robot_height=41
 
 
 swerve_inverted=false
+sensor_phase=true
 swerve_kp=0.3
 swerve_kd=0.0
 
@@ -16,16 +17,16 @@ swerve_kd=0.0
 # Offsets are inverted
 fl_rotate=5
 fl_drive=1
-fl_offset=224
+fl_offset=-224
 fr_rotate=12
 fr_drive=16
-fr_offset=0
+fr_offset=176
 bl_rotate=8
 bl_drive=4
-bl_offset=-47
+bl_offset=47
 br_rotate=9
 br_drive=13
-br_offset=-428
+br_offset=428
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.83259571

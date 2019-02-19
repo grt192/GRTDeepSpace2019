@@ -105,9 +105,9 @@ class Wheel {
 	private void configRotateMotor() {
 		Config.defaultConfigTalon(rotateMotor);
 
-		boolean inverted = Config.getBoolean("swerve_inverted") ^ Config.getBoolean(name + "_inverted");
+		boolean inverted = Config.getBoolean("swerve_inverted");
 		rotateMotor.setInverted(inverted);
-		rotateMotor.setSensorPhase(!inverted);
+		rotateMotor.setSensorPhase((!inverted) ^ Config.getBoolean("sensor_phase"));
 		rotateMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
 		rotateMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10, 0);
 
