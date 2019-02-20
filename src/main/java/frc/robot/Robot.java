@@ -80,6 +80,7 @@ public class Robot extends TimedRobot {
     }
 
     private void loop() {
+        ELEVATOR.printstuff();
         // handle mode switching
         int i = mode.getNumber(0).intValue();
         if (manualOverride()) {

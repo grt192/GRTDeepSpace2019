@@ -27,14 +27,9 @@ public class Elevator {
 
     private int[] positions;
 
-    private int rollerBottom = 500;
-    private int rollerTop = 156670;
-
     public Elevator() {
         winch = new TalonSRX(Config.getInt("winch"));
         winchFollower = new TalonSRX(Config.getInt("winch_follower"));
-        rollerBottom = Config.getInt("roller_bottom");
-        rollerTop = Config.getInt("roller_bottom");
         positions = new int[4];
         positions[ROCKET_BOTTOM] = Config.getInt("rocket_1");
         positions[ROCKET_MIDDLE] = Config.getInt("rocket_2");
@@ -50,26 +45,23 @@ public class Elevator {
             if (val < -1)
                 return;
             closedLoop = true;
-            if (!Robot.BOTTOM_INTAKE.getPosition()
-                    && ((val == PICKUP && winch.getSelectedSensorPosition() > rollerBottom)
-                            || winch.getSelectedSensorPosition() < rollerTop)) {
-                Robot.BOTTOM_INTAKE.forceOut();
+            if (val == PICKUP) {
+                Robot.BOTTOM_INTAKE.out();
                 try {
                     Thread.sleep(700);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            if (val == PICKUP)
                 winch.set(ControlMode.PercentOutput, -0.3);
-            else
+            } else {
                 winch.set(ControlMode.Position, positions[val]);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Robot.BOTTOM_INTAKE.in();
             }
-            Robot.BOTTOM_INTAKE.setToDesiredPos();
         }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
         this.setPower(0);
     }
@@ -77,7 +69,10 @@ public class Elevator {
     public void setPower(double power) {
         closedLoop = false;
         desiredPos.setNumber(-2);
-        winch.set(ControlMode.PercentOutput, power);
+        if (power == 0)
+            winch.set(ControlMode.Position, winch.getSelectedSensorPosition());
+        else
+            winch.set(ControlMode.PercentOutput, power);
     }
 
     public void setPosition(int position) {
@@ -92,14 +87,19 @@ public class Elevator {
     private void configTalon(TalonSRX talon) {
         Config.defaultConfigTalon(talon);
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        talon.setSensorPhase(true);
-        talon.configReverseSoftLimitThreshold(0);
+        talon.setInverted(Config.getBoolean("winch_inverted"));
+        talon.setSensorPhase(Config.getBoolean("winch_sensor_phase"));
+        talon.configReverseSoftLimitThreshold(Config.getInt("elevator_bottom"));
         talon.configReverseSoftLimitEnable(true);
-        talon.configForwardSoftLimitThreshold(positions[ROCKET_TOP]);
+        talon.configForwardSoftLimitThreshold(Config.getInt("elevator_top"));
         talon.configForwardSoftLimitEnable(true);
-        talon.config_kP(0, 1024.0 / 4000);
+        talon.config_kP(0, 1024.0 / 2000);
         talon.config_kI(0, 0);
-        talon.config_kD(0, 1024.0 / 10000);
+        talon.config_kD(0, 1024.0 / 7000);
         talon.config_kF(0, 0);
+    }
+
+    public void printstuff() {
+        System.out.println("Err: " + winch.getClosedLoopError() + "; Output: " + winch.getMotorOutputVoltage());
     }
 }

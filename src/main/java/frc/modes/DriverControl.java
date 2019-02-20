@@ -47,23 +47,14 @@ class DriverControl extends Mode {
 
         // Swerve Driver: Right joystick to intake power
         intakePower = JoystickProfile.applyDeadband(Input.SWERVE_XBOX.getY(Hand.kRight), 0.3);
+        if (Input.SWERVE_XBOX.getBButton())
+            intakePower = 1.0;
 
         // Swerve Driver: Activate roller
-        if (Input.SWERVE_XBOX.getBButton()) {
-            Robot.BOTTOM_INTAKE.out();
-            intakePower = 1.0;
-        }
-
-        // Swerve Driver: Intake sequence, pull ball into inner roller
-        if (Input.SWERVE_XBOX.getBButtonReleased()) {
-            Sequence.INTAKE_SEQUENCE.start();
-        }
-
-        // If no sequence is running, give manual control to rollers
-        if (!Sequence.INTAKE_SEQUENCE.isRunning()) {
+        if (Robot.BOTTOM_INTAKE.getPosition()) {
             Robot.BOTTOM_INTAKE.setPower(intakePower);
-            Robot.TOP_INTAKE.setPower(intakePower);
         }
+        Robot.TOP_INTAKE.setPower(intakePower);
 
         // Mech Driver: Get manual elevator power (from controller)
         elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft), 0.2);

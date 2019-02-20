@@ -26,28 +26,30 @@ bl_drive=4
 bl_offset=47
 br_rotate=9
 br_drive=13
-br_offset=428
+br_offset=990
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.83259571
 
-roller=7
+roller=10
 roller_sol=0
 
 winch=14
 winch_follower=15
-roller_bottom=500
-roller_top=156670
-pickup=0
-rocket_1=209000
-cargo_ship=295877
-rocket_2=360962
-rocket_3=434890
+winch_sensor_phase=false
+winch_inverted=false
+
+elevator_bottom=50000
+rocket_1=130000
+cargo_ship=190000
+rocket_2=240000
+rocket_3=315000
+elevator_top=317000
 
 left_climber=15
 right_climber=14
 
-intake=6
+intake=7
 
 name=omega2019
 
