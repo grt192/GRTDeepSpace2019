@@ -93,9 +93,9 @@ public class Elevator {
         talon.configReverseSoftLimitEnable(true);
         talon.configForwardSoftLimitThreshold(Config.getInt("elevator_top"));
         talon.configForwardSoftLimitEnable(true);
-        talon.config_kP(0, 1024.0 / 2000);
+        talon.config_kP(0, 1024.0 / 4000);
         talon.config_kI(0, 0);
-        talon.config_kD(0, 1024.0 / 7000);
+        talon.config_kD(0, 1024.0 / 10000);
         talon.config_kF(0, 0);
     }
 
