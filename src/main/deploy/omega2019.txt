@@ -4,8 +4,8 @@
 swerve_width=24.25
 swerve_height=20.5
 
-robot_width=37.00
-robot_height=41
+robot_width=38
+robot_height=35
 
 
 swerve_inverted=false

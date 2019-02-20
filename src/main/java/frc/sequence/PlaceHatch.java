@@ -17,7 +17,7 @@ public class PlaceHatch extends Sequence {
     @Override
     public void runSequence() {
         Robot.HATCHES.setMiddle(true);
-        sleep(300);
+        // sleep(300);
         Robot.HATCHES.setTop(true);
         // sleep(200);
         Robot.HATCHES.setBottom(true);
