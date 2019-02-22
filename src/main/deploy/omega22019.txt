@@ -1,4 +1,4 @@
-# Config file for 2019 omega
+# Config file for 2019 omega 2
 # Domain: roborio-192-frc.local
 
 swerve_width=24.25
