@@ -231,26 +231,32 @@ public class FieldMap {
         FIELD_WIDTH = 14 * 12 + 10;
         FIELD_HEIGHT = 16 * 12;
         bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
-        obstacles = new Polygon[2];
-        reflectionLine = FIELD_HEIGHT / 2;
+        obstacles = new Polygon[4];
         Polygon rocket = new Polygon(new Vector(130, FIELD_WIDTH), new Vector(130, FIELD_WIDTH - 3.5),
                 new Vector(130 + 9, FIELD_WIDTH - 22), new Vector(130 + 18.5 + 9, FIELD_WIDTH - 22),
                 new Vector(130 + 9 + 9 + 18.5, FIELD_WIDTH - 3.5), new Vector(130 + 9 + 9 + 18.5, FIELD_WIDTH));
         Polygon habzone = new Polygon(new Vector(0, 65.5), new Vector(67, 65.5), new Vector(67, 116),
                 new Vector(0, 116));
-        obstacles[0] = rocket;
-        obstacles[1] = habzone;
-
-        visionTargets = new VisionTarget[3];
         VisionTarget intake = new VisionTarget(new Vector(0, 29.75), 0, false);
         VisionTarget rightSideRocket = new VisionTarget(
                 new Vector((2 * (105 + 18.5 + 9) + 9) / 2 + 25, (2 * FIELD_WIDTH - 3.5 - 22) / 2),
                 -2.0944 + Math.PI / 2, false);
         VisionTarget centerSideRocket = new VisionTarget(new Vector(123.25 + 25, 156), -Math.PI / 2, true);
         VisionTarget leftSideRocket = new VisionTarget(new Vector(109.5 + 25, 165.25), -1.0472 - Math.PI / 2, false);
+        Polygon level2 = new Polygon(new Vector(0, 116), new Vector(22, 116), new Vector(22, FIELD_WIDTH - 20.5),
+                new Vector(0, FIELD_WIDTH - 20.5));
+        Polygon cargoShip = new Polygon(new Vector(FIELD_HEIGHT - 23.5, 0), new Vector(FIELD_HEIGHT, 0),
+                new Vector(FIELD_HEIGHT, 28), new Vector(FIELD_HEIGHT - 23.5, 28));
+        obstacles[0] = rocket;
+        obstacles[1] = habzone;
+        obstacles[2] = level2;
+        obstacles[3] = cargoShip;
+
+        visionTargets = new VisionTarget[4];
         visionTargets[0] = intake;
         visionTargets[1] = leftSideRocket;
         // visionTargets[2] = rightSideRocket;
         visionTargets[2] = centerSideRocket;
+        visionTargets[3] = new VisionTarget(new Vector(FIELD_HEIGHT - 11, 28), Math.PI / 2, false);
     }
 }
