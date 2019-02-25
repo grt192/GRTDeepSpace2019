@@ -47,8 +47,8 @@ class DriverControl extends Mode {
 
         // Swerve Driver: Right joystick to intake power
         intakePower = -JoystickProfile.applyDeadband(Input.SWERVE_XBOX.getY(Hand.kRight), 0.3);
-        if (Input.SWERVE_XBOX.getBButton())
-            intakePower = -1.0;
+        if (Input.SWERVE_XBOX.getBButtonPressed())
+            Robot.BOTTOM_INTAKE.toggle();
 
         // Swerve Driver: Activate roller
         if (Robot.BOTTOM_INTAKE.getPosition()) {

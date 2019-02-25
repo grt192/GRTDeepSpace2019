@@ -16,16 +16,16 @@ swerve_kd=0.0
 
 fl_rotate=5
 fl_drive=1
-fl_offset=50
+fl_offset=-1993
 fr_rotate=12
 fr_drive=16
-fr_offset=1951
+fr_offset=3985
 bl_rotate=8
 bl_drive=4
-bl_offset=1589
+bl_offset=568
 br_rotate=9
 br_drive=13
-br_offset=-256
+br_offset=1787
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.83259571
