@@ -55,6 +55,8 @@ public class Robot extends TimedRobot {
     public static double ROBOT_RADIUS;
     public static Camera HATCH_JEVOIS;
 
+    private boolean overridden;
+
     @Override
     public void robotInit() {
         Config.start();
@@ -94,8 +96,12 @@ public class Robot extends TimedRobot {
     private boolean manualOverride() {
         double x = JoystickProfile.applyDeadband(-Input.SWERVE_XBOX.getY(Hand.kLeft));
         double y = JoystickProfile.applyDeadband(Input.SWERVE_XBOX.getX(Hand.kLeft));
-        if (x != 0 || y != 0)
+        boolean temp = !(x == 0 && y == 0);
+        if (temp && !overridden) {
+            overridden = temp;
             return true;
+        }
+        overridden = temp;
         return false;
     }
 
