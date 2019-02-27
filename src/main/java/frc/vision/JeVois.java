@@ -1,25 +1,24 @@
 package frc.vision;
 
-import edu.wpi.first.hal.util.UncleanStatusException;
-import edu.wpi.first.wpilibj.SerialPort;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class JeVois extends Thread {
 
     private boolean enabled = true;
 
-    private SerialPort camera;
+    private String name;
+    private BufferedReader camera;
     public String lastString;
     public volatile JeVoisMessage lastMessage = null;
     public volatile long lastReceivedTimestamp;
 
-    public JeVois() {
-        this(SerialPort.Port.kUSB);
-    }
-
-    public JeVois(SerialPort.Port port) { // port should be kUSB, kUSB1, or kUSB2
+    public JeVois(String device) {
+        this.name = device;
         try {
-            this.camera = new SerialPort(115200, port);
-        } catch (UncleanStatusException e) {
+            camera = new BufferedReader(new FileReader(device));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -31,17 +30,13 @@ public class JeVois extends Thread {
         while (true) {
             if (this.enabled) {
                 try {
-                    String body = camera.readString().trim();
-                    String[] lines = body.split("\n");
-                    if (lines.length == 0) {
-                        continue;
-                    }
-                    String line = lines[lines.length - 1];
+                    String line = camera.readLine();
                     if (line.split(" ").length < 8) {
                         continue;
                     }
                     this.lastString = line;
                     if (!lastString.equals("")) {
+                        System.out.println(name + ": " + line);
                         lastReceivedTimestamp = System.currentTimeMillis();
                         this.lastMessage = new JeVoisMessage(lastString, lastReceivedTimestamp);
                     }

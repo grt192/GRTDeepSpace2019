@@ -19,13 +19,13 @@ public class Camera {
     private JeVois jeVois;
     private String name;
 
-    public Camera(String name, Port port) {
+    public Camera(String name, String device) {
         this.name = name;
         double x = Config.getDouble(name + "_x");
         double y = Config.getDouble(name + "_y");
         double angle = Config.getDouble(name + "_angle");
         relativePosition = new Position(new Vector(x, y), angle);
-        jeVois = new JeVois(port);
+        jeVois = new JeVois(device);
         jeVois.start();
     }
 
