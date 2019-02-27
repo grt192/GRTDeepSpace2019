@@ -31,12 +31,13 @@ public class JeVois extends Thread {
             if (this.enabled) {
                 try {
                     String line = camera.readLine();
+                    if (line == null)
+                        continue;
                     if (line.split(" ").length < 8) {
                         continue;
                     }
                     this.lastString = line;
                     if (!lastString.equals("")) {
-                        System.out.println(name + ": " + line);
                         lastReceivedTimestamp = System.currentTimeMillis();
                         this.lastMessage = new JeVoisMessage(lastString, lastReceivedTimestamp);
                     }
