@@ -7,7 +7,6 @@
 
 package frc.sequence;
 
-import frc.mechs.Elevator;
 import frc.robot.Robot;
 
 /**

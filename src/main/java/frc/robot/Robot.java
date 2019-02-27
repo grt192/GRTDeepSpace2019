@@ -11,6 +11,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.config.Config;
 import frc.fieldmap.FieldMap;
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
     public static double ROBOT_HEIGHT;
     public static double ROBOT_RADIUS;
     public static Camera HATCH_JEVOIS;
+    public static Camera[] CAMERAS;
 
     private boolean overridden;
 
@@ -69,7 +71,10 @@ public class Robot extends TimedRobot {
         TOP_INTAKE = new TopIntake();
         BOTTOM_INTAKE = new BottomIntake();
         HATCHES = new Hatches();
-        HATCH_JEVOIS = new Camera("hatch_cam");
+        CAMERAS = new Camera[2];
+        HATCH_JEVOIS = new Camera("hatch_cam", Port.kUSB1);
+        CAMERAS[0] = HATCH_JEVOIS;
+        CAMERAS[1] = new Camera("elevator_cam", Port.kUSB2);
         POS_TRACKER = new KalmanFilterPositionTracker();
         // POS_TRACKER = new BasicPositionTracker();
         POS_TRACKER.set(66 + ROBOT_HEIGHT / 2, 14.75 + ROBOT_WIDTH / 2);
@@ -78,7 +83,6 @@ public class Robot extends TimedRobot {
         Mode.initModes();
         mode = NetworkTableInstance.getDefault().getTable("Robot").getEntry("mode");
         mode.setNumber(0);
-        CameraServer.getInstance().startAutomaticCapture();
     }
 
     private void loop() {

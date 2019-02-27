@@ -7,6 +7,8 @@
 
 package frc.positiontracking;
 
+import java.util.ArrayList;
+
 import org.opencv.core.CvException;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -90,11 +92,13 @@ public class KalmanFilterPositionTracker extends PositionTracker {
         Mat U = new Mat(STATES, 1, TYPE);
         U.put(0, 0, data.encoderVX, data.encoderVY);
         kf.predict(U);
-        Position estimate = Robot.HATCH_JEVOIS.getPositionEstimate(ticks);
-        if (estimate != null) {
-            Mat Z = new Mat(STATES, 1, TYPE);
-            Z.put(0, 0, estimate.pos.x, estimate.pos.y);
-            kf.correct(Z);
+        for (int i = 0; i < Robot.CAMERAS.length; ++i) {
+            Position estimate = Robot.CAMERAS[i].getPositionEstimate(ticks);
+            if (estimate != null) {
+                Mat Z = new Mat(STATES, 1, TYPE);
+                Z.put(0, 0, estimate.pos.x, estimate.pos.y);
+                kf.correct(Z);
+            }
         }
         // Occasionally position tracking jumps billions of miles away (no joke) and
         // wrecks stuff

@@ -7,23 +7,25 @@
 
 package frc.vision;
 
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.config.Config;
 import frc.fieldmap.VisionTarget;
 import frc.fieldmap.geometry.Vector;
 import frc.positiontracking.Position;
 import frc.robot.Robot;
-import frc.util.GRTUtil;
 
 public class Camera {
     private Position relativePosition;
     private JeVois jeVois;
+    private String name;
 
-    public Camera(String name) {
+    public Camera(String name, Port port) {
+        this.name = name;
         double x = Config.getDouble(name + "_x");
         double y = Config.getDouble(name + "_y");
         double angle = Config.getDouble(name + "_angle");
         relativePosition = new Position(new Vector(x, y), angle);
-        jeVois = new JeVois();
+        jeVois = new JeVois(port);
         jeVois.start();
     }
 
@@ -40,6 +42,7 @@ public class Camera {
                 .add(robotPos);
         double targetAngleEstimate = gyroAngle + message.rotateY + relativePosition.angle + Math.PI;
         VisionTarget target = Robot.FIELD_MAP.getNearestTarget(estimate, targetAngleEstimate);
+        System.out.println(name + ": " + estimate);
         if (target == null)
             return null;
         double angleEstimate = -message.rotateY + Math.PI + target.pos.angle - relativePosition.angle;
