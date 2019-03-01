@@ -61,6 +61,6 @@ hatch_cam_x=14
 hatch_cam_y=1.5
 hatch_cam_angle=0
 
-elevator_cam_x=-5
-elevator_cam_y=6
+elevator_cam_x=-3.5
+elevator_cam_y=10
 elevator_cam_angle=3.1415926535

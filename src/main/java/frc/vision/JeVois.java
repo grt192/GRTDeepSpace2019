@@ -39,7 +39,11 @@ public class JeVois extends Thread {
                     this.lastString = line;
                     if (!lastString.equals("")) {
                         lastReceivedTimestamp = System.currentTimeMillis();
-                        this.lastMessage = new JeVoisMessage(lastString, lastReceivedTimestamp);
+                        try {
+                            this.lastMessage = new JeVoisMessage(lastString, lastReceivedTimestamp);
+                        } catch (NumberFormatException e) {
+                            System.out.println(name + ": " + line);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
