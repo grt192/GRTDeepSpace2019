@@ -88,7 +88,6 @@ class DriverControl extends Mode {
         }
 
         if (Input.MECH_XBOX.getAButtonPressed()) {
-            System.out.println("a");
             Sequence.EXTEND_HOOK.start();
         } else if (Input.MECH_XBOX.getBButtonPressed()) {
             Sequence.RETRACT_HOOK.start();
