@@ -36,6 +36,9 @@ public class Elevator {
         positions[ROCKET_TOP] = Config.getInt("rocket_3");
         positions[CARGO_SHIP] = Config.getInt("cargo_ship");
         Config.defaultConfigTalon(winchFollower);
+        // winchFollower.configPeakCurrentLimit(0);
+        // winchFollower.configContinuousCurrentLimit(35);
+        // winchFollower.enableCurrentLimit(true);
         configTalon(winch);
         winchFollower.follow(winch);
         desiredPos = NetworkTableInstance.getDefault().getTable("Robot").getSubTable("Elevator").getEntry("target");
@@ -69,9 +72,10 @@ public class Elevator {
     public void setPower(double power) {
         closedLoop = false;
         desiredPos.setNumber(-2);
-        if (power == 0)
+        if (power == 0) {
             winch.set(ControlMode.Position, winch.getSelectedSensorPosition());
-        else
+            closedLoop = true;
+        } else
             winch.set(ControlMode.PercentOutput, power);
     }
 
@@ -86,6 +90,9 @@ public class Elevator {
 
     private void configTalon(TalonSRX talon) {
         Config.defaultConfigTalon(talon);
+        // talon.configPeakCurrentLimit(0);
+        // talon.configContinuousCurrentLimit(35);
+        // talon.enableCurrentLimit(true);
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         talon.setInverted(Config.getBoolean("winch_inverted"));
         talon.setSensorPhase(Config.getBoolean("winch_sensor_phase"));
