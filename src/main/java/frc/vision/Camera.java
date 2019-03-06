@@ -33,7 +33,7 @@ public class Camera {
         if (System.currentTimeMillis() - jeVois.getLastReceivedTimestamp() > maxAge)
             return null;
         JeVoisMessage message = jeVois.getLastMessage();
-        if (message == null)
+        if (message == null || !message.retval)
             return null;
         double gyroAngle = Math.toRadians(Robot.GYRO.getAngle());
         Vector imageDisplacement = new Vector(message.translateZ, message.translateX);

@@ -6,6 +6,7 @@ public class JeVoisMessage {
 
     public final long receivedTime; // millis
     public final double cameraTime; // seconds since camera startup
+    public final boolean retval;
 
     public final double translateX; // inches
     public final double translateY;
@@ -21,17 +22,17 @@ public class JeVoisMessage {
 
         String[] split = line.split(" ");
 
-        this.cameraTime = Double.valueOf(split[0]);
+        this.cameraTime = Double.parseDouble(split[0]);
 
-        // this.retval = Double.valueOf(split[1]);
+        this.retval = Boolean.parseBoolean(split[1]);
 
-        this.translateX = Double.valueOf(split[2]);
-        this.translateY = Double.valueOf(split[3]);
-        this.translateZ = Double.valueOf(split[4]);
+        this.translateX = Double.parseDouble(split[2]);
+        this.translateY = Double.parseDouble(split[3]);
+        this.translateZ = Double.parseDouble(split[4]);
 
-        this.rotateX = Double.valueOf(split[5]);
-        this.rotateY = Double.valueOf(split[6]);
-        this.rotateZ = Double.valueOf(split[7]);
+        this.rotateX = Double.parseDouble(split[5]);
+        this.rotateY = Double.parseDouble(split[6]);
+        this.rotateZ = Double.parseDouble(split[7]);
     }
 
     public String toString() {

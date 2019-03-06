@@ -33,7 +33,7 @@ public class JeVois extends Thread {
                     String line = camera.readLine();
                     if (line == null)
                         continue;
-                    if (line.split(" ").length < 8) {
+                    if (line.split(" ").length != 8) {
                         continue;
                     }
                     this.lastString = line;
