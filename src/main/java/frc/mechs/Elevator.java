@@ -37,6 +37,7 @@ public class Elevator {
         positions[CARGO_SHIP] = Config.getInt("cargo_ship");
         Config.defaultConfigTalon(winchFollower);
         configTalon(winch);
+        winchFollower.setInverted(Config.getBoolean("winch_inverted"));
         winchFollower.follow(winch);
         desiredPos = NetworkTableInstance.getDefault().getTable("Robot").getSubTable("Elevator").getEntry("target");
         desiredPos.setNumber(-2);
@@ -89,10 +90,10 @@ public class Elevator {
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         talon.setInverted(Config.getBoolean("winch_inverted"));
         talon.setSensorPhase(Config.getBoolean("winch_sensor_phase"));
-        // talon.configReverseSoftLimitThreshold(Config.getInt("elevator_bottom"));
-        // talon.configReverseSoftLimitEnable(true);
-        // talon.configForwardSoftLimitThreshold(Config.getInt("elevator_top"));
-        // talon.configForwardSoftLimitEnable(true);
+        talon.configReverseSoftLimitThreshold(Config.getInt("elevator_bottom"));
+        talon.configReverseSoftLimitEnable(true);
+        talon.configForwardSoftLimitThreshold(Config.getInt("elevator_top"));
+        talon.configForwardSoftLimitEnable(true);
         talon.config_kP(0, 1024.0 / 4000);
         talon.config_kI(0, 0);
         talon.config_kD(0, 1024.0 / 10000);
