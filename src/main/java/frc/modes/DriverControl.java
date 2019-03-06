@@ -7,9 +7,7 @@
 
 package frc.modes;
 
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import frc.config.Config;
 import frc.input.Input;
 import frc.input.JoystickProfile;
 import frc.mechs.Elevator;
@@ -87,12 +85,23 @@ class DriverControl extends Mode {
             Robot.ELEVATOR.setPosition(Elevator.PICKUP);
         }
 
+        if (Input.MECH_XBOX.getStartButtonPressed()) {
+            Robot.BOTTOM_INTAKE.toggle();
+        }
+
+        // Experimental stuff
         if (Input.MECH_XBOX.getAButtonPressed()) {
-            System.out.println("a");
             Sequence.EXTEND_HOOK.start();
         } else if (Input.MECH_XBOX.getBButtonPressed()) {
             Sequence.RETRACT_HOOK.start();
         }
+        // if (Input.MECH_XBOX.getBumperPressed(Hand.kLeft)) {
+        // Robot.CLIMBER.toggleFront();
+        // }
+        // if (Input.MECH_XBOX.getBumperPressed(Hand.kRight)) {
+        // Robot.CLIMBER.toggleBack();
+        // }
+
     }
 
     private void driveSwerve() {

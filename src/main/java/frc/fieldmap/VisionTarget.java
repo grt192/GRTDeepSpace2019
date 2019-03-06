@@ -33,22 +33,12 @@ public class VisionTarget {
     }
 
     public VisionTarget flipVisionTargetX(double line) {
-        boolean high;
-        if (height == HIGH_HEIGHT) {
-            high = true;
-        } else {
-            high = false;
-        }
-        return new VisionTarget(new Vector(2 * line - pos.pos.x, pos.pos.y), Math.PI - pos.angle, high);
+        double angle = Math.PI - pos.angle;
+        return new VisionTarget(new Vector(2 * line - pos.pos.x, pos.pos.y), angle, high);
     }
 
     public VisionTarget flipVisionTargetY(double line) {
-        boolean high;
-        if (height == HIGH_HEIGHT) {
-            high = true;
-        } else {
-            high = false;
-        }
-        return new VisionTarget(new Vector(pos.pos.x, 2 * line - pos.pos.y), Math.PI - pos.angle, high);
+        double angle = -pos.angle;
+        return new VisionTarget(new Vector(pos.pos.x, 2 * line - pos.pos.y), angle, high);
     }
 }

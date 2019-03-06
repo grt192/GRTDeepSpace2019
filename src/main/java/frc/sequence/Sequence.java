@@ -16,7 +16,6 @@ public abstract class Sequence implements Runnable {
 
     public static RumbleSeguence RUMBLE_SEQUENCE;
     public static PlaceHatch PLACE_HATCH;
-    public static ClimbSequence CLIMB_SEQUENCE;
     public static IntakeSequence INTAKE_SEQUENCE;
     public static IntakeHatch INTAKE_HATCH;
     public static ExtendHook EXTEND_HOOK;
@@ -27,13 +26,11 @@ public abstract class Sequence implements Runnable {
     public static void initSequneces() {
         RUMBLE_SEQUENCE = new RumbleSeguence();
         PLACE_HATCH = new PlaceHatch();
-        CLIMB_SEQUENCE = new ClimbSequence();
         INTAKE_SEQUENCE = new IntakeSequence();
         INTAKE_HATCH = new IntakeHatch();
         EXTEND_HOOK = new ExtendHook();
         RETRACT_HOOK = new RetractHook();
-      }
-
+    }
 
     private Notifier notifier;
 

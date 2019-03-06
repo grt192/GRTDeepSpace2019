@@ -11,7 +11,6 @@ public abstract class Mode {
 
     public static Mode DRIVER_CONTROL;
     public static PathfindingControl PATHFINDING_CONTROL;
-    public static ClimbMode CLIMB_MODE;
     public static ScoreMode SCORE_MODE;
     private static Mode[] modes;
 
