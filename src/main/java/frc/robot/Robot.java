@@ -69,7 +69,6 @@ public class Robot extends TimedRobot {
         TOP_INTAKE = new TopIntake();
         BOTTOM_INTAKE = new BottomIntake();
         HATCHES = new Hatches();
-        CLIMBER = new Climber();
         HATCH_JEVOIS = new Camera("hatch_cam");
         POS_TRACKER = new KalmanFilterPositionTracker();
         // POS_TRACKER = new BasicPositionTracker();
@@ -79,8 +78,8 @@ public class Robot extends TimedRobot {
         Mode.initModes();
         mode = NetworkTableInstance.getDefault().getTable("Robot").getEntry("mode");
         mode.setNumber(0);
-        CameraServer.getInstance().startAutomaticCapture(0);
-        CameraServer.getInstance().startAutomaticCapture(1);
+        // CameraServer.getInstance().startAutomaticCapture(0);
+        // CameraServer.getInstance().startAutomaticCapture(1);
     }
 
     private void loop() {

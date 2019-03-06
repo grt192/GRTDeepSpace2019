@@ -40,6 +40,7 @@ public class Elevator {
         // winchFollower.configContinuousCurrentLimit(35);
         // winchFollower.enableCurrentLimit(true);
         configTalon(winch);
+        winchFollower.setInverted(Config.getBoolean("winch_inverted"));
         winchFollower.follow(winch);
         desiredPos = NetworkTableInstance.getDefault().getTable("Robot").getSubTable("Elevator").getEntry("target");
         desiredPos.setNumber(-2);
