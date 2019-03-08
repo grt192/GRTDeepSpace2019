@@ -25,7 +25,7 @@ bl_drive=4
 bl_offset=568
 br_rotate=9
 br_drive=13
-br_offset=1787
+br_offset=-306
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.83259571
