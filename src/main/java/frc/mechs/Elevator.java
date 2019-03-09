@@ -45,27 +45,27 @@ public class Elevator {
         desiredPos = NetworkTableInstance.getDefault().getTable("Robot").getSubTable("Elevator").getEntry("target");
         desiredPos.setNumber(-2);
         desiredPos.addListener((event) -> {
-            // int val = (int) event.value.getDouble();
-            // if (val < -1)
-            // return;
-            // closedLoop = true;
-            // if (val == PICKUP) {
-            // Robot.BOTTOM_INTAKE.out();
-            // try {
-            // Thread.sleep(700);
-            // } catch (InterruptedException e) {
-            // e.printStackTrace();
-            // }
-            // winch.set(ControlMode.PercentOutput, -0.3);
-            // } else {
-            // winch.set(ControlMode.Position, positions[val]);
-            // try {
-            // Thread.sleep(1500);
-            // } catch (InterruptedException e) {
-            // e.printStackTrace();
-            // }
-            // Robot.BOTTOM_INTAKE.in();
-            // }
+            int val = (int) event.value.getDouble();
+            if (val < -1)
+                return;
+            closedLoop = true;
+            if (val == PICKUP) {
+                Robot.BOTTOM_INTAKE.out();
+                try {
+                    Thread.sleep(700);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                winch.set(ControlMode.PercentOutput, -0.3);
+            } else {
+                winch.set(ControlMode.Position, positions[val]);
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Robot.BOTTOM_INTAKE.in();
+            }
         }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
         this.setPower(0);
     }

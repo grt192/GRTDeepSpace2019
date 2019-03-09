@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
         BOTTOM_INTAKE = new BottomIntake();
         HATCHES = new Hatches();
         CAMERAS = new Camera[2];
-        CAMERAS[0] = new Camera("hatch_cam", "/dev/ttyACM1");
+        CAMERAS[0] = new Camera("hatch_cam", Port.kUSB1);
         CAMERAS[1] = new Camera("elevator_cam", "/dev/ttyACM0");
         POS_TRACKER = new KalmanFilterPositionTracker();
         // POS_TRACKER = new BasicPositionTracker();

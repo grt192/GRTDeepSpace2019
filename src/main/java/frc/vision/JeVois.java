@@ -3,6 +3,11 @@ package frc.vision;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+
+import edu.wpi.first.hal.util.UncleanStatusException;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 
 public class JeVois extends Thread {
 
@@ -10,6 +15,8 @@ public class JeVois extends Thread {
 
     private String name;
     private BufferedReader camera;
+    private SerialPort serialPort;
+
     public String lastString;
     public volatile JeVoisMessage lastMessage = null;
     public volatile long lastReceivedTimestamp;
@@ -23,19 +30,28 @@ public class JeVois extends Thread {
         }
     }
 
+    public JeVois(String name, Port port) {
+        this.name = name;
+        try {
+            serialPort = new SerialPort(115200, port);
+        } catch (UncleanStatusException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
-        if (camera == null)
+        if (camera == null && serialPort == null)
             return;
         while (true) {
             if (this.enabled) {
                 try {
-                    String line = camera.readLine();
+                    String line = readLine();
                     if (line == null)
                         continue;
-                    if (line.split(" ").length != 8) {
-                        continue;
-                    }
+                    // if (line.split(" ").length != 8) {
+                    // continue;
+                    // }
                     this.lastString = line;
                     if (!lastString.equals("")) {
                         System.out.println(line);
@@ -56,6 +72,18 @@ public class JeVois extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    private String readLine() throws IOException {
+        if (camera != null)
+            return camera.readLine();
+        String body = serialPort.readString().trim();
+        String[] lines = body.split("\n");
+        if (lines.length == 0) {
+            return null;
+        }
+        String line = lines[lines.length - 1];
+        return line;
     }
 
     public JeVoisMessage getLastMessage() {

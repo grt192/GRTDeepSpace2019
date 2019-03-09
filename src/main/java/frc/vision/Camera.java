@@ -29,6 +29,16 @@ public class Camera {
         jeVois.start();
     }
 
+    public Camera(String name, Port device) {
+        this.name = name;
+        double x = Config.getDouble(name + "_x");
+        double y = Config.getDouble(name + "_y");
+        double angle = Config.getDouble(name + "_angle");
+        relativePosition = new Position(new Vector(x, y), angle);
+        jeVois = new JeVois(name, device);
+        jeVois.start();
+    }
+
     public Position getPositionEstimate(long maxAge) {
         if (System.currentTimeMillis() - jeVois.getLastReceivedTimestamp() > maxAge)
             return null;
