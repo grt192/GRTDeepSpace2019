@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.networktables.EntryListenerFlags;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.config.Config;
@@ -16,6 +17,7 @@ public class Elevator {
     private TalonSRX winchFollower;
 
     private NetworkTableEntry desiredPos;
+    private NetworkTableEntry setter;
 
     private boolean closedLoop;
 
@@ -42,7 +44,9 @@ public class Elevator {
         configTalon(winch);
         winchFollower.setInverted(Config.getBoolean("winch_inverted"));
         winchFollower.follow(winch);
-        desiredPos = NetworkTableInstance.getDefault().getTable("Robot").getSubTable("Elevator").getEntry("target");
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("Robot").getSubTable("Elevator");
+        desiredPos = table.getEntry("target");
+        setter = table.getEntry("set");
         desiredPos.setNumber(-2);
         desiredPos.addListener((event) -> {
             int val = (int) event.value.getDouble();
@@ -67,7 +71,14 @@ public class Elevator {
                 Robot.BOTTOM_INTAKE.in();
             }
         }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
-        this.setPower(0);
+        setter.addListener((event) -> {
+            int val = (int) event.value.getDouble();
+            if (val < 0)
+                return;
+            positions[val] = winch.getSelectedSensorPosition();
+            desiredPos.setNumber(val);
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        setPower(0);
     }
 
     public void setPower(double power) {
