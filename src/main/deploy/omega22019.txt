@@ -55,5 +55,5 @@ hatch_bottom=4
 hatch_servo=0
 
 hatch_cam_x=14
-hatch_cam_y=0
+hatch_cam_y=2
 hatch_cam_angle=0
