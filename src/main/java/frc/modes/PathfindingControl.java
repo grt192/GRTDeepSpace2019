@@ -82,7 +82,6 @@ public class PathfindingControl extends Mode {
     }
 
     public void setTarget(double x, double y) {
-        System.out.println("Setting target to " + x + ", " + y);
         target = new Vector(x, y);
         pathfinding.setTargetNode(x, y);
         pfpf.setTarget(x, y);

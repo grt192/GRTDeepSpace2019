@@ -48,7 +48,7 @@ public class Camera {
         Vector posEstimate = robotPos.add(target.pos.pos.subtract(estimate));
         // System.out.println(GRTUtil.positiveMod(Math.toDegrees(angleEstimate),
         // 360.0));
-        System.out.println(posEstimate);
+        // System.out.println(posEstimate);
         Position pos = new Position(posEstimate, angleEstimate);
         return pos;
     }
