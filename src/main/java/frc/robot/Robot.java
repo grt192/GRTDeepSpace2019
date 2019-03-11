@@ -40,6 +40,7 @@ import frc.vision.Camera;
 public class Robot extends TimedRobot {
 
     private NetworkTableEntry mode;
+    private Autonomous autonomous;
 
     public static Swerve SWERVE;
     public static NavXGyro GYRO;
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
         ROBOT_HEIGHT = Config.getDouble("robot_height");
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
         FIELD_MAP = new FieldMap();
+        autonomous = new Autonomous(this);
         GYRO = new NavXGyro();
         ELEVATOR = new Elevator();
         TOP_INTAKE = new TopIntake();
@@ -84,14 +86,21 @@ public class Robot extends TimedRobot {
 
     private void loop() {
         // handle mode switching
+        autonomous.loop();
         int i = mode.getNumber(0).intValue();
         if (manualOverride()) {
+            autonomous.kill();
             mode.setNumber(0);
             i = 0;
         }
         if (!Mode.getMode(i).loop()) {
+            autonomous.modeFinished();
             mode.setNumber(0);
         }
+    }
+
+    public void setMode(int i) {
+        mode.setNumber(i);
     }
 
     private boolean manualOverride() {
@@ -104,6 +113,11 @@ public class Robot extends TimedRobot {
         }
         overridden = temp;
         return false;
+    }
+
+    @Override
+    public void autonomousInit() {
+        autonomous.init("2hatchesleft.txt");
     }
 
     @Override

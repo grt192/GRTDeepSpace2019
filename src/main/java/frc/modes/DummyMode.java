@@ -5,18 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.sequence;
-
-import frc.robot.*;
+package frc.modes;
 
 /**
  * Add your docs here.
  */
-public class IntakeHatch extends Sequence {
+public class DummyMode extends Mode {
 
     @Override
-    public void runSequence() {
-        Robot.HATCHES.setMiddle(false);
+    public boolean loop() {
+        return true;
     }
-
 }
