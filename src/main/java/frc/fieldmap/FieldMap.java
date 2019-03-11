@@ -88,7 +88,7 @@ public class FieldMap {
 	}
 
 	public VisionTarget getNearestTarget(Vector estimate, double angleEstimate) {
-		double min = Double.POSITIVE_INFINITY;
+		double min = 25;
 		VisionTarget best = null;
 		int j = -1;
 		double angleError = Math.toRadians(20);
