@@ -71,6 +71,7 @@ public class Elevator {
                 Robot.BOTTOM_INTAKE.in();
             }
         }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
+        setter.setNumber(-1);
         setter.addListener((event) -> {
             int val = (int) event.value.getDouble();
             if (val < 0)
