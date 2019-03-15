@@ -19,6 +19,7 @@ public abstract class Mode {
         DRIVER_CONTROL = new DriverControl();
         PATHFINDING_CONTROL = new PathfindingControl();
         SCORE_MODE = new ScoreMode();
+        DUMMY_MODE = new DummyMode();
         modes = new Mode[4];
         modes[0] = DRIVER_CONTROL;
         modes[1] = PATHFINDING_CONTROL;

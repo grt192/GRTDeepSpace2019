@@ -85,18 +85,22 @@ public class Robot extends TimedRobot {
     }
 
     private void loop() {
+        long start = System.nanoTime();
         // handle mode switching
         autonomous.loop();
+        // System.out.println("auton: " + (System.nanoTime() - start));
         int i = mode.getNumber(0).intValue();
         if (manualOverride()) {
             autonomous.kill();
             mode.setNumber(0);
             i = 0;
         }
+        // System.out.println("override: " + (System.nanoTime() - start));
         if (!Mode.getMode(i).loop()) {
             autonomous.modeFinished();
             mode.setNumber(0);
         }
+        // System.out.println("done: " + (System.nanoTime() - start));
     }
 
     public void setMode(int i) {
@@ -117,7 +121,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autonomous.init("2hatchesleft.txt");
+        autonomous.init("2hatchesshop.txt");
     }
 
     @Override

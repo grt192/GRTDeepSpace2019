@@ -70,7 +70,7 @@ public class Autonomous {
                 return;
             }
             System.out.println(line);
-            String[] cmd = line.split(" ");
+            String[] cmd = line.trim().split(" ");
             switch (cmd[0]) {
             case "delay":
                 delayTime = time + Integer.parseInt(cmd[1]);
@@ -82,7 +82,7 @@ public class Autonomous {
                 robot.setMode(2);
                 break;
             case "visiontarget":
-                Mode.SCORE_MODE.setTarget(Robot.FIELD_MAP.visionTargets[Integer.parseInt(cmd[1])]);
+                Mode.SCORE_MODE.setTarget(Integer.parseInt(cmd[1]));
                 break;
             case "pathfind":
                 Mode.PATHFINDING_CONTROL.setTarget(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]));

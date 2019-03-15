@@ -46,7 +46,7 @@ public class ScoreMode extends Mode {
         double angle = target.pos.angle;
         Vector displacement = pos.subtract(target.pos.pos).rotate(-angle)
                 .subtract(new Vector((Robot.ROBOT_HEIGHT / 2) + 6.0, 0));
-        if (displacement.x <= 2.0) {// -2.0) { pls dont smack camera
+        if (displacement.x <= 0) {// -2.0) { pls dont smack camera
             Robot.SWERVE.drive(0, 0, 0);
             return false;
         }
@@ -64,9 +64,12 @@ public class ScoreMode extends Mode {
     }
 
     public void setTarget(VisionTarget vt) {
-        System.out.println(target);
         target = vt;
         if (target != null)
             Robot.SWERVE.setAngle(vt.pos.angle + (target.high ? 0 : Math.PI));
+    }
+
+    public void setTarget(int i) {
+        targetEntry.setNumber(i);
     }
 }
