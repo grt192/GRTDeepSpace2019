@@ -29,9 +29,9 @@ public class FieldMap {
 	private double reflectionLineX, reflectionLineY;
 
 	public FieldMap() {
-		// buildMap();
+		buildMap();
 		// testMap();
-		testMapShop();
+		// testMapShop();
 		bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
 		wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
 				new Vector(0, FIELD_WIDTH));
