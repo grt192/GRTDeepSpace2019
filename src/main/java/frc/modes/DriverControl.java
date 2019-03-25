@@ -95,12 +95,12 @@ class DriverControl extends Mode {
         } else if (Input.MECH_XBOX.getBButtonPressed()) {
             Sequence.RETRACT_HOOK.start();
         }
-        // if (Input.MECH_XBOX.getBumperPressed(Hand.kLeft)) {
-        // Robot.CLIMBER.toggleFront();
-        // }
-        // if (Input.MECH_XBOX.getBumperPressed(Hand.kRight)) {
-        // Robot.CLIMBER.toggleBack();
-        // }
+        if (Input.MECH_XBOX.getBumperPressed(Hand.kLeft)) {
+            Robot.CLIMBER.toggleFront();
+        }
+        if (Input.MECH_XBOX.getBumperPressed(Hand.kRight)) {
+            Robot.CLIMBER.toggleBack();
+        }
 
     }
 

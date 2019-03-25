@@ -10,7 +10,7 @@ robot_height=35
 
 swerve_inverted=false
 sensor_phase=true
-swerve_kp=0.3
+swerve_kp=0.2
 swerve_kd=0.0
 
 

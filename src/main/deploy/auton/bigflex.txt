@@ -9,7 +9,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 25
+pathfind 50 28
 delay 1000
 visiontarget 0
 wait
@@ -24,7 +24,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 25
+pathfind 50 28
 delay 1000
 visiontarget 0
 wait
@@ -39,7 +39,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 25
+pathfind 50 28
 delay 1000
 visiontarget 0
 wait
@@ -54,7 +54,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 25
+pathfind 50 28
 delay 1000
 visiontarget 0
 wait
@@ -69,7 +69,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 25
+pathfind 50 28
 delay 1000
 visiontarget 0
 wait
@@ -84,7 +84,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 25
+pathfind 50 28
 delay 1000
 visiontarget 0
 wait
@@ -99,7 +99,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 299
+pathfind 50 296
 delay 1000
 visiontarget 1
 wait
@@ -114,7 +114,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 299
+pathfind 50 296
 delay 1000
 visiontarget 1
 wait
@@ -129,7 +129,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 299
+pathfind 50 296
 delay 1000
 visiontarget 1
 wait
@@ -144,7 +144,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 299
+pathfind 50 296
 delay 1000
 visiontarget 1
 wait
@@ -159,7 +159,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 299
+pathfind 50 296
 delay 1000
 visiontarget 1
 wait
@@ -174,7 +174,7 @@ score
 wait
 placehatch
 delay 500
-pathfind 50 299
+pathfind 50 296
 delay 1000
 visiontarget 1
 wait

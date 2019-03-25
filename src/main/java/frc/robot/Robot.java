@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
         autonomous = new Autonomous(this);
         GYRO = new NavXGyro();
         ELEVATOR = new Elevator();
+        CLIMBER = new Climber();
         TOP_INTAKE = new TopIntake();
         BOTTOM_INTAKE = new BottomIntake();
         HATCHES = new Hatches();
@@ -81,11 +82,11 @@ public class Robot extends TimedRobot {
         mode = NetworkTableInstance.getDefault().getTable("Robot").getEntry("mode");
         mode.setNumber(0);
         CameraServer.getInstance().startAutomaticCapture(0);
-        // CameraServer.getInstance().startAutomaticCapture(1);
+        CameraServer.getInstance().startAutomaticCapture(1);
     }
 
     private void loop() {
-        long start = System.nanoTime();
+        // long start = System.nanoTime();
         // handle mode switching
         autonomous.loop();
         // System.out.println("auton: " + (System.nanoTime() - start));
@@ -121,7 +122,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autonomous.init("2hatchesleft.txt");
+        autonomous.init("2hatchesfrontl.txt");
     }
 
     @Override
