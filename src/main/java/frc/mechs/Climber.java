@@ -19,8 +19,8 @@ public class Climber {
     private Solenoid back;
 
     public Climber() {
-        front = new Solenoid(Config.getInt("climber_front"));
-        back = new Solenoid(Config.getInt("climber_back"));
+        front = new Solenoid(/* Config.getInt("climber_front") */7);
+        back = new Solenoid(/* Config.getInt("climber_back") */6);
     }
 
     public void setFront(boolean on) {

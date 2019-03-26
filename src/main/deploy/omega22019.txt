@@ -49,9 +49,9 @@ intake=7
 
 name=omega22019
 
-hatch_top=2
-hatch_middle=3
-hatch_bottom=4
+hatch_top=1
+hatch_middle=2
+hatch_bottom=3
 hatch_servo=0
 
 hatch_cam_x=14
