@@ -62,32 +62,32 @@ class DriverControl extends Mode {
             Robot.ELEVATOR.setPower(elevatorPower);
         }
 
-        // Mech Driver: goto elevator position
-        switch (Input.MECH_XBOX.getPOV()) {
-        case 0:
-            Robot.ELEVATOR.setPosition(Elevator.ROCKET_TOP);
-            // System.out.println("Rocket Top");
-            break;
-        case 90:
-            Robot.ELEVATOR.setPosition(Elevator.ROCKET_MIDDLE);
-            // System.out.println("Rocket Middle");
-            break;
-        case 180:
-            Robot.ELEVATOR.setPosition(Elevator.ROCKET_BOTTOM);
-            // System.out.println("Rocket Bottom");
-            break;
-        case 270:
-            Robot.ELEVATOR.setPosition(Elevator.CARGO_SHIP);
-            // System.out.println("Cargo Ship");
-            break;
-        }
-        if (Input.MECH_XBOX.getBackButtonPressed()) {
-            Robot.ELEVATOR.setPosition(Elevator.PICKUP);
-        }
+        // // Mech Driver: goto elevator position
+        // switch (Input.MECH_XBOX.getPOV()) {
+        // case 0:
+        // Robot.ELEVATOR.setPosition(Elevator.ROCKET_TOP);
+        // // System.out.println("Rocket Top");
+        // break;
+        // case 90:
+        // Robot.ELEVATOR.setPosition(Elevator.ROCKET_MIDDLE);
+        // // System.out.println("Rocket Middle");
+        // break;
+        // case 180:
+        // Robot.ELEVATOR.setPosition(Elevator.ROCKET_BOTTOM);
+        // // System.out.println("Rocket Bottom");
+        // break;
+        // case 270:
+        // Robot.ELEVATOR.setPosition(Elevator.CARGO_SHIP);
+        // // System.out.println("Cargo Ship");
+        // break;
+        // }
+        // if (Input.MECH_XBOX.getBackButtonPressed()) {
+        // Robot.ELEVATOR.setPosition(Elevator.PICKUP);
+        // }
 
-        if (Input.MECH_XBOX.getStartButtonPressed()) {
-            Robot.BOTTOM_INTAKE.toggle();
-        }
+        // if (Input.MECH_XBOX.getStartButtonPressed()) {
+        // Robot.BOTTOM_INTAKE.toggle();
+        // }
 
         // Experimental stuff
         if (Input.MECH_XBOX.getAButtonPressed()) {
