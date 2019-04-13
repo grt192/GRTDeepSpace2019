@@ -35,6 +35,7 @@ public class Camera {
             return null;
         double gyroAngle = Math.toRadians(Robot.GYRO.getAngle());
         Vector imageDisplacement = new Vector(message.translateZ, message.translateX);
+        System.out.println("image: " + imageDisplacement);
         Vector robotPos = new Vector(Robot.POS_TRACKER.getX(), Robot.POS_TRACKER.getY());
         Vector estimate = relativePosition.pos.add(imageDisplacement.rotate(relativePosition.angle)).rotate(gyroAngle)
                 .add(robotPos);
@@ -48,7 +49,7 @@ public class Camera {
         Vector posEstimate = robotPos.add(target.pos.pos.subtract(estimate));
         // System.out.println(GRTUtil.positiveMod(Math.toDegrees(angleEstimate),
         // 360.0));
-        System.out.println(posEstimate);
+        System.out.println("pos: " + posEstimate);
         Position pos = new Position(posEstimate, angleEstimate);
         return pos;
     }

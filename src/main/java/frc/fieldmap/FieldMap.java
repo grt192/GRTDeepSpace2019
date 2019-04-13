@@ -32,6 +32,7 @@ public class FieldMap {
 		buildMap();
 		// testMap();
 		// testMapShop();
+		bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
 		wall = new Polygon(new Vector(0, 0), new Vector(FIELD_HEIGHT, 0), new Vector(FIELD_HEIGHT, FIELD_WIDTH),
 				new Vector(0, FIELD_WIDTH));
 	}
@@ -88,7 +89,7 @@ public class FieldMap {
 	}
 
 	public VisionTarget getNearestTarget(Vector estimate, double angleEstimate) {
-		double min = 25;
+		double min = 60 * 60;
 		VisionTarget best = null;
 		int j = -1;
 		double angleError = Math.toRadians(20);
@@ -137,7 +138,6 @@ public class FieldMap {
 	private void buildMap() {
 		FIELD_WIDTH = 27 * 12;
 		FIELD_HEIGHT = 54 * 12;
-		bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
 		visionTargets = new VisionTarget[32];
 		reflectionLineX = FIELD_HEIGHT / 2;
 		reflectionLineY = FIELD_WIDTH / 2;
@@ -212,7 +212,6 @@ public class FieldMap {
 	private void testMap() {
 		FIELD_WIDTH = 14 * 12;
 		FIELD_HEIGHT = 14 * 12;
-		bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
 		obstacles = new Polygon[2];
 		reflectionLineX = FIELD_HEIGHT / 2;
 		Polygon table = new Polygon(new Vector(48, 72), new Vector(48, 96), new Vector(120, 96), new Vector(120, 72));
@@ -231,7 +230,6 @@ public class FieldMap {
 	private void testMapShop() {
 		FIELD_WIDTH = 14 * 12 + 10;
 		FIELD_HEIGHT = 16 * 12;
-		bounds = new Vector(FIELD_HEIGHT, FIELD_WIDTH);
 		obstacles = new Polygon[4];
 		Polygon rocket = new Polygon(new Vector(130, FIELD_WIDTH), new Vector(130, FIELD_WIDTH - 3.5),
 				new Vector(130 + 9, FIELD_WIDTH - 22), new Vector(130 + 18.5 + 9, FIELD_WIDTH - 22),
@@ -259,5 +257,6 @@ public class FieldMap {
 		// visionTargets[2] = rightSideRocket;
 		visionTargets[2] = centerSideRocket;
 		visionTargets[3] = new VisionTarget(new Vector(FIELD_HEIGHT - 11, 28), Math.PI / 2, false);
+		FIELD_HEIGHT += 12;
 	}
 }

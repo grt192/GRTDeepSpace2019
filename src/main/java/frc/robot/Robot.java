@@ -40,6 +40,7 @@ import frc.vision.Camera;
 public class Robot extends TimedRobot {
 
     private NetworkTableEntry mode;
+    private Autonomous autonomous;
 
     public static Swerve SWERVE;
     public static NavXGyro GYRO;
@@ -64,8 +65,10 @@ public class Robot extends TimedRobot {
         ROBOT_HEIGHT = Config.getDouble("robot_height");
         ROBOT_RADIUS = Math.sqrt(ROBOT_WIDTH * ROBOT_WIDTH + ROBOT_HEIGHT * ROBOT_HEIGHT) / 2;
         FIELD_MAP = new FieldMap();
+        autonomous = new Autonomous(this);
         GYRO = new NavXGyro();
         ELEVATOR = new Elevator();
+        CLIMBER = new Climber();
         TOP_INTAKE = new TopIntake();
         BOTTOM_INTAKE = new BottomIntake();
         HATCHES = new Hatches();
@@ -79,19 +82,30 @@ public class Robot extends TimedRobot {
         mode = NetworkTableInstance.getDefault().getTable("Robot").getEntry("mode");
         mode.setNumber(0);
         CameraServer.getInstance().startAutomaticCapture(0);
-        // CameraServer.getInstance().startAutomaticCapture(1);
+        CameraServer.getInstance().startAutomaticCapture(1);
     }
 
     private void loop() {
+        // long start = System.nanoTime();
         // handle mode switching
+        autonomous.loop();
+        // System.out.println("auton: " + (System.nanoTime() - start));
         int i = mode.getNumber(0).intValue();
         if (manualOverride()) {
+            autonomous.kill();
             mode.setNumber(0);
             i = 0;
         }
+        // System.out.println("override: " + (System.nanoTime() - start));
         if (!Mode.getMode(i).loop()) {
+            autonomous.modeFinished();
             mode.setNumber(0);
         }
+        // System.out.println("done: " + (System.nanoTime() - start));
+    }
+
+    public void setMode(int i) {
+        mode.setNumber(i);
     }
 
     private boolean manualOverride() {
@@ -104,6 +118,11 @@ public class Robot extends TimedRobot {
         }
         overridden = temp;
         return false;
+    }
+
+    @Override
+    public void autonomousInit() {
+        autonomous.init("2hatchesfrontl.txt");
     }
 
     @Override

@@ -10,22 +10,22 @@ robot_height=35
 
 swerve_inverted=false
 sensor_phase=true
-swerve_kp=0.3
+swerve_kp=0.2
 swerve_kd=0.0
 
 
 fl_rotate=5
 fl_drive=1
-fl_offset=-1993
+fl_offset=385
 fr_rotate=12
 fr_drive=16
-fr_offset=-189
+fr_offset=-184
 bl_rotate=8
 bl_drive=4
-bl_offset=568
+bl_offset=560
 br_rotate=9
 br_drive=13
-br_offset=709
+br_offset=778
 
 ticks_per_rotation=1024
 drive_encoder_scale=1.83259571
@@ -55,5 +55,5 @@ hatch_bottom=4
 hatch_servo=0
 
 hatch_cam_x=14
-hatch_cam_y=2
+hatch_cam_y=0
 hatch_cam_angle=0
