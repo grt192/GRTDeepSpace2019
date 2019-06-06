@@ -140,8 +140,8 @@ class DriverControl extends Mode {
 
         }
 
-        double lTrigger = Input.SWERVE_XBOX.getTriggerAxis(Hand.kRight);
-        double rTrigger = Input.SWERVE_XBOX.getTriggerAxis(Hand.kLeft);
+        double lTrigger = Input.SWERVE_XBOX.getTriggerAxis(Hand.kLeft);
+        double rTrigger = Input.SWERVE_XBOX.getTriggerAxis(Hand.kRight);
         double rotate = 0;
         if (lTrigger + rTrigger > 0.05) {
             rotate = -(rTrigger * rTrigger - lTrigger * lTrigger);
