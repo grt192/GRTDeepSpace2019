@@ -122,19 +122,19 @@ class DriverControl extends Mode {
         if (buttonPressed) {
             if (pov == -1) {
             } else if (pov == 45) {
-                Robot.SWERVE.setAngle(Math.toRadians(60));
+                Robot.SWERVE.setAngle(Math.toRadians(-60));
                 lastPov = pov;
             } else if (pov == 135) {
-                Robot.SWERVE.setAngle(Math.toRadians(150));
+                Robot.SWERVE.setAngle(Math.toRadians(-150));
                 lastPov = pov;
             } else if (pov == 235) {
-                Robot.SWERVE.setAngle(Math.toRadians(300));
+                Robot.SWERVE.setAngle(Math.toRadians(-300));
                 lastPov = pov;
             } else if (pov == 325) {
-                Robot.SWERVE.setAngle(Math.toRadians(210));
+                Robot.SWERVE.setAngle(Math.toRadians(-210));
                 lastPov = pov;
             } else {
-                Robot.SWERVE.setAngle(Math.toRadians(pov));
+                Robot.SWERVE.setAngle(Math.toRadians(-pov));
                 lastPov = pov;
             }
 

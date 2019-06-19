@@ -74,6 +74,7 @@ public class Swerve implements Runnable {
 
 	private double calcPID() {
 		double error = GRTUtil.distanceToAngle(Math.toRadians(gyro.getAngle()), angle);
+		System.out.println("error: " + error);
 		double w = error * kP - Math.toRadians(gyro.getRate()) * kD;
 		return w;
 	}
