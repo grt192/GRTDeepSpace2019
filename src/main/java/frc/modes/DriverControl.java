@@ -50,9 +50,9 @@ class DriverControl extends Mode {
 
         // Swerve Driver: Activate roller
         if (Robot.BOTTOM_INTAKE.getPosition()) {
-            Robot.BOTTOM_INTAKE.setPower(intakePower);
+            Robot.BOTTOM_INTAKE.setPower(-intakePower);
         }
-        Robot.TOP_INTAKE.setPower(intakePower);
+        Robot.TOP_INTAKE.setPower(-intakePower);
 
         // Mech Driver: Get manual elevator power (from controller)
         elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft), 0.2);
@@ -145,6 +145,7 @@ class DriverControl extends Mode {
         double rotate = 0;
         if (lTrigger + rTrigger > 0.05) {
             rotate = -(rTrigger * rTrigger - lTrigger * lTrigger);
+            System.out.println("rotate: " + rotate);
         }
         Robot.SWERVE.drive(x, y, rotate);
     }

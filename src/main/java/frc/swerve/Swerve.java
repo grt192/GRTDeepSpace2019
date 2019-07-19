@@ -59,8 +59,9 @@ public class Swerve implements Runnable {
 
 	public void run() {
 		double w = userW;
-		if (withPID)
+		if (withPID) {
 			w = calcPID();
+		}
 		changeMotors(userVX, userVY, w);
 		calcSwerveData();
 		Robot.POS_TRACKER.update();
@@ -69,12 +70,11 @@ public class Swerve implements Runnable {
 		SmartDashboard.putNumber("Angle", gyro.getAngle());
 		Robot.POS_TRACKER.sendToNetwork();
 		gyroAngle.setDouble(Math.toRadians(gyro.getAngle()));
-
 	}
 
 	private double calcPID() {
 		double error = GRTUtil.distanceToAngle(Math.toRadians(gyro.getAngle()), angle);
-		System.out.println("error: " + error);
+		// System.out.println("error: " + error);
 		double w = error * kP - Math.toRadians(gyro.getRate()) * kD;
 		return w;
 	}
@@ -83,8 +83,10 @@ public class Swerve implements Runnable {
 		userVX = vx;
 		userVY = vy;
 		userW = w;
-		if (w != 0)
+		// System.out.println("w: " + w);
+		if (w != 0) {
 			withPID = false;
+		}
 	}
 
 	public void setAngle(double angle) {
@@ -107,6 +109,7 @@ public class Swerve implements Runnable {
 			double wheelVY = vy + dx * w;
 			double wheelPos = Math.atan2(wheelVY, wheelVX) - gyroAngle;
 			double power = Math.sqrt(wheelVX * wheelVX + wheelVY * wheelVY);
+			// System.out.println("VSX: " + wheelVX + ", VY: " + wheelVY);
 			wheels[i].set(wheelPos, power);
 		}
 	}
