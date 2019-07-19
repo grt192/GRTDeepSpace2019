@@ -50,7 +50,7 @@ class DriverControl extends Mode {
 
         // Swerve Driver: Activate roller
         if (Robot.BOTTOM_INTAKE.getPosition()) {
-            Robot.BOTTOM_INTAKE.setPower(-intakePower);
+            Robot.BOTTOM_INTAKE.setPower(intakePower);
         }
         Robot.TOP_INTAKE.setPower(-intakePower);
 
