@@ -74,7 +74,6 @@ public class Swerve implements Runnable {
 
 	private double calcPID() {
 		double error = GRTUtil.distanceToAngle(Math.toRadians(gyro.getAngle()), angle);
-		// System.out.println("error: " + error);
 		double w = error * kP - Math.toRadians(gyro.getRate()) * kD;
 		return w;
 	}
@@ -83,7 +82,6 @@ public class Swerve implements Runnable {
 		userVX = vx;
 		userVY = vy;
 		userW = w;
-		// System.out.println("w: " + w);
 		if (w != 0) {
 			withPID = false;
 		}
@@ -109,7 +107,6 @@ public class Swerve implements Runnable {
 			double wheelVY = vy + dx * w;
 			double wheelPos = Math.atan2(wheelVY, wheelVX) - gyroAngle;
 			double power = Math.sqrt(wheelVX * wheelVX + wheelVY * wheelVY);
-			// System.out.println("VSX: " + wheelVX + ", VY: " + wheelVY);
 			wheels[i].set(wheelPos, power);
 		}
 	}

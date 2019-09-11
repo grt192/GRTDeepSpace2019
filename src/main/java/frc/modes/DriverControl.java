@@ -57,9 +57,10 @@ class DriverControl extends Mode {
         // Mech Driver: Get manual elevator power (from controller)
         elevatorPower = JoystickProfile.applyDeadband(-Input.MECH_XBOX.getY(Hand.kLeft), 0.2);
 
-        // If no elecator sequence is running, give manual control to height
+        // If no elevator sequence is running, give manual control to height
         if (!Robot.ELEVATOR.isClosedLoop() || elevatorPower != 0) {
             Robot.ELEVATOR.setPower(elevatorPower);
+            System.out.println("elevator power: " + elevatorPower);
         }
 
         // Mech Driver: goto elevator position
@@ -92,11 +93,15 @@ class DriverControl extends Mode {
         }
 
         // Experimental stuff
-        if (Input.MECH_XBOX.getAButtonPressed()) {
-            Sequence.EXTEND_HOOK.start();
-        } else if (Input.MECH_XBOX.getBButtonPressed()) {
-            Sequence.RETRACT_HOOK.start();
+
+        if(Input.MECH_XBOX.getAButtonPressed()){
+            
         }
+        // if (Input.MECH_XBOX.getAButtonPressed()) {
+        //     Sequence.EXTEND_HOOK.start();
+        // } else if (Input.MECH_XBOX.getBButtonPressed()) {
+        //     Sequence.RETRACT_HOOK.start();
+        // }
         // if (Input.MECH_XBOX.getBumperPressed(Hand.kLeft)) {
         // Robot.CLIMBER.toggleFront();
         // }

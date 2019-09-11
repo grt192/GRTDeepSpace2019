@@ -16,7 +16,7 @@ swerve_kd=0.0
 fl_rotate=5
 fl_drive=1
 fl_offset=842
-fr_rotate=12
+fr_rotate=12 
 fr_drive=16
 fr_offset=484
 bl_rotate=8
@@ -38,9 +38,9 @@ winch_sensor_phase=false
 winch_inverted=false
 
 elevator_bottom=50000
-rocket_1=162000
+rocket_1=178090 
 cargo_ship=204000
-rocket_2=265000
+rocket_2=239302
 rocket_3=355000
 elevator_top=1000000
 
