@@ -7,12 +7,16 @@
 
 package frc.modes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.fieldmap.geometry.Vector;
 import frc.robot.Robot;
+import frc.drawing.Path;
 
 /**
  * Add your docs here.
@@ -23,6 +27,10 @@ public class DrawingMode extends Mode {
     private volatile Vector tempTarget;
     private volatile boolean newTarget;
     private NetworkTableEntry targetEntry;
+
+    private boolean premadePath;
+    private List<Vector> points = new ArrayList<Vector>();
+    private Path path;
 
     public static final double SPEED = 0.5;
 
@@ -36,20 +44,37 @@ public class DrawingMode extends Mode {
             tempTarget = new Vector(Double.parseDouble(split[0]), Double.parseDouble(split[1]));
             newTarget = true;
         }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate | EntryListenerFlags.kLocal);
+
+        path = new Path();
     }
 
     @Override
     public boolean loop() {
         Robot.SWERVE.setRobotCentric(false);
-        if (newTarget) {
-            target = tempTarget;
-            newTarget = false;
+        if (premadePath) {
+            points = path.getAction(1);
+            if (points != null) {
+                for (int i = 0; i < points.size(); i++) {
+                    move(points.get(i));
+                }
+            }
+        } else {
+            if (newTarget) {
+                target = tempTarget;
+                newTarget = false;
+            }
+            if (target == null)
+                return false;
+            move(target);
         }
-        if (target == null)
-            return false;
+        return true;
+    }
+
+    private void move(Vector target) {
         double xPos = Robot.POS_TRACKER.getX();
         double yPos = Robot.POS_TRACKER.getY();
         Vector pos = new Vector(xPos, yPos);
+
         Vector velocity = new Vector(target.x - xPos, target.y - yPos);
 
         double distance = pos.distanceTo(target);
@@ -58,7 +83,5 @@ public class DrawingMode extends Mode {
         velocity = velocity.multiply(speed);
 
         Robot.SWERVE.drive(velocity.x, velocity.y, 0);
-        return true;
     }
-
 }
