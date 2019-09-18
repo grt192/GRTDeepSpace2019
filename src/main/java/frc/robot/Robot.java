@@ -17,7 +17,6 @@ import frc.fieldmap.FieldMap;
 import frc.input.Input;
 import frc.input.JoystickProfile;
 import frc.mechs.BottomIntake;
-import frc.mechs.Climber;
 import frc.mechs.Elevator;
 import frc.mechs.Hatches;
 import frc.mechs.TopIntake;
@@ -50,7 +49,6 @@ public class Robot extends TimedRobot {
     public static BottomIntake BOTTOM_INTAKE;
     public static Elevator ELEVATOR;
     public static TopIntake TOP_INTAKE;
-    public static Climber CLIMBER;
     public static double ROBOT_WIDTH;
     public static double ROBOT_HEIGHT;
     public static double ROBOT_RADIUS;
@@ -68,7 +66,6 @@ public class Robot extends TimedRobot {
         autonomous = new Autonomous(this);
         GYRO = new NavXGyro();
         ELEVATOR = new Elevator();
-        CLIMBER = new Climber();
         TOP_INTAKE = new TopIntake();
         BOTTOM_INTAKE = new BottomIntake();
         HATCHES = new Hatches();
