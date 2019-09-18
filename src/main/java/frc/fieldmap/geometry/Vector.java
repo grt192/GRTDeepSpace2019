@@ -13,10 +13,17 @@ package frc.fieldmap.geometry;
 public class Vector {
 
     public final double x, y;
+    public boolean z = true;
 
     public Vector(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Vector(double x, double y, boolean z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public Vector add(Vector v) {

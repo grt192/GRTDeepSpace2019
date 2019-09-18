@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.modes;
+package frc.sequence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +17,14 @@ import frc.drawing.Path;
 /**
  * Add your docs here.
  */
-public class DrawingMode extends Mode {
+public class StarSequence extends Sequence {
 
     private List<Vector> points = new ArrayList<Vector>();
     private Path path;
 
     public static final double SPEED = 0.5;
 
-    public DrawingMode() {
-        System.out.println("Drawing mode");
-    }
-
-    @Override
-    public boolean loop() {
+    public void runSequence() {
         Robot.SWERVE.setRobotCentric(false);
         points = path.getAction();
         if (points != null) {
@@ -37,7 +32,6 @@ public class DrawingMode extends Mode {
                 move(points.get(i));
             }
         }
-        return true;
     }
 
     private void move(Vector target) {

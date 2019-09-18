@@ -13,6 +13,7 @@ public abstract class Mode {
     public static PathfindingControl PATHFINDING_CONTROL;
     public static ScoreMode SCORE_MODE;
     public static DummyMode DUMMY_MODE;
+    public static DrawingMode DRAWING_MODE;
     private static Mode[] modes;
 
     public static void initModes() {
@@ -20,11 +21,13 @@ public abstract class Mode {
         PATHFINDING_CONTROL = new PathfindingControl();
         SCORE_MODE = new ScoreMode();
         DUMMY_MODE = new DummyMode();
-        modes = new Mode[4];
+        DRAWING_MODE = new DrawingMode();
+        modes = new Mode[5];
         modes[0] = DRIVER_CONTROL;
         modes[1] = PATHFINDING_CONTROL;
         modes[2] = SCORE_MODE;
         modes[3] = DUMMY_MODE;
+        modes[4] = DRAWING_MODE;
     }
 
     public abstract boolean loop();
