@@ -12,14 +12,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import frc.modes.Mode;
-import frc.sequence.Sequence;
 
 /**
  * Add your docs here.
@@ -87,12 +84,6 @@ public class Autonomous {
             case "pathfind":
                 Mode.PATHFINDING_CONTROL.setTarget(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]));
                 robot.setMode(1);
-                break;
-            case "placehatch":
-                Sequence.PLACE_HATCH.start();
-                break;
-            case "intakehatch":
-                Robot.HATCHES.setMiddle(false);
                 break;
             case "swerve":
                 robot.setMode(3);

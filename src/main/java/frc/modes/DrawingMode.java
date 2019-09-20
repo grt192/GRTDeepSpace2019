@@ -32,7 +32,7 @@ public class DrawingMode extends Mode {
     public boolean loop() {
         Robot.SWERVE.setRobotCentric(false);
         points = path.getAction();
-        if (points != null) {
+        if (!points.isEmpty()) {
             for (int i = 0; i < points.size(); i++) {
                 move(points.get(i));
             }
